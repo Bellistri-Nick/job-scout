@@ -1,0 +1,7 @@
+# Shell scripts and unit files must keep LF endings, or a Windows checkout ships
+# CRLF to a Linux box and bash fails on "set: pipefail: invalid option name".
+*.sh text eol=lf
+*.service text eol=lf
+*.timer text eol=lf
+crontab.example text eol=lf
+*.py text eol=lf
