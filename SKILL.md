@@ -78,6 +78,19 @@ python run.py scan --dry-run --open
 
 Review the results together before the first real send.
 
+## Telegram push (optional)
+
+If the user wants to know the moment a digest lands, wire up Telegram. They create the bot;
+you cannot do it for them.
+
+1. Tell them to message @BotFather, send `/newbot`, and paste the token into `.env` as
+   `TELEGRAM_BOT_TOKEN`
+2. Tell them to send their new bot any message
+3. `python run.py telegram-setup` finds the chat id and sends a confirmation
+
+`python run.py test-telegram` sends a sample. The push fires only after the email is
+accepted by the SMTP server, so it means delivered, not attempted.
+
 ## Running a scan
 
 ```bash

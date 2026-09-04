@@ -17,7 +17,7 @@ import webbrowser
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
-from jobagent import digest, discover, llm, mailer, score  # noqa: E402
+from jobagent import digest, discover, llm, mailer, notify, score  # noqa: E402
 from jobagent.sources import adzuna, ats, boards  # noqa: E402
 from jobagent.store import Store  # noqa: E402
 
@@ -150,6 +150,10 @@ def cmd_scan(args):
             store.record(job, sent=False)
     store.log_run(len(raw), len(kept), len(emailed))
     print(f"Emailed {len(emailed)} roles to {', '.join(recipients)}")
+
+    if notify.configured():
+        if notify.send(notify.digest_delivered(strong, look, rest, recipients, stats)):
+            print("    telegram push sent")
 
 
 def cmd_discover(args):
@@ -321,6 +325,37 @@ Output only the JSON object."""
     print("Read it before the first scan. The titles and comp floor are worth a human pass.")
 
 
+def cmd_telegram_setup(args):
+    """Find the chat id after the user has messaged their bot once."""
+    token = args.token or os.getenv("TELEGRAM_BOT_TOKEN", "")
+    if not token:
+        sys.exit("Set TELEGRAM_BOT_TOKEN in .env first, or pass --token.\n"
+                 "Get one by messaging @BotFather on Telegram and sending /newbot.")
+    chat_id, name = notify.find_chat_id(token=token)
+    if not chat_id:
+        sys.exit("No messages found. Send your bot any message in Telegram, then run this again.")
+    print(f"Chat id: {chat_id}" + (f"  ({name})" if name else ""))
+    print("\nAdd this to .env:")
+    print(f"  TELEGRAM_CHAT_ID={chat_id}")
+    if notify.send("Job Scout is connected. You will get a push here whenever a digest goes out.",
+                   chat_id=chat_id, token=token):
+        print("\nSent a test message. Check Telegram.")
+
+
+def cmd_test_telegram(args):
+    if not notify.configured():
+        sys.exit("Set TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID in .env first.\n"
+                 "Run 'python run.py telegram-setup' to find your chat id.")
+    from jobagent.model import Job
+    sample = [Job(source="ashby", company="Vanta", title="Staff Product Manager, AI Foundations",
+                  url="https://jobs.ashbyhq.com/vanta/example", location="Remote U.S.",
+                  comp_text="$180K - $215K", score=92, tier="strong",
+                  why="Owns the AI quality and evaluation stack, which is your current scope.")]
+    ok = notify.send(notify.digest_delivered(sample, [], [], ["you@example.com"],
+                                             {"fetched": 892, "sources": 4}))
+    print("Telegram push sent." if ok else "Telegram push failed. Check the token and chat id.")
+
+
 def cmd_stats(args):
     s = Store(DB_PATH).stats()
     print(f"Tracked postings : {s['tracked']}")
@@ -373,6 +408,13 @@ def main():
     r.add_argument("--force", action="store_true", help="overwrite an existing profile.json")
     r.add_argument("--model", default=None)
     r.set_defaults(func=cmd_profile_from_resume)
+
+    tg = sub.add_parser("telegram-setup", help="find your Telegram chat id")
+    tg.add_argument("--token", default=None, help="bot token, if not yet in .env")
+    tg.set_defaults(func=cmd_telegram_setup)
+
+    tt = sub.add_parser("test-telegram", help="send a sample push")
+    tt.set_defaults(func=cmd_test_telegram)
 
     st = sub.add_parser("stats", help="what the agent has seen")
     st.set_defaults(func=cmd_stats)

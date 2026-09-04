@@ -94,6 +94,18 @@ That builds a venv, locks `.env` to mode 600, and installs a systemd timer for w
 mornings at 7:15 with a randomized delay, so the boards do not see a robot arriving at the
 same second every day. `install/crontab.example` covers non-systemd machines.
 
+## Telegram push (optional)
+
+Get a push the moment a digest is delivered, with the top match and a link, so you know
+whether to open the email now or at lunch:
+
+1. Message [@BotFather](https://t.me/botfather) on Telegram, send `/newbot`, copy the token
+2. Put it in `.env` as `TELEGRAM_BOT_TOKEN`, then send your new bot any message
+3. `python run.py telegram-setup` finds your chat id and sends a test
+
+`python run.py test-telegram` sends a sample push any time. With the two values unset the
+feature is a silent no-op, and a push failure never breaks a scan: the email already went.
+
 ## How scoring works
 
 Two passes. Rules first, then judgment.
