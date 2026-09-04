@@ -21,30 +21,43 @@ def _has(text, needles):
     return [n for n in needles if _pat(n).search(t)]
 
 
+def hard_reject_reason(title, company, p):
+    """Rejects that need only the title and company, never the description.
+
+    Sources call this before paying for a per-posting detail fetch: on a big
+    Greenhouse board most candidate titles are rejected on the title alone, and
+    fetching their descriptions first is pure waste.
+    """
+    title = (title or "").lower()
+    company = (company or "").strip().lower()
+
+    hit = _has(title, p["title_block"])
+    if hit:
+        return f"blocked title: {hit[0]}"
+    hit = _has(title, p["junior_block"])
+    if hit:
+        return f"too junior: {hit[0]}"
+    if company in [c.lower() for c in p.get("companies_skip", [])]:
+        return "company on skip list"
+    hit = _has(company, p.get("company_skip_patterns", []))
+    if hit:
+        return f"staffing firm ({hit[0]})"
+    if not (_has(title, p["titles_tier1"]) or _has(title, p["titles_tier2"])):
+        return "title not in your target function"
+    return None
+
+
 def score_job(job, p):
     """Score 0-100 against the profile. Sets job.score, job.tier, job.reasons."""
     title = (job.title or "").lower()
     loc = (job.location or "").lower()
     desc = (job.description or "").lower()
-    blob = f"{title} {loc} {desc}"
     reasons, score = [], 0
 
     # --- hard rejects -------------------------------------------------
-    hit = _has(title, p["title_block"])
-    if hit:
-        job.tier, job.reject, job.reasons = "drop", "hard", [f"blocked title: {hit[0]}"]
-        return job
-    hit = _has(title, p["junior_block"])
-    if hit:
-        job.tier, job.reject, job.reasons = "drop", "hard", [f"too junior: {hit[0]}"]
-        return job
-    company = job.company.strip().lower()
-    if company in [c.lower() for c in p.get("companies_skip", [])]:
-        job.tier, job.reject, job.reasons = "drop", "hard", ["company on skip list"]
-        return job
-    hit = _has(company, p.get("company_skip_patterns", []))
-    if hit:
-        job.tier, job.reject, job.reasons = "drop", "hard", [f"staffing firm ({hit[0]})"]
+    reason = hard_reject_reason(job.title, job.company, p)
+    if reason:
+        job.tier, job.reject, job.reasons = "drop", "hard", [reason]
         return job
 
     # --- title fit ----------------------------------------------------
@@ -53,12 +66,9 @@ def score_job(job, p):
     if t1:
         score += 40
         reasons.append(f"target title ({t1[0]})")
-    elif t2:
+    else:
         score += 25
         reasons.append(f"adjacent title ({t2[0]})")
-    else:
-        job.tier, job.reject, job.reasons = "drop", "hard", ["title not in your target function"]
-        return job
 
     # --- seniority ----------------------------------------------------
     if _has(title, p["seniority_lead"]):

@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 
 from ..http import get_json
 from ..model import Job, strip_html
+from ..score import hard_reject_reason
 from ..terms import is_in_field
 
 GREENHOUSE_LIST = "https://boards-api.greenhouse.io/v1/boards/{slug}/jobs?content=false"
@@ -38,6 +39,11 @@ def greenhouse(slug, company, profile):
     for j in data["jobs"]:
         title = j.get("title", "")
         if not _title_interesting(title, profile):
+            continue
+        # Greenhouse is the one source that costs a request per posting. Reject on the
+        # title before spending it: on a 600-role board that is the difference between
+        # a few dozen fetches and a few hundred.
+        if hard_reject_reason(title, company, profile):
             continue
         detail = get_json(GREENHOUSE_ONE.format(slug=slug, jid=j.get("id"))) or {}
         out.append(Job(
