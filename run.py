@@ -90,8 +90,20 @@ def cmd_scan(args):
     shortlist = sorted([j for j in scored if j.score >= floor], key=lambda j: -j.score)[:25]
     print(f"  {len(kept)} cleared the rules, {len(shortlist)} going to the model")
 
+    reviewed_ran = False
     if shortlist and not args.no_llm:
-        llm.rerank(shortlist, profile, model=args.model)
+        reviewed_ran = llm.rerank(shortlist, profile, model=args.model)
+
+    # Only the shortlist reaches the model. On a large watchlist the rest would
+    # otherwise claim "strong" on rule score alone, having never been read.
+    if reviewed_ran:
+        demoted = 0
+        for job in kept:
+            if job.tier == "strong" and not job.reviewed:
+                job.tier = "look"
+                demoted += 1
+        if demoted:
+            print(f"    {demoted} unreviewed roles held back from strong")
 
     ranked = sorted(kept, key=lambda j: -j.score)
     strong = [j for j in ranked if j.tier == "strong"]

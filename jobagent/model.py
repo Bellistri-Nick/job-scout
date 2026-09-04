@@ -49,6 +49,7 @@ class Job:
     reasons: list = field(default_factory=list)
     why: str = ""               # one-line LLM rationale for the email
     llm_score: int = 0
+    reviewed: bool = False      # the model actually scored this one
 
     @property
     def fingerprint(self):

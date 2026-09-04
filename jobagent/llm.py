@@ -121,6 +121,7 @@ def rerank(jobs, profile, model=None, verbose=True):
             continue
         job = jobs[idx]
         job.llm_score = int(v.get("fit", 0))
+        job.reviewed = True
         job.why = (v.get("why") or "").strip()
         if v.get("flag"):
             job.reasons.append("flag: " + v["flag"])
