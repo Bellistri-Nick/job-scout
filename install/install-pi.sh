@@ -8,7 +8,13 @@ APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 USER_NAME="$(id -un)"
 PY="$APP_DIR/.venv/bin/python"
 
-echo "Installing job agent from $APP_DIR"
+# Unit name defaults to the install directory, so two instances for two people can
+# live on one machine without fighting over the same systemd unit.
+UNIT="${UNIT_NAME:-$(basename "$APP_DIR")}"
+# Weekday morning by default. Override with SCAN_TIME=07:35 to stagger instances.
+WHEN="${SCAN_TIME:-07:15}"
+
+echo "Installing $UNIT from $APP_DIR (runs weekdays at $WHEN)"
 
 if [ ! -f "$APP_DIR/.env" ]; then
   cp "$APP_DIR/.env.example" "$APP_DIR/.env"
@@ -24,7 +30,7 @@ python3 -m venv "$APP_DIR/.venv"
 
 mkdir -p "$APP_DIR/out"
 
-sudo tee /etc/systemd/system/jobagent.service >/dev/null <<UNIT
+sudo tee "/etc/systemd/system/$UNIT.service" >/dev/null <<UNITFILE
 [Unit]
 Description=Job search agent scan
 After=network-online.target
@@ -43,23 +49,23 @@ PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=read-only
 ReadWritePaths=$APP_DIR/out
-UNIT
+UNITFILE
 
-sudo tee /etc/systemd/system/jobagent.timer >/dev/null <<'UNIT'
+sudo tee "/etc/systemd/system/$UNIT.timer" >/dev/null <<UNITFILE
 [Unit]
-Description=Run the job search agent every weekday morning
+Description=Run $UNIT every weekday morning
 
 [Timer]
-OnCalendar=Mon..Fri 07:15
+OnCalendar=Mon..Fri $WHEN
 Persistent=true
 RandomizedDelaySec=600
 
 [Install]
 WantedBy=timers.target
-UNIT
+UNITFILE
 
 sudo systemctl daemon-reload
-sudo systemctl enable --now jobagent.timer
+sudo systemctl enable --now "$UNIT.timer"
 
 echo
 echo "Installed. Next:"
@@ -67,6 +73,6 @@ echo "  1. nano $APP_DIR/.env          fill in SMTP_USER, SMTP_PASSWORD, MAIL_TO
 echo "  2. $PY $APP_DIR/run.py test-email"
 echo "  3. $PY $APP_DIR/run.py scan --dry-run"
 echo
-echo "  systemctl list-timers jobagent.timer     when it next fires"
-echo "  sudo systemctl start jobagent.service    run it right now"
+echo "  systemctl list-timers $UNIT.timer     when it next fires"
+echo "  sudo systemctl start $UNIT.service    run it right now"
 echo "  tail -f $APP_DIR/out/agent.log           watch it work"
