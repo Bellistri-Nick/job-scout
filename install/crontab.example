@@ -1,0 +1,3 @@
+# Alternative to systemd. `crontab -e` and paste, adjusting the path.
+# Every day at 6:30am. Output goes to a log you can tail.
+30 6 * * * cd /home/pi/job-agent && .venv/bin/python run.py scan --skip-empty >> out/cron.log 2>&1

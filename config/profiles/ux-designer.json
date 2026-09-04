@@ -1,0 +1,73 @@
+{
+  "_readme": "Example profile. Invented, not a real person. Shows how the template works for a design search; copy it and replace every field with your own.",
+
+  "name": "Your Name",
+  "headline": "Senior and lead product design roles",
+  "email_to": "you@example.com",
+  "home_base": "City, ST",
+
+  "resume_summary": "Senior Product Designer with 8 years on complex web applications. Owns end-to-end design for a core product area: discovery research, interaction design, prototyping, and design QA through ship. Maintains a shared component library with front-end engineering and runs the critique process for a team of four designers. Prior work spans healthcare software and consumer mobile. BFA in Graphic Design. Tools: Figma, FigJam, Maze, Dovetail, Storybook, basic HTML and CSS.",
+
+  "titles_tier1": [
+    "senior product designer", "lead product designer", "staff product designer",
+    "principal product designer", "design lead", "senior ux designer",
+    "lead ux designer", "design manager", "head of design", "director of design",
+    "senior interaction designer", "senior product design"
+  ],
+  "titles_tier2": [
+    "product designer", "ux designer", "ui designer", "senior designer",
+    "design systems designer", "interaction designer", "ux researcher",
+    "senior visual designer", "digital designer"
+  ],
+  "title_block": [
+    "engineer", "software", "developer", "sales", "account executive", "recruiter",
+    "graphic designer", "motion designer", "video editor", "industrial designer",
+    "cad", "interior designer", "fashion", "print production", "intern"
+  ],
+  "junior_block": ["intern", "junior", "entry level", "apprentice", "coordinator", "assistant", "trainee", "associate designer"],
+
+  "seniority_lead": ["director", "head of", "vp", "vice president", "chief", "principal", "lead", "staff", "manager"],
+  "seniority_senior": ["senior", "sr.", "sr ", "ii", "iii"],
+
+  "locations_allow": ["remote", "anywhere", "united states", "u.s.", "usa"],
+  "locations_block": [
+    "india", "philippines", "brazil", "argentina", "colombia", "mexico", "poland",
+    "ukraine", "romania", "germany", "france", "spain", "netherlands", "australia",
+    "singapore", "japan", "china", "emea only", "apac", "latam"
+  ],
+  "us_only_remote": true,
+
+  "comp_floor": 130000,
+  "comp_target": 165000,
+
+  "keywords_strong": [
+    "design system", "component library", "end-to-end", "discovery", "user research",
+    "prototyping", "interaction design", "design critique", "mentor", "accessibility",
+    "wcag", "usability testing", "design ops"
+  ],
+  "keywords_good": [
+    "figma", "storybook", "saas", "b2b", "mobile", "responsive", "wireframe",
+    "information architecture", "cross-functional", "agile", "front-end", "css",
+    "product thinking", "qualitative research"
+  ],
+  "keywords_negative": ["unpaid", "equity only", "spec work", "portfolio test required", "commission"],
+
+  "fit_signals": [
+    "Owns a product area end to end, from research through shipped interface",
+    "Design has real influence, not a service desk taking tickets from product",
+    "Design systems, accessibility, or research depth is treated as core work",
+    "Senior, lead, or staff level with mentorship or craft leadership"
+  ],
+  "anti_signals": [
+    "Marketing, brand, or graphic production work dressed up as product design",
+    "Junior or associate level individual contributor",
+    "Agencies doing pure execution with no ownership",
+    "Unpaid spec work or take-homes framed as the interview"
+  ],
+
+  "companies_skip": [],
+  "company_skip_patterns": ["staffing", "recruit", "talent partners", "search group", "consultants", "headhunt"],
+
+  "max_age_days": 45,
+  "thresholds": { "strong": 80, "look": 58, "llm_floor": 45 }
+}

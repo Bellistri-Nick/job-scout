@@ -1,0 +1,67 @@
+{
+  "_readme": "Copy to config/profile.json and edit. Everything the agent knows about you lives here; no code changes needed. Run 'python run.py profile-from-resume resume.txt' to have Claude draft this from your resume, or start from a ready-made profile in config/profiles/.",
+
+  "name": "Your Name",
+  "headline": "Short description of the roles you want",
+  "email_to": "you@example.com",
+  "home_base": "City, ST (metro you can commute into)",
+
+  "resume_summary": "3-6 sentences: current role and scope, what you own, the size of team or business, prior roles, education, tools. Written in third person. This is the single most important field. The model reads it to judge fit, so specifics beat adjectives.",
+
+  "_titles": "Tier 1 = the job you want. Tier 2 = adjacent, worth seeing. Matching is word-boundary aware and case-insensitive; substrings of a title match, so 'content director' hits 'Content Director, Brand'.",
+  "titles_tier1": [
+    "director of example",
+    "head of example",
+    "example lead"
+  ],
+  "titles_tier2": [
+    "senior example",
+    "example manager"
+  ],
+
+  "_blocks": "Hard rejects. A title hit here never reaches your inbox and never appears in the ranked tail. Use for functions that share your vocabulary but are not your job.",
+  "title_block": [
+    "engineer",
+    "software",
+    "sales",
+    "intern"
+  ],
+  "junior_block": ["intern", "junior", "entry level", "apprentice", "coordinator", "assistant", "trainee"],
+
+  "_seniority": "Title words that signal level. Lead scores higher than senior.",
+  "seniority_lead": ["director", "head of", "vp", "vice president", "chief", "principal", "lead", "manager", "supervisor"],
+  "seniority_senior": ["senior", "sr.", "sr ", "staff", "ii", "iii"],
+
+  "_locations": "allow = places you would work. block = places you would not. Neither is a hard reject: a blocked location is a heavy penalty, so the role still appears at the bottom with the reason shown.",
+  "locations_allow": ["remote", "anywhere", "united states", "u.s.", "usa"],
+  "locations_block": ["india", "philippines", "brazil", "poland", "ukraine", "germany", "australia", "singapore", "apac", "latam"],
+  "us_only_remote": true,
+
+  "comp_floor": 100000,
+  "comp_target": 130000,
+
+  "_keywords": "Vocabulary from postings you would want. strong = the language of your actual job. good = supporting context. Scored from the posting body, capped so a keyword-stuffed listing cannot dominate.",
+  "keywords_strong": ["example responsibility", "example ownership"],
+  "keywords_good": ["example tool", "example industry"],
+  "keywords_negative": ["cold calling", "quota", "commission-only", "unpaid"],
+
+  "_llm": "Plain-language bullets handed to Claude for the judgment pass. Write these the way you would brief a recruiter.",
+  "fit_signals": [
+    "Leads or mentors a team, or owns a function end to end",
+    "Sits in the org where this work actually reports"
+  ],
+  "anti_signals": [
+    "Junior individual contributor or coordinator level",
+    "Pure execution with no ownership",
+    "Onsite required outside your metro"
+  ],
+
+  "_skip": "Companies you never want to see. Patterns catch staffing and recruiting firms, which repost the same roles endlessly and are the single largest noise source in most searches.",
+  "companies_skip": [],
+  "company_skip_patterns": ["staffing", "recruit", "talent partners", "search group", "consultants", "headhunt"],
+
+  "max_age_days": 45,
+
+  "_thresholds": "strong and look set the two top sections. llm_floor is the score a posting needs before it costs an API call. Raise strong for a quieter inbox, lower look for a longer middle section.",
+  "thresholds": { "strong": 80, "look": 58, "llm_floor": 45 }
+}

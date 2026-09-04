@@ -1,0 +1,13 @@
+[Unit]
+Description=Job scout scan (fetch, score, email)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=__USER__
+WorkingDirectory=__APP_DIR__
+ExecStart=__APP_DIR__/.venv/bin/python __APP_DIR__/run.py scan --skip-empty
+# The scan hits ~50 boards; give a Pi Zero plenty of room.
+TimeoutStartSec=1800
+Nice=10
