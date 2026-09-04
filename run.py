@@ -71,11 +71,17 @@ def cmd_scan(args):
     print(f"  {len(raw)} postings fetched\n")
 
     # Dedupe within this run, then against everything already seen.
-    unique, seen = [], set()
+    unique, seen = [], {}
     for job in raw:
-        if not job.url or job.fingerprint in seen:
+        if not job.url:
             continue
-        seen.add(job.fingerprint)
+        first = seen.get(job.fingerprint)
+        if first is not None:
+            # Same role, another city. Fold the location in rather than repeating it.
+            if job.location and job.location.lower() not in first.location.lower():
+                first.location = f"{first.location} / {job.location}"[:120]
+            continue
+        seen[job.fingerprint] = job
         unique.append(job)
     fresh = [j for j in unique if store.is_new(j)]
     print(f"Scoring: {len(unique)} unique, {len(fresh)} not seen before")

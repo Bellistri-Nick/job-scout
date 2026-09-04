@@ -53,7 +53,7 @@ class Job:
 
     @property
     def fingerprint(self):
-        key = f"{self.company.strip().lower()}|{norm_title(self.title)}|{(self.location or '').lower()[:24]}"
+        key = f"{self.company.strip().lower()}|{norm_title(self.title)}"
         return hashlib.sha1(key.encode("utf-8")).hexdigest()
 
     @property
