@@ -178,6 +178,18 @@ Bundled starting profiles live in `config/profiles/`: `product-management` and
   in an email that you would catch on opening the posting.
 - Set a monthly spend cap on your API key.
 
+## Tests
+
+```bash
+python -m unittest discover -s tests -t .
+```
+
+Standard library only, no network, no API key. The suite pins down the parts that
+fail silently: scoring weights and hard rejects, word-boundary matching ("intern" must
+not fire on "internal"), salary parsing, and dedupe both within a run (one role posted
+in five cities is one job) and across runs (a retitled repost is not a new role). A
+change to the scoring rules should move a test, on purpose.
+
 ## Layout
 
 ```
@@ -190,6 +202,7 @@ jobagent/llm.py               model re-rank, prompt built from your profile
 jobagent/digest.py            the email
 jobagent/store.py             SQLite dedupe and send history
 jobagent/sources/             one module per board family
+tests/                        unit tests for scoring, parsing, and dedupe
 out/jobs.db                   everything it has ever seen
 ```
 

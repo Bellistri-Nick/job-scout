@@ -61,16 +61,7 @@ def collect(profile, companies, use_boards=True):
     return jobs, sources
 
 
-def cmd_scan(args):
-    profile = load(PROFILE_PATH)
-    companies = load(COMPANIES_PATH, {"companies": []}).get("companies", [])
-    store = Store(DB_PATH)
-
-    print("Scanning...")
-    raw, source_count = collect(profile, companies, use_boards=not args.no_boards)
-    print(f"  {len(raw)} postings fetched\n")
-
-    # Dedupe within this run, then against everything already seen.
+def dedupe(raw):
     unique, seen = [], {}
     for job in raw:
         if not job.url:
@@ -83,6 +74,31 @@ def cmd_scan(args):
             continue
         seen[job.fingerprint] = job
         unique.append(job)
+    return unique
+
+
+def hold_back_unreviewed(kept):
+    # Only the shortlist reaches the model. On a large watchlist the rest would
+    # otherwise claim "strong" on rule score alone, having never been read.
+    demoted = 0
+    for job in kept:
+        if job.tier == "strong" and not job.reviewed:
+            job.tier = "look"
+            demoted += 1
+    return demoted
+
+
+def cmd_scan(args):
+    profile = load(PROFILE_PATH)
+    companies = load(COMPANIES_PATH, {"companies": []}).get("companies", [])
+    store = Store(DB_PATH)
+
+    print("Scanning...")
+    raw, source_count = collect(profile, companies, use_boards=not args.no_boards)
+    print(f"  {len(raw)} postings fetched\n")
+
+    # Dedupe within this run, then against everything already seen.
+    unique = dedupe(raw)
     fresh = [j for j in unique if store.is_new(j)]
     print(f"Scoring: {len(unique)} unique, {len(fresh)} not seen before")
 
@@ -100,14 +116,8 @@ def cmd_scan(args):
     if shortlist and not args.no_llm:
         reviewed_ran = llm.rerank(shortlist, profile, model=args.model)
 
-    # Only the shortlist reaches the model. On a large watchlist the rest would
-    # otherwise claim "strong" on rule score alone, having never been read.
     if reviewed_ran:
-        demoted = 0
-        for job in kept:
-            if job.tier == "strong" and not job.reviewed:
-                job.tier = "look"
-                demoted += 1
+        demoted = hold_back_unreviewed(kept)
         if demoted:
             print(f"    {demoted} unreviewed roles held back from strong")
 
