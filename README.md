@@ -136,6 +136,33 @@ Three sections:
 The footer tallies what was filtered out entirely: `Hid 54: 52 outside your field, 1 too
 junior, 1 staffing firm.` Nothing vanishes silently.
 
+## After you apply: jobmail and the metrics dashboard
+
+Job Scout finds roles. `jobmail/` tracks what happens once you apply, with nothing logged
+by hand. It polls your job-search mailbox over IMAP, has Claude classify each message
+(company, role, stage, whether you owe a reply), links it to an application, and moves the
+stage forward on its own: `applied → screening → interviewing → assessment → offer`, or
+`rejected`.
+
+It serves a private, read-only dashboard:
+
+- **Pipeline**: every application by stage, with what needs a reply pinned to the top
+- **Metrics** (`/metrics`): response rate, median days to a reply, a funnel, applications per
+  month, and which ATS each came through. The funnel reads how far each application *ever*
+  got from the event log, so a rejection does not erase the interviews before it
+- **API**: `/api/summary` for counts and last poll time, `/health` for monitoring
+
+Alerts go to Telegram or email when something needs you. It also mirrors each application
+into an Obsidian note if you use one. It never sends mail on your behalf.
+
+The two are separate installs that share nothing but a Pi. jobmail needs FastAPI and the
+Anthropic SDK, so it keeps its own venv. Setup, configuration, and the backfill for
+applications from before you installed it are in [jobmail/README.md](jobmail/README.md).
+
+```bash
+cd jobmail && sudo bash deploy/install.sh $USER
+```
+
 ## Commands
 
 | Command | What it does |
@@ -182,6 +209,7 @@ Bundled starting profiles live in `config/profiles/`: `product-management` and
 
 ```bash
 python -m unittest discover -s tests -t .
+cd jobmail && pip install -e ".[dev]" && pytest     # jobmail's own suite
 ```
 
 Standard library only, no network, no API key. The suite pins down the parts that
@@ -204,6 +232,7 @@ jobagent/store.py             SQLite dedupe and send history
 jobagent/sources/             one module per board family
 tests/                        unit tests for scoring, parsing, and dedupe
 out/jobs.db                   everything it has ever seen
+jobmail/                      application tracker + metrics dashboard (own README)
 ```
 
 ## License

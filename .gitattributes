@@ -5,3 +5,4 @@
 *.timer text eol=lf
 crontab.example text eol=lf
 *.py text eol=lf
+.env.example text eol=lf

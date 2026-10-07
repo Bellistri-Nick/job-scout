@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{{ a.company }} — jobmail{% endblock %}
+{% block crumbs %}<span class="muted">/</span> <span>{{ a.company }}</span>{% endblock %}
+{% block content %}
+
+<div class="card">
+  <div style="display:flex;gap:14px;align-items:baseline;flex-wrap:wrap">
+    <h1 style="margin:0;font-size:20px">{{ a.company }}</h1>
+    <span class="muted">{{ a.role or 'role unknown' }}</span>
+    <span class="pill s-{{ a.stage }}">{{ a.stage }}</span>
+  </div>
+  <dl class="kv" style="margin-top:12px">
+    <dt>Applied</dt><dd>{{ a.applied_at|date }}</dd>
+    <dt>Last activity</dt><dd>{{ a.last_activity_at|fmt }} ({{ a.last_activity_at|rel }})</dd>
+    {% if a.next_action %}<dt>Next action</dt><dd style="color:var(--med)">{{ a.next_action }}{% if a.next_action_due %} — due {{ a.next_action_due|fmt }}{% endif %}</dd>{% endif %}
+    {% if a.closed_at %}<dt>Closed</dt><dd>{{ a.closed_at|date }}</dd>{% endif %}
+    {% if domains %}<dt>Sender domains</dt><dd class="muted">{{ domains|join(', ') }}</dd>{% endif %}
+  </dl>
+</div>
+
+<div class="two">
+  <div>
+    <h2>Key dates</h2>
+    <div class="card">
+    {% if dates %}<table>{% for d in dates %}<tr><td class="small" style="white-space:nowrap">{{ d.date|fmt }}</td><td>{{ d.description }}</td></tr>{% endfor %}</table>
+    {% else %}<div class="empty">None recorded.</div>{% endif %}
+    </div>
+  </div>
+  <div>
+    <h2>Timeline</h2>
+    <div class="card">
+    <table>{% for e in events %}<tr><td class="small muted" style="white-space:nowrap">{{ e.at|fmt }}</td><td><span class="small muted">{{ e.kind }}</span> {{ e.detail }}</td></tr>{% endfor %}</table>
+    </div>
+  </div>
+</div>
+
+<h2>Correspondence ({{ msgs|length }})</h2>
+{% for m in msgs %}
+<div class="msg {{ 'in' if m.direction == 'inbound' else 'out' }}">
+  <div class="hd">
+    <span class="who">{{ '←' if m.direction == 'inbound' else '→' }} {{ m.from_name or m.from_addr if m.direction == 'inbound' else m.to_addr }}</span>
+    <span class="muted small">{{ m.sent_at|fmt }}</span>
+    {% if m.message_type and m.message_type != 'outbound' %}<span class="muted small">{{ m.message_type|replace('_',' ') }}</span>{% endif %}
+    {% if m.needs_reply and not m.replied_at %}<span class="pill u-{{ m.urgency or 'low' }}">reply needed</span>{% elif m.replied_at %}<span class="pill u-low">replied</span>{% endif %}
+  </div>
+  <div><a href="/message/{{ m.id }}"><b>{{ m.subject or '(no subject)' }}</b></a></div>
+  {% if m.summary %}<div class="small">{{ m.summary }}</div>{% endif %}
+  {% if m.action_needed and not m.replied_at %}<div class="small" style="color:var(--med)">Action: {{ m.action_needed }}</div>{% endif %}
+</div>
+{% else %}
+<div class="empty">No messages linked.</div>
+{% endfor %}
+{% endblock %}
