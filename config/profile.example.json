@@ -32,9 +32,10 @@
   "seniority_lead": ["director", "head of", "vp", "vice president", "chief", "principal", "lead", "manager", "supervisor"],
   "seniority_senior": ["senior", "sr.", "sr ", "staff", "ii", "iii"],
 
-  "_locations": "allow = places you would work. block = places you would not. Neither is a hard reject: a blocked location is a heavy penalty, so the role still appears at the bottom with the reason shown.",
+  "_locations": "allow = places you would work. local = your commutable metro, which earns the biggest location bonus. block = places you would not. Neither is a hard reject: a blocked location is a heavy penalty, so the role still appears at the bottom with the reason shown.",
   "locations_allow": ["remote", "anywhere", "united states", "u.s.", "usa"],
   "locations_block": ["india", "philippines", "brazil", "poland", "ukraine", "germany", "australia", "singapore", "apac", "latam"],
+  "locations_local": ["city name", "nearby town", ", st"],
   "us_only_remote": true,
 
   "comp_floor": 100000,

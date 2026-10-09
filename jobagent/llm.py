@@ -7,6 +7,9 @@ clear the rule floor are sent here, so the cost stays small.
 import json
 import os
 
+# Token usage of the most recent re-rank, for the eval's cost column.
+last_usage = {}
+
 SCHEMA = {
     "type": "object",
     "properties": {
@@ -132,8 +135,9 @@ def rerank(jobs, profile, model=None, verbose=True):
     for job in jobs:
         job.tier = ("strong" if job.score >= th["strong"]
                     else "look" if job.score >= th["look"] else "long")
+    u = resp.usage
+    last_usage.update(input_tokens=u.input_tokens, output_tokens=u.output_tokens, model=model)
     if verbose:
-        u = resp.usage
         print("    LLM re-rank: {} scored ({} in / {} out tokens)".format(
             len(verdicts), u.input_tokens, u.output_tokens))
     return True

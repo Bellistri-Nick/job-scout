@@ -5,6 +5,12 @@ from .model import parse_salary
 
 _CACHE = {}
 
+# The commute bonus used to be this list, hard-coded, because the first profile
+# was a Boston-area search. A profile now names its own metro in
+# "locations_local"; this stays only as the fallback for older profiles.
+_LEGACY_LOCAL = [", ma", "boston", "massachusetts", "cambridge", "quincy",
+                 "foxboro", "foxborough", "needham", "waltham", "newton", "hingham"]
+
 
 def _pat(needle):
     """Word-boundary match so 'intern' does not fire on 'internal communications'
@@ -83,7 +89,7 @@ def score_job(job, p):
     allowed_loc = _has(loc, p["locations_allow"])
     if blocked_loc and not allowed_loc:
         score -= 60
-        reasons.append(f"outside her range ({job.location})")
+        reasons.append(f"outside your range ({job.location})")
     elif "remote" in loc or job.remote:
         if p.get("us_only_remote") and blocked_loc:
             score -= 45
@@ -91,10 +97,9 @@ def score_job(job, p):
         else:
             score += 20
             reasons.append("remote")
-    elif any(k in loc for k in (", ma", "boston", "massachusetts", "cambridge", "quincy",
-                                "foxboro", "foxborough", "needham", "waltham", "newton", "hingham")):
+    elif any(k in loc for k in p.get("locations_local", _LEGACY_LOCAL)):
         score += 20
-        reasons.append("Boston metro / commutable")
+        reasons.append("commutable from home base")
     elif allowed_loc:
         score += 8
         reasons.append("US-based")

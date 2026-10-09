@@ -1,0 +1,35 @@
+NICK BELLISTRI
+Senior Product Manager · Scituate, MA
+(Condensed for the demo. Dates and metrics omitted.)
+
+SUMMARY
+Product manager with 15+ years across B2B SaaS, AI/ML, fintech and marketing technology.
+Currently owns AI-generated content quality and campaign creation for a marketing platform.
+
+EXPERIENCE
+
+HubSpot — Senior Product Manager, Marketing Studio
+- Owns campaign creation and AI-generated campaign assets.
+- Owns the framework for AI output quality across the product: prompt engineering,
+  model selection, context quality, evaluation.
+- Leading Campaign Creation 2.0, a multi-modal experience with four entry points:
+  start from an asset, AI chat, insight-driven, and canvas.
+- Proposed a Campaign Planning Hub that turns unstructured planning documents into
+  structured inputs; built the opportunity solution tree for it.
+- Runs ongoing competitive analysis of marketing automation platforms.
+
+Orum — Product Manager, Generative AI and Platform
+- Generative AI features and platform work for a sales-calling product.
+
+Addepar — Product Manager
+- Wealth management platform for financial advisors.
+
+John Hancock Retirement Plan Services — Product
+- Retirement plan products and participant experience.
+
+EDUCATION
+MBA, Quantic School of Business and Technology
+BA, English and Professional Writing
+
+TOOLS
+Amplitude, Snowflake, Looker, Figma, Jira, ProductBoard, Miro, Python, SQL

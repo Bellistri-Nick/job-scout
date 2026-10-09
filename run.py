@@ -61,6 +61,25 @@ def collect(profile, companies, use_boards=True):
     return jobs, sources
 
 
+def load_postings(path):
+    """Postings from a JSON file instead of the internet: for demos, evals and replays.
+
+    Each entry takes Job's fields. "days_ago" stands in for "posted" so a
+    sample file stays fresh no matter when it runs.
+    """
+    from dataclasses import fields
+    from datetime import datetime, timedelta, timezone
+    from jobagent.model import Job
+    names = {f.name for f in fields(Job)}
+    jobs = []
+    for d in load(path)["postings"]:
+        d = dict(d)
+        if "days_ago" in d:
+            d["posted"] = (datetime.now(timezone.utc) - timedelta(days=d.pop("days_ago"))).date().isoformat()
+        jobs.append(Job(**{k: v for k, v in d.items() if k in names}))
+    return jobs
+
+
 def dedupe(raw):
     unique, seen = [], {}
     for job in raw:
@@ -88,13 +107,46 @@ def hold_back_unreviewed(kept):
     return demoted
 
 
-def cmd_scan(args):
-    profile = load(PROFILE_PATH)
-    companies = load(COMPANIES_PATH, {"companies": []}).get("companies", [])
-    store = Store(DB_PATH)
+def rank(fresh, profile, use_llm=True, model=None, explain=False, verbose=True):
+    """Rules, then the model on the shortlist. Shared by scan and eval so they cannot drift.
 
-    print("Scanning...")
-    raw, source_count = collect(profile, companies, use_boards=not args.no_boards)
+    Returns (scored, kept): every posting with its score and tier, and the ones
+    that survived the hard rejects.
+    """
+    scored = [score.score_job(j, profile) for j in fresh]
+    if explain:
+        for j in sorted(scored, key=lambda x: -x.score):
+            print(f"    [{j.score:>3}] {j.tier:<6} {j.title[:44]:<44} | {j.company[:16]:<16} "
+                  f"| {(j.location or '?')[:22]:<22} | {'; '.join(j.reasons)[:70]}")
+    kept = [j for j in scored if j.reject != "hard"]
+    floor = profile["thresholds"]["llm_floor"]
+    shortlist = sorted([j for j in scored if j.score >= floor], key=lambda j: -j.score)[:25]
+    if verbose:
+        print(f"  {len(kept)} cleared the rules, {len(shortlist)} going to the model")
+
+    reviewed_ran = False
+    if shortlist and use_llm:
+        reviewed_ran = llm.rerank(shortlist, profile, model=model, verbose=verbose)
+
+    if reviewed_ran:
+        demoted = hold_back_unreviewed(kept)
+        if demoted and verbose:
+            print(f"    {demoted} unreviewed roles held back from strong")
+    return scored, kept
+
+
+def cmd_scan(args):
+    profile = load(args.profile or PROFILE_PATH)
+    companies = load(COMPANIES_PATH, {"companies": []}).get("companies", [])
+    store = Store(args.db or DB_PATH)
+    html_out = args.out or HTML_OUT
+
+    if args.postings:
+        print(f"Reading postings from {args.postings} (no network)...")
+        raw, source_count = load_postings(args.postings), 1
+    else:
+        print("Scanning...")
+        raw, source_count = collect(profile, companies, use_boards=not args.no_boards)
     print(f"  {len(raw)} postings fetched\n")
 
     # Dedupe within this run, then against everything already seen.
@@ -102,25 +154,7 @@ def cmd_scan(args):
     fresh = [j for j in unique if store.is_new(j)]
     print(f"Scoring: {len(unique)} unique, {len(fresh)} not seen before")
 
-    scored = [score.score_job(j, profile) for j in fresh]
-    if args.explain:
-        for j in sorted(scored, key=lambda x: -x.score):
-            print(f"    [{j.score:>3}] {j.tier:<6} {j.title[:44]:<44} | {j.company[:16]:<16} "
-                  f"| {(j.location or '?')[:22]:<22} | {'; '.join(j.reasons)[:70]}")
-    kept = [j for j in scored if j.reject != "hard"]
-    floor = profile["thresholds"]["llm_floor"]
-    shortlist = sorted([j for j in scored if j.score >= floor], key=lambda j: -j.score)[:25]
-    print(f"  {len(kept)} cleared the rules, {len(shortlist)} going to the model")
-
-    reviewed_ran = False
-    if shortlist and not args.no_llm:
-        reviewed_ran = llm.rerank(shortlist, profile, model=args.model)
-
-    if reviewed_ran:
-        demoted = hold_back_unreviewed(kept)
-        if demoted:
-            print(f"    {demoted} unreviewed roles held back from strong")
-
+    scored, kept = rank(fresh, profile, use_llm=not args.no_llm, model=args.model, explain=args.explain)
     ranked = sorted(kept, key=lambda j: -j.score)
     strong = [j for j in ranked if j.tier == "strong"]
     look = [j for j in ranked if j.tier == "look"][:args.max_look]
@@ -135,14 +169,15 @@ def cmd_scan(args):
     text = digest.build_text(strong, look, rest)
     subject = digest.subject(strong, look, rest)
 
-    with open(HTML_OUT, "w", encoding="utf-8") as fh:
+    os.makedirs(os.path.dirname(os.path.abspath(html_out)), exist_ok=True)
+    with open(html_out, "w", encoding="utf-8") as fh:
         fh.write(html)
 
     if args.dry_run:
-        print(f"Dry run. Digest written to {HTML_OUT}")
+        print(f"Dry run. Digest written to {html_out}")
         print(f"Subject would be: {subject}")
         if args.open:
-            webbrowser.open("file://" + HTML_OUT.replace("\\", "/"))
+            webbrowser.open("file://" + os.path.abspath(html_out).replace("\\", "/"))
         return
 
     if not (strong or look or rest) and args.skip_empty:
@@ -164,6 +199,56 @@ def cmd_scan(args):
     if notify.configured():
         if notify.send(notify.digest_delivered(strong, look, rest, recipients, stats)):
             print("    telegram push sent")
+
+
+def cmd_eval(args):
+    """Score rules-only and rules+model against the labelled sample postings."""
+    from jobagent import evaluate
+    out_dir = os.path.join(HERE, "eval", "scout")
+    os.makedirs(out_dir, exist_ok=True)
+
+    if args.report:
+        # Metrics are recomputed from each run's saved tiers, so changing how a
+        # metric is defined never needs another API call. Cost is carried over.
+        results = []
+        for name in sorted(os.listdir(out_dir)):
+            if name.endswith(".json"):
+                r = load(os.path.join(out_dir, name))
+                postings = load(r["postings"])["postings"]
+                r["runs"] = [{**evaluate.summarise(postings, run["tiers"]), "cost_usd": run["cost_usd"],
+                              "tiers": run["tiers"]} for run in r["runs"]]
+                results.append(r)
+        results.sort(key=lambda r: (r["mode"] != "rules", r["label"]))
+        text = evaluate.report(results)
+        with open(os.path.join(out_dir, "REPORT.md"), "w", encoding="utf-8") as fh:
+            fh.write(text)
+        print(text)
+        return
+
+    profile = load(args.profile)
+    postings = load(args.postings)["postings"]
+    use_llm = not args.no_llm
+    model = args.model or os.getenv("JOBAGENT_MODEL", "claude-opus-5")
+    label = f"rules + {model}" if use_llm else "rules only"
+    runs = []
+    for i in range(1 if not use_llm else args.repeats):
+        unique = dedupe(load_postings(args.postings))
+        llm.last_usage.clear()
+        scored, _ = rank(unique, profile, use_llm=use_llm, model=model, verbose=False)
+        if use_llm and not llm.last_usage:
+            sys.exit("The model pass did not run (no API key, or the call failed). Nothing recorded.")
+        res = evaluate.summarise(postings, evaluate.outcome(postings, unique, scored),
+                                 dict(llm.last_usage) if use_llm else None)
+        res["tiers"] = evaluate.outcome(postings, unique, scored)
+        runs.append(res)
+        print(f"  run {i + 1}: tier accuracy {res['tier_accuracy']:.0%}, {res['strong_emailed']} strong "
+              f"(precision {res['strong_precision']}, recall {res['strong_recall']}), "
+              f"false drops {res['false_drops']}, checks {res['checks']}")
+    slug = "rules" if not use_llm else model
+    with open(os.path.join(out_dir, f"{slug}.json"), "w", encoding="utf-8") as fh:
+        json.dump({"label": label, "mode": "rules" if not use_llm else "llm", "model": model if use_llm else None,
+                   "profile": args.profile, "postings": args.postings, "runs": runs}, fh, indent=2)
+    print(f"  -> eval/scout/{slug}.json")
 
 
 def cmd_discover(args):
@@ -267,6 +352,27 @@ def cmd_init(args):
         print(f"\nStarting profiles available: {', '.join(available)}")
 
 
+def json_type(value):
+    """JSON Schema for one example value. bool before int: True is an int in Python."""
+    if isinstance(value, bool):
+        return {"type": "boolean"}
+    if isinstance(value, int):
+        return {"type": "integer"}
+    if isinstance(value, list):
+        return {"type": "array", "items": {"type": "string"}}
+    if isinstance(value, dict):
+        # Structured outputs rejects an object without its properties spelled out
+        # and additionalProperties: false, so nested objects are built the same way.
+        return {"type": "object", "properties": {k: json_type(v) for k, v in value.items()},
+                "required": list(value), "additionalProperties": False}
+    return {"type": "string"}
+
+
+def profile_schema(template, keys):
+    return {"type": "object", "properties": {k: json_type(template[k]) for k in keys},
+            "required": list(keys), "additionalProperties": False}
+
+
 def cmd_profile_from_resume(args):
     """Draft a profile from a resume using Claude, then write it for review."""
     try:
@@ -278,6 +384,10 @@ def cmd_profile_from_resume(args):
 
     with open(args.resume, encoding="utf-8", errors="replace") as fh:
         resume = fh.read()[:20000]
+    notes = args.notes or ""
+    if args.interview:
+        with open(args.interview, encoding="utf-8", errors="replace") as fh:
+            notes = (fh.read()[:12000] + "\n" + notes).strip()
     template = load(os.path.join(CONFIG, "profile.example.json"))
     schema_keys = [k for k in template if not k.startswith("_")]
 
@@ -286,8 +396,8 @@ def cmd_profile_from_resume(args):
 RESUME
 {resume}
 
-EXTRA CONTEXT FROM THE USER
-{args.notes or "(none given)"}
+SETUP INTERVIEW AND NOTES FROM THE USER (these override anything inferred from the resume)
+{notes or "(none given)"}
 
 Return a JSON object with exactly these keys: {", ".join(schema_keys)}
 
@@ -299,7 +409,8 @@ Rules:
 - title_block: functions that share vocabulary with this field but are the wrong job.
 - keywords_strong: the actual language of this person's work, as it appears in postings.
 - fit_signals / anti_signals: plain bullets briefing a recruiter.
-- comp_floor / comp_target: infer from seniority and market unless the user stated a number.
+- comp_floor / comp_target: use the user's stated numbers; infer from seniority and market only if none.
+- locations_local: lowercase towns of the commutable metro around home_base, plus ", st" for the state.
 - Keep locations_allow, locations_block, junior_block, seniority_*, thresholds,
   company_skip_patterns, and max_age_days at sensible defaults for this field.
 Output only the JSON object."""
@@ -310,15 +421,7 @@ Output only the JSON object."""
         model=args.model or os.getenv("JOBAGENT_MODEL", "claude-opus-5"),
         max_tokens=8000,
         messages=[{"role": "user", "content": prompt}],
-        output_config={"format": {"type": "json_schema", "schema": {
-            "type": "object",
-            "properties": {k: ({"type": "array", "items": {"type": "string"}}
-                               if isinstance(template[k], list) else
-                               {"type": "integer"} if isinstance(template[k], int) else
-                               {"type": "boolean"} if isinstance(template[k], bool) else
-                               {"type": "object"} if isinstance(template[k], dict) else
-                               {"type": "string"}) for k in schema_keys},
-            "required": schema_keys, "additionalProperties": False}}},
+        output_config={"format": {"type": "json_schema", "schema": profile_schema(template, schema_keys)}},
     )
     text = next(b.text for b in resp.content if b.type == "text")
     profile = json.loads(text)
@@ -395,7 +498,20 @@ def main():
     s.add_argument("--max-rest", type=int, default=30, help="cap on the ranked tail")
     s.add_argument("--model", default=None, help="override the Claude model")
     s.add_argument("--explain", action="store_true", help="print every scored posting and why")
+    s.add_argument("--profile", help="profile JSON to use (default config/profile.json)")
+    s.add_argument("--postings", help="read postings from a JSON file instead of the internet")
+    s.add_argument("--db", help="history database (default out/jobs.db)")
+    s.add_argument("--out", help="where to write the digest HTML (default out/digest.html)")
     s.set_defaults(func=cmd_scan)
+
+    ev = sub.add_parser("eval", help="score the ranking against labelled sample postings")
+    ev.add_argument("--profile", default=os.path.join(HERE, "samples", "scout", "profile.json"))
+    ev.add_argument("--postings", default=os.path.join(HERE, "samples", "scout", "postings.json"))
+    ev.add_argument("--no-llm", action="store_true", help="rules only (deterministic, free)")
+    ev.add_argument("--model", default=None, help="Claude model for the re-rank")
+    ev.add_argument("--repeats", type=int, default=3, help="model runs to repeat (variance)")
+    ev.add_argument("--report", action="store_true", help="render eval/scout/REPORT.md from saved results")
+    ev.set_defaults(func=cmd_eval)
 
     d = sub.add_parser("discover", help="find each company's ATS board")
     d.add_argument("companies", nargs="?", default="", help="comma-separated company names")
@@ -414,6 +530,7 @@ def main():
     r = sub.add_parser("profile-from-resume", help="draft a profile from a resume with Claude")
     r.add_argument("resume", help="path to a .txt or .md resume")
     r.add_argument("--notes", help="extra context: comp floor, location, what you want next")
+    r.add_argument("--interview", help="a file of setup-interview answers (see samples/scout/interview.md)")
     r.add_argument("--out", help="where to write (default config/profile.json)")
     r.add_argument("--force", action="store_true", help="overwrite an existing profile.json")
     r.add_argument("--model", default=None)

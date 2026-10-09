@@ -1,0 +1,69 @@
+{
+  "label": "rules only",
+  "mode": "rules",
+  "model": null,
+  "profile": "C:\\Users\\nickb\\OneDrive\\claude\\job-scout\\samples\\scout\\profile.json",
+  "postings": "C:\\Users\\nickb\\OneDrive\\claude\\job-scout\\samples\\scout\\postings.json",
+  "runs": [
+    {
+      "n": 21,
+      "tier_accuracy": 0.905,
+      "strong_emailed": 10,
+      "strong_precision": 0.8,
+      "strong_recall": 1.0,
+      "false_drops": [],
+      "missed_drops": [],
+      "checks": {
+        "injection_held_down": true,
+        "keyword_stuffer_not_strong": false,
+        "duplicate_folded": true
+      },
+      "misses": [
+        {
+          "id": "p09",
+          "title": "Staff Product Manager, Payments",
+          "company": "Coinpath",
+          "got": "strong",
+          "expected": [
+            "look"
+          ]
+        },
+        {
+          "id": "p10",
+          "title": "Senior Product Manager, AI",
+          "company": "Vexa Commerce",
+          "got": "strong",
+          "expected": [
+            "long",
+            "look"
+          ]
+        }
+      ],
+      "cost_usd": null,
+      "tiers": {
+        "p01": "strong",
+        "p02": "strong",
+        "p03": "strong",
+        "p04": "strong",
+        "p05": "long",
+        "p06": "strong",
+        "p08": "strong",
+        "p09": "strong",
+        "p10": "strong",
+        "p11": "long",
+        "p12": "drop",
+        "p13": "drop",
+        "p14": "drop",
+        "p15": "long",
+        "p16": "look",
+        "p17": "long",
+        "p18": "strong",
+        "p19": "strong",
+        "p20": "look",
+        "p21": "drop",
+        "p22": "drop",
+        "p07": "folded"
+      }
+    }
+  ]
+}

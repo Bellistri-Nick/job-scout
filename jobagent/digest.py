@@ -39,7 +39,7 @@ text-align:center;color:#6b6b66;font-size:14px;}
 
 
 def safe_url(url):
-    """Only https links reach her inbox. Job data is third-party text, not trusted input."""
+    """Only https links reach the inbox. Job data is third-party text, not trusted input."""
     url = (url or "").strip()
     return url if url.lower().startswith("https://") else ""
 
@@ -75,7 +75,7 @@ def _row(job):
     url = html.escape(safe_url(job.url))
     meta = [b for b in (job.location, job.comp_text) if b]
     catch = next((r for r in job.reasons
-                  if r.startswith(("outside her range", "comp below floor", "posted", "remote but"))), "")
+                  if r.startswith(("outside your range", "comp below floor", "posted", "remote but"))), "")
     if catch:
         meta.append(catch)
     inner = (f'<span class="n">{job.score}</span>'
@@ -134,8 +134,8 @@ def build_html(strong, look, rest, stats, profile):
 
     parts.append(f"""
 <div class="foot">
-  Filtered for {html.escape(profile['headline'])} roles, remote US or Boston metro,
-  base at or above ${profile['comp_floor']:,}.<br>
+  Filtered for {html.escape(profile['headline'])} roles, remote US or near
+  {html.escape(profile.get('home_base') or 'your home base')}, base at or above ${profile['comp_floor']:,}.<br>
   {html.escape(stats.get('cut_line', ''))}<br>
   Duplicates and anything sent before are suppressed automatically.
 </div></div></body></html>""")

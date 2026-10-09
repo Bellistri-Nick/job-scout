@@ -62,16 +62,16 @@ class ScoreJobTest(unittest.TestCase):
     def test_blocked_location_is_penalized_not_rejected(self):
         j = score_job(job(location="Bangalore, India"), self.p)
         self.assertNotEqual(j.reject, "hard")
-        self.assertIn("outside her range (Bangalore, India)", j.reasons)
+        self.assertIn("outside your range (Bangalore, India)", j.reasons)
 
     def test_remote_outside_us_is_penalized(self):
         j = score_job(job(location="Remote - Germany"), self.p)
         self.assertIn("remote but not US-eligible", j.reasons)
         self.assertNotIn("remote", j.reasons)
 
-    def test_boston_metro_counts_as_local(self):
+    def test_legacy_profile_without_locations_local_keeps_boston(self):
         j = score_job(job(location="Boston, MA"), self.p)
-        self.assertIn("Boston metro / commutable", j.reasons)
+        self.assertIn("commutable from home base", j.reasons)
 
     def test_comp_parsed_from_description_and_below_floor(self):
         j = score_job(job(description="Base pay: $130,000 – $150,000 USD"), self.p)
@@ -112,3 +112,16 @@ class ScoreJobTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def test_commute_bonus_comes_from_the_profile_not_the_code():
+    """The engine once hard-coded Boston towns. A Denver profile must get the bonus for Denver."""
+    from jobagent.score import score_job
+    p = profile()
+    p["locations_allow"] = ["united states", "remote", "denver"]
+    p["locations_local"] = ["denver", "boulder", ", co"]
+    local = score_job(job(title="Senior Product Manager", location="Denver, CO"), p)
+    boston = score_job(job(title="Senior Product Manager", location="Boston, MA"), p)
+    assert "commutable from home base" in local.reasons
+    assert "commutable from home base" not in boston.reasons
+    assert local.score > boston.score
