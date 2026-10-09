@@ -128,7 +128,7 @@ class ObsidianWriter:
         for m in msgs:
             arrow = "←" if m["direction"] == "inbound" else "→"
             who = m["from_name"] or m["from_addr"] or ""
-            flag = " **[needs reply]**" if (m["needs_reply"] and not m["replied_at"]) else ""
+            flag = " **[needs reply]**" if (m["needs_reply"] and not m["replied_at"] and not m["superseded_by"]) else ""
             lines.append(f"### {_fmt_dt(m['sent_at'])} {arrow} {who}{flag}")
             lines.append("")
             lines.append(f"**Subject:** {m['subject'] or '(no subject)'}  ")

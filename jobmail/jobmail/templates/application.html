@@ -41,11 +41,11 @@
     <span class="who">{{ '←' if m.direction == 'inbound' else '→' }} {{ m.from_name or m.from_addr if m.direction == 'inbound' else m.to_addr }}</span>
     <span class="muted small">{{ m.sent_at|fmt }}</span>
     {% if m.message_type and m.message_type != 'outbound' %}<span class="muted small">{{ m.message_type|replace('_',' ') }}</span>{% endif %}
-    {% if m.needs_reply and not m.replied_at %}<span class="pill u-{{ m.urgency or 'low' }}">reply needed</span>{% elif m.replied_at %}<span class="pill u-low">replied</span>{% endif %}
+    {% if m.needs_reply and not m.replied_at and not m.superseded_by %}<span class="pill u-{{ m.urgency or 'low' }}">reply needed</span>{% elif m.replied_at %}<span class="pill u-low">replied</span>{% elif m.superseded_by %}<span class="pill u-low">superseded</span>{% endif %}
   </div>
   <div><a href="/message/{{ m.id }}"><b>{{ m.subject or '(no subject)' }}</b></a></div>
   {% if m.summary %}<div class="small">{{ m.summary }}</div>{% endif %}
-  {% if m.action_needed and not m.replied_at %}<div class="small" style="color:var(--med)">Action: {{ m.action_needed }}</div>{% endif %}
+  {% if m.action_needed and not m.replied_at and not m.superseded_by %}<div class="small" style="color:var(--med)">Action: {{ m.action_needed }}</div>{% endif %}
 </div>
 {% else %}
 <div class="empty">No messages linked.</div>

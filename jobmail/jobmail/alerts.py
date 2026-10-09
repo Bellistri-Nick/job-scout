@@ -112,7 +112,7 @@ def format_alert(m, dashboard_url: str = "") -> tuple[str, str, str]:
     The headline follows the event. "Reply needed" is simply wrong for an offer
     that asks nothing of you, and a silent phone is wrong for it too.
     """
-    needs_reply = bool(m["needs_reply"]) and not m["replied_at"]
+    needs_reply = bool(m["needs_reply"]) and not m["replied_at"] and not m["superseded_by"]
     icon, label = TYPE_HEADLINE.get(m["message_type"] or "", ("", ""))
     if needs_reply:
         icon = URGENCY_ICON.get(m["urgency"] or "low", "🟢")

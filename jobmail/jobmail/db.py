@@ -65,6 +65,7 @@ CREATE TABLE IF NOT EXISTS messages (
     summary TEXT,
     action_needed TEXT,
     replied_at TEXT,
+    superseded_by INTEGER,              -- a later message on the same application took over this ask
     alerted_at TEXT,
     created_at TEXT NOT NULL,
     UNIQUE(folder, uid)
@@ -122,6 +123,10 @@ class Database:
         CREATE TABLE is a no-op, so the column does not exist yet when the
         schema script runs and the index statement would fail.
         """
+        mcols = {r["name"] for r in self.conn.execute("PRAGMA table_info(messages)")}
+        if "superseded_by" not in mcols:
+            self.conn.execute("ALTER TABLE messages ADD COLUMN superseded_by INTEGER")
+            self.conn.commit()
         cols = {r["name"] for r in self.conn.execute("PRAGMA table_info(events)")}
         if "to_stage" not in cols:
             # Without this, a rejected application forgets how far it ever got,
@@ -337,7 +342,7 @@ class Database:
         return self.conn.execute(
             """SELECT m.*, a.company, a.role, a.stage
                FROM messages m LEFT JOIN applications a ON a.id = m.application_id
-               WHERE m.needs_reply=1 AND m.replied_at IS NULL
+               WHERE m.needs_reply=1 AND m.replied_at IS NULL AND m.superseded_by IS NULL
                ORDER BY CASE m.urgency WHEN 'high' THEN 0 WHEN 'medium' THEN 1 ELSE 2 END,
                         m.sent_at DESC"""
         ).fetchall()
@@ -346,7 +351,8 @@ class Database:
         return self.conn.execute(
             """SELECT m.*, a.company, a.role
                FROM messages m LEFT JOIN applications a ON a.id = m.application_id
-               WHERE m.needs_reply=1 AND m.replied_at IS NULL AND m.alerted_at IS NULL
+               WHERE m.needs_reply=1 AND m.replied_at IS NULL AND m.superseded_by IS NULL
+                 AND m.alerted_at IS NULL
                ORDER BY m.sent_at"""
         ).fetchall()
 
@@ -368,12 +374,41 @@ class Database:
                 FROM messages m LEFT JOIN applications a ON a.id = m.application_id
                 WHERE m.alerted_at IS NULL
                   AND m.replied_at IS NULL
+                  AND m.superseded_by IS NULL
                   AND m.direction = 'inbound'
                   AND COALESCE(m.is_job_related, 0) = 1
                   AND (m.needs_reply = 1 OR m.message_type IN ({placeholders}))
                 ORDER BY m.sent_at""",
             tuple(types),
         ).fetchall()
+
+    def supersede_open_asks(self, app_id: int, newer_msg_id: int, before: str) -> int:
+        """A newer inbound message on an application takes over its older open asks.
+
+        "Needs reply" used to clear only when you answered in the same thread.
+        Conversations move: you reply from your phone, book through Calendly,
+        or the recruiter writes again with the next step. The newest message
+        carries the current ask (and is flagged itself if it needs you).
+        """
+        with self.tx() as c:
+            cur = c.execute(
+                """UPDATE messages SET superseded_by=?
+                   WHERE application_id=? AND id<>? AND direction='inbound' AND needs_reply=1
+                     AND replied_at IS NULL AND superseded_by IS NULL AND sent_at<=?""",
+                (newer_msg_id, app_id, newer_msg_id, before),
+            )
+            return cur.rowcount
+
+    def resolve_open_asks(self, app_id: int, replied_at: str) -> int:
+        """You wrote to this company after they asked: their open asks are answered."""
+        with self.tx() as c:
+            cur = c.execute(
+                """UPDATE messages SET replied_at=?
+                   WHERE application_id=? AND direction='inbound' AND needs_reply=1
+                     AND replied_at IS NULL AND superseded_by IS NULL AND sent_at<=?""",
+                (replied_at, app_id, replied_at),
+            )
+            return cur.rowcount
 
     def mark_replied_to(self, message_id: str, replied_at: str) -> int:
         """Mark any inbound message with this Message-ID as replied. Returns rows changed."""

@@ -32,6 +32,7 @@ class Pipeline:
         self.matcher = Matcher(db)
         self.obsidian = obsidian
         self.touched_apps: set[int] = set()
+        self.last_match = None  # how the latest inbound message was linked (thread/company/domain/created)
 
     # ------------------------------------------------------------ inbound
     def process_inbound(self, msg: ParsedMessage) -> int:
@@ -66,6 +67,7 @@ class Pipeline:
                         getattr(getattr(self.classifier, "last_result", None), "error", "") or "exception")
 
         match = self.matcher.match(msg, cls)
+        self.last_match = match
         app_id = match.application_id
 
         self.db.update_message(
@@ -86,6 +88,10 @@ class Pipeline:
             return msg_id
 
         self.touched_apps.add(app_id)
+        if not match.created:
+            n = self.db.supersede_open_asks(app_id, msg_id, msg.sent_at)
+            if n:
+                self.db.add_event(app_id, "note", f"{n} earlier open ask(s) superseded by: {msg.subject}")
         app = self.db.get_application(app_id)
         updates: dict = {"last_activity_at": max(msg.sent_at, app["last_activity_at"] or "")}
         if not app["role"] and cls.role:
@@ -150,6 +156,7 @@ class Pipeline:
         )
         if app_id:
             self.touched_apps.add(int(app_id))
+            self.db.resolve_open_asks(int(app_id), msg.sent_at)
             self.db.update_application(int(app_id), last_activity_at=msg.sent_at, next_action=None, next_action_due=None)
 
     # ------------------------------------------------------------ alerts

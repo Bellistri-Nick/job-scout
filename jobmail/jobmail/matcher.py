@@ -89,6 +89,10 @@ def roles_similar(a: str, b: str) -> bool:
     return len(ta & tb) / len(ta | tb) >= 0.5
 
 
+# Message types that open a new conversation about a role rather than continue one.
+NEW_APPLICATION_TYPES = {"application_confirmation", "recruiter_outreach"}
+
+
 @dataclass
 class MatchResult:
     application_id: int | None
@@ -114,21 +118,28 @@ class Matcher:
 
         # 2. company name
         key = normalise_company(cls.company)
+        domain = msg.from_domain
+        new_role = False
         if key:
             candidates = self.db.find_applications_by_company(key)
             if candidates:
                 open_c = [c for c in candidates if c["stage"] in OPEN_STAGES]
                 pool = open_c or candidates
-                if len(pool) == 1:
-                    return MatchResult(int(pool[0]["id"]), False, "company")
                 for c in pool:
                     if roles_similar(c["role"] or "", cls.role):
-                        return MatchResult(int(c["id"]), False, "company+role")
-                return MatchResult(int(pool[0]["id"]), False, "company(first)")
+                        how = "company" if len(pool) == 1 else "company+role"
+                        return MatchResult(int(c["id"]), False, how)
+                # A named role that matches nothing on file is a different
+                # application when it starts a new thread, or when everything
+                # at this company is already closed. Otherwise a recruiter
+                # coming back after a rejection with a new role reopens the
+                # old, rejected application under the wrong title.
+                new_role = bool(cls.role) and (not open_c or cls.message_type in NEW_APPLICATION_TYPES)
+                if not new_role:
+                    return MatchResult(int(pool[0]["id"]), False, "company(first)")
 
         # 3. sender domain
-        domain = msg.from_domain
-        if domain and domain not in SHARED_DOMAINS:
+        if domain and domain not in SHARED_DOMAINS and not new_role:
             by_domain = self.db.find_applications_by_domain(domain)
             open_d = [c for c in by_domain if c["stage"] in OPEN_STAGES]
             pool = open_d or by_domain
@@ -150,6 +161,6 @@ class Matcher:
                 sender_domains=[domain] if domain and domain not in SHARED_DOMAINS else [],
                 applied_at=msg.sent_at,
             )
-            return MatchResult(app_id, True, "created")
+            return MatchResult(app_id, True, "created(new role)" if new_role else "created")
 
         return MatchResult(None, False, "no_company")

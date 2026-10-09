@@ -527,3 +527,45 @@ def test_an_alert_is_sent_once(cfg, db):
     p.process_inbound(make_email(1, frm="hr@acme.com", subject="Offer", body="", msg_id="<o@1>"))
     p.send_alerts(); p.send_alerts()
     assert len(alerter.sent) == 1
+
+
+def test_new_role_after_rejection_is_a_new_application(cfg, db, days_ago):
+    """A recruiter returning with a different role must not reopen the rejected application."""
+    p, _, _ = _pipeline(cfg, db, {
+        "received": {"company": "Halcyon Health", "role": "Staff Product Manager, Clinical Data",
+                     "message_type": "application_confirmation"},
+        "not moving forward": {"company": "Halcyon Health", "role": "Staff Product Manager, Clinical Data",
+                               "message_type": "rejection"},
+        "new opening": {"company": "Halcyon Health", "role": "Group Product Manager, AI Care Navigation",
+                        "message_type": "recruiter_outreach", "needs_reply": True},
+    })
+    p.process_inbound(make_email(1, frm="no-reply@greenhouse.io", subject="We received your application",
+                                 body=".", msg_id="<a1@gh>", when=days_ago(20)))
+    p.process_inbound(make_email(2, frm="no-reply@greenhouse.io", subject="We are not moving forward",
+                                 body=".", msg_id="<a2@gh>", when=days_ago(10)))
+    p.process_inbound(make_email(3, frm="sofia@halcyon.example", subject="A new opening",
+                                 body=".", msg_id="<a3@h>", when=days_ago(1)))
+    apps = {a["role"]: a for a in db.list_applications()}
+    assert apps["Staff Product Manager, Clinical Data"]["stage"] == "rejected"
+    assert apps["Group Product Manager, AI Care Navigation"]["stage"] == "screening"
+    assert p.last_match.how == "created(new role)"
+
+
+def test_open_asks_clear_when_the_conversation_moves_on(cfg, db, days_ago):
+    """Needs-reply used to clear only on an in-thread reply. Two other ways now count."""
+    p, _, _ = _pipeline(cfg, db, {
+        "applied": {"company": "Quarry", "role": "PM", "message_type": "application_confirmation"},
+        "case study": {"company": "Quarry", "role": "PM", "message_type": "assessment", "needs_reply": True},
+        "checking in": {"company": "Quarry", "role": "PM", "message_type": "follow_up", "needs_reply": True},
+    })
+    p.process_inbound(make_email(1, frm="x@lever.co", subject="applied", body=".", msg_id="<q1@l>", when=days_ago(9)))
+    p.process_inbound(make_email(2, frm="e@quarry.example", subject="case study", body=".", msg_id="<q2@q>",
+                                 when=days_ago(5)))
+    p.process_inbound(make_email(3, frm="e@quarry.example", subject="checking in", body=".", msg_id="<q3@q>",
+                                 when=days_ago(2)))
+    # 1. the follow-up takes over the original ask: one open item, not two
+    assert [r["subject"] for r in db.list_needs_reply()] == ["checking in"]
+    # 2. a reply in a NEW thread to the same company still resolves it
+    p.process_outbound(make_email(9, frm="me@gmail.com", to="e@quarry.example", subject="Case study attached",
+                                  body=".", msg_id="<o9@me>", folder="Sent", when=days_ago(1)))
+    assert db.list_needs_reply() == []
