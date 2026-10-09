@@ -8,6 +8,10 @@ Runs on a Raspberry Pi, an old laptop, or any machine that stays on. The scan it
 Python standard library. The only optional dependency is the Anthropic SDK, for the pass that
 reads postings and judges fit.
 
+Job Scout is the first of two agents. [jobmail](jobmail/README.md) picks up after you apply, and a
+read-only bridge joins the two. How they were built, evaluated, and what the evals found:
+**[CASE_STUDY.md](CASE_STUDY.md)**.
+
 ## Why this instead of job alerts
 
 Job board alerts match on keywords. This scores against your actual background, then explains
@@ -169,7 +173,7 @@ cd jobmail && sudo bash deploy/install.sh $USER
 | Command | What it does |
 |---|---|
 | `run.py init [--profile NAME]` | Create `profile.json` and `.env` from templates |
-| `run.py profile-from-resume FILE` | Draft a profile from your resume with Claude |
+| `run.py profile-from-resume FILE [--interview FILE]` | Draft a profile from your resume and setup-interview answers with Claude |
 | `run.py discover "A,B,C"` | Find which ATS a company uses, add to the watchlist |
 | `run.py scan` | Full run: fetch, score, email |
 | `run.py scan --dry-run --open` | Build the digest, open it locally, send nothing |
@@ -177,6 +181,9 @@ cd jobmail && sudo bash deploy/install.sh $USER
 | `run.py scan --no-llm` | Rules only, no API call |
 | `run.py test-email` | Send a sample digest to prove SMTP works |
 | `run.py stats` | What the agent has seen and sent |
+| `run.py scan --postings FILE --profile FILE --db FILE` | Run on saved postings with no network; used by the demo |
+| `run.py eval [--no-llm] [--model M]` | Score the ranking against labelled sample postings ([report](eval/scout/REPORT.md)) |
+| `run.py funnel --jobmail-db FILE` | Join what Scout emailed to how far each role got in jobmail |
 
 ## Tuning
 
