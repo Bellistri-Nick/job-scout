@@ -154,6 +154,18 @@ def cmd_scan(args):
     fresh = [j for j in unique if store.is_new(j)]
     print(f"Scoring: {len(unique)} unique, {len(fresh)} not seen before")
 
+    # v2's memory feeds v1: anything jobmail already tracks as an application
+    # is old news, however well it scores. Read-only; no jobmail, no change.
+    applied = []
+    jobmail_db = args.jobmail_db or os.getenv("JOBMAIL_DB_PATH")
+    if jobmail_db and os.path.exists(jobmail_db):
+        from jobagent import funnel
+        apps = funnel.applications(jobmail_db)
+        applied = [j for j in fresh if funnel.find_application(j.company, j.title, apps)]
+        fresh = [j for j in fresh if j not in applied]
+        if applied:
+            print(f"  {len(applied)} skipped: already applied, per jobmail")
+
     scored, kept = rank(fresh, profile, use_llm=not args.no_llm, model=args.model, explain=args.explain)
     ranked = sorted(kept, key=lambda j: -j.score)
     strong = [j for j in ranked if j.tier == "strong"]
@@ -163,8 +175,10 @@ def cmd_scan(args):
     print(f"  {len(strong)} strong, {len(look)} worth a look, {len(rest)} ranked below\n")
 
     hard_drops = [j for j in scored if j.reject == "hard"]
-    stats = {"fetched": len(raw), "sources": source_count,
-             "cut_line": digest.cut_summary(hard_drops)}
+    cut_line = digest.cut_summary(hard_drops)
+    if applied:
+        cut_line = (cut_line + f" Skipped {len(applied)} you have already applied to.").strip()
+    stats = {"fetched": len(raw), "sources": source_count, "cut_line": cut_line}
     html = digest.build_html(strong, look, rest, stats, profile)
     text = digest.build_text(strong, look, rest)
     subject = digest.subject(strong, look, rest)
@@ -176,6 +190,14 @@ def cmd_scan(args):
     if args.dry_run:
         print(f"Dry run. Digest written to {html_out}")
         print(f"Subject would be: {subject}")
+        if args.record_sent:
+            # Demo only: remember this digest as if delivered, so the funnel has history.
+            for job in strong + look + rest:
+                store.record(job, sent=True)
+            for job in applied:
+                store.record(job, sent=False)
+            store.log_run(len(raw), len(kept), len(strong + look + rest), "dry run, recorded as sent")
+            print("Recorded as sent (--record-sent). No email went out.")
         if args.open:
             webbrowser.open("file://" + os.path.abspath(html_out).replace("\\", "/"))
         return
@@ -190,7 +212,7 @@ def cmd_scan(args):
     for job in emailed:
         store.record(job, sent=True)
     shown = set(id(j) for j in emailed)
-    for job in kept:
+    for job in kept + applied:
         if id(job) not in shown:
             store.record(job, sent=False)
     store.log_run(len(raw), len(kept), len(emailed))
@@ -199,6 +221,16 @@ def cmd_scan(args):
     if notify.configured():
         if notify.send(notify.digest_delivered(strong, look, rest, recipients, stats)):
             print("    telegram push sent")
+
+
+def cmd_funnel(args):
+    from jobagent import funnel
+    path = args.jobmail_db or os.getenv("JOBMAIL_DB_PATH")
+    if not path or not os.path.exists(path):
+        sys.exit("Point --jobmail-db (or JOBMAIL_DB_PATH) at jobmail's database.")
+    store = Store(args.db or DB_PATH)
+    rows, outside = funnel.funnel(store.db, path)
+    print(funnel.render(rows, outside))
 
 
 def cmd_eval(args):
@@ -502,7 +534,16 @@ def main():
     s.add_argument("--postings", help="read postings from a JSON file instead of the internet")
     s.add_argument("--db", help="history database (default out/jobs.db)")
     s.add_argument("--out", help="where to write the digest HTML (default out/digest.html)")
+    s.add_argument("--jobmail-db", help="jobmail's database, to skip roles already applied to "
+                                        "(default: JOBMAIL_DB_PATH if set)")
+    s.add_argument("--record-sent", action="store_true",
+                   help="with --dry-run: remember the digest as delivered (demos only)")
     s.set_defaults(func=cmd_scan)
+
+    fu = sub.add_parser("funnel", help="what Scout emailed vs. what jobmail saw happen")
+    fu.add_argument("--jobmail-db", help="jobmail's database (default: JOBMAIL_DB_PATH)")
+    fu.add_argument("--db", help="Scout's history database (default out/jobs.db)")
+    fu.set_defaults(func=cmd_funnel)
 
     ev = sub.add_parser("eval", help="score the ranking against labelled sample postings")
     ev.add_argument("--profile", default=os.path.join(HERE, "samples", "scout", "profile.json"))

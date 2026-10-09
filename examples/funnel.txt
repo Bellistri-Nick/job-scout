@@ -1,0 +1,16 @@
+Scout to jobmail funnel
+
+tier      emailed  applied  advanced  interview  apply rate  interview rate
+--------------------------------------------------------------------------------
+strong          5        2         2          2         40%            100%
+look            5        2         0          0         40%              0%
+long            6        1         0          0         17%              0%
+  [strong] Northbeam Analytics: Senior Product Manager, AI Platform -> interviewing (furthest: interviewing)
+  [strong] Quarry Labs: Principal Product Manager, Developer Platform -> assessment (furthest: assessment)
+  [look] Halcyon Health: Staff Product Manager, Clinical Data -> rejected (furthest: applied)
+  [look] Brightline Robotics: Staff Product Manager, Fleet Intelligence -> rejected (furthest: applied)
+  [long] Tidewater Bank: Senior Product Manager - Digital Banking -> rejected (furthest: applied)
+
+Applications Scout never emailed (2): recruiter outreach, referrals, or roles found elsewhere
+  Ferncliff: Group Product Manager -> interviewing
+  Halcyon Health: Group Product Manager, AI Care Navigation -> screening
