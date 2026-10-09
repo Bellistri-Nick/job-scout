@@ -1,6 +1,6 @@
 # jobmail
 
-An agent that reads a job-search inbox, decides what needs a human, and keeps the pipeline current without anyone typing into a spreadsheet. It has run on a Raspberry Pi against my own search since September 2026 and tracked 56 applications through 7 stages.
+An agent that reads a job-search inbox, decides what needs a human, and keeps the pipeline current without anyone typing into a spreadsheet. It has run on a Raspberry Pi against my own search since September 2026 and tracked 56 applications from first email to outcome.
 
 The interesting part is not the job search. It is the shape: **an inbox where most mail is noise, a few messages need a decision, and missing one has a cost.** Recruiting coordinators, AP specialists and deal desks all live in that shape. The triage engine here is built to be pointed at those inboxes, and `ap_inbox` proves it with no new code.
 
