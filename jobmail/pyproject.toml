@@ -21,6 +21,7 @@ jobmail-preflight = "jobmail.preflight:main"
 jobmail-backfill = "jobmail.backfill:main"
 jobmail-telegram = "jobmail.telegram_setup:main"
 jobmail-dashboard = "jobmail.dashboard:main"
+jobmail-triage = "jobmail.triage:main"
 
 [build-system]
 requires = ["setuptools>=68"]
@@ -30,4 +31,4 @@ build-backend = "setuptools.build_meta"
 include = ["jobmail*"]
 
 [tool.setuptools.package-data]
-jobmail = ["templates/*.html"]
+jobmail = ["templates/*.html", "skills/*.json"]

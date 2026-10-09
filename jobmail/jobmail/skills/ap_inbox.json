@@ -1,0 +1,67 @@
+{
+  "name": "ap_inbox",
+  "description": "Classify one email in a Finance accounts-payable inbox: vendor, request type, invoice fields, whether AP must respond, and fraud-risk signals that require human verification.",
+  "instructions": "You triage a company's shared accounts-payable inbox for the Finance team. You classify each email precisely and conservatively. You never approve, pay, or reply.\n\nGuidance:\n- \"vendor\" is the company billing or writing to us, not the email provider, payment platform (Bill.com, Coupa, Tipalti), or a collections agency unless it is the creditor.\n- Copy invoice_number, po_number, amount and currency exactly as written. Empty string when absent. Never compute or infer an amount.\n- due_date: ISO 8601, converted from relative dates using the Date header. Empty string when absent or vague.\n- needs_reply is true when AP must respond or act: a question, a dispute, a missing PO, a past-due notice.\n- risk_flags: list every signal that applies. A request to change bank, remittance or payment details is ALWAYS \"bank_detail_change\", however routine it sounds. Also flag \"urgency_pressure\" (pay today, threats, secrecy), \"sender_domain_mismatch\" (display name or signature company differs from the sending domain), and \"new_vendor\" (first contact, onboarding, W-9).\n- requires_human_verification is true whenever risk_flags contains bank_detail_change or sender_domain_mismatch. You never decide such a request is legitimate.\n- summary: one plain-language sentence for the AP specialist, at most 200 characters.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "is_ap_related": {"type": "boolean"},
+      "vendor": {"type": "string", "description": "The billing company. Empty string if unknown."},
+      "message_type": {
+        "type": "string",
+        "enum": [
+          "invoice", "payment_status_inquiry", "past_due_notice", "dispute_or_credit",
+          "remittance_or_payment_confirmation", "vendor_detail_change", "vendor_onboarding",
+          "statement", "other_ap_related", "not_ap_related"
+        ]
+      },
+      "invoice_number": {"type": "string"},
+      "po_number": {"type": "string"},
+      "amount": {"type": "string", "description": "As written, e.g. '12,400.00'. Empty if absent."},
+      "currency": {"type": "string", "description": "ISO 4217 code if stated or unambiguous. Empty otherwise."},
+      "due_date": {"type": "string"},
+      "needs_reply": {"type": "boolean"},
+      "urgency": {"type": "string", "enum": ["low", "medium", "high"]},
+      "risk_flags": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": ["bank_detail_change", "urgency_pressure", "sender_domain_mismatch", "new_vendor"]
+        }
+      },
+      "requires_human_verification": {"type": "boolean"},
+      "summary": {"type": "string"},
+      "action_needed": {"type": "string", "description": "What AP should do next. Empty if nothing."}
+    },
+    "required": [
+      "is_ap_related", "vendor", "message_type", "invoice_number", "po_number", "amount", "currency",
+      "due_date", "needs_reply", "urgency", "risk_flags", "requires_human_verification", "summary",
+      "action_needed"
+    ],
+    "additionalProperties": false
+  },
+  "invariants": [
+    {"when": {"field": "risk_flags", "contains": "bank_detail_change"},
+     "set": {"requires_human_verification": true, "urgency": "high"},
+     "why": "A payment-detail change is the classic business email compromise. Verify by calling a number already on file, never one in the email."},
+    {"when": {"field": "risk_flags", "contains": "sender_domain_mismatch"},
+     "set": {"requires_human_verification": true},
+     "why": "A mismatched sender is unverified until a person checks it."}
+  ],
+  "fallback": {
+    "is_ap_related": true,
+    "vendor": "",
+    "message_type": "other_ap_related",
+    "invoice_number": "",
+    "po_number": "",
+    "amount": "",
+    "currency": "",
+    "due_date": "",
+    "needs_reply": true,
+    "urgency": "high",
+    "risk_flags": [],
+    "requires_human_verification": true,
+    "summary": "Automatic classification failed. A person needs to read this one.",
+    "action_needed": "Read and route manually: classification failed."
+  }
+}

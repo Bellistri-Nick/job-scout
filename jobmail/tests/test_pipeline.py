@@ -213,10 +213,14 @@ def test_classifier_asks_for_low_effort(monkeypatch):
     class FakeMessages:
         def create(self, **kw):
             captured.update(kw)
+            import json as _json
+            rec = {"is_job_related": True, "company": "Acme", "role": "", "message_type": "rejection",
+                   "sender_is_human": False, "needs_reply": False, "urgency": "low", "summary": "s",
+                   "action_needed": "", "key_dates": [], "contact_name": ""}
             class R:
-                content = [type("B", (), {"type": "tool_use", "name": "record_classification",
-                                          "input": {"is_job_related": True, "company": "Acme",
-                                                    "message_type": "rejection"}})()]
+                content = [type("B", (), {"type": "text", "text": _json.dumps(rec)})()]
+                usage = None
+                stop_reason = "end_turn"
             return R()
 
     class FakeAnthropic:
@@ -227,13 +231,14 @@ def test_classifier_asks_for_low_effort(monkeypatch):
 
     c = ClaudeClassifier("k", "claude-sonnet-5", "Sam")
     c.classify(make_email(1, frm="a@b.com", subject="s", body="b", msg_id="<x@y>"))
-    assert captured["output_config"] == {"effort": "low"}
+    assert captured["output_config"]["effort"] == "low"
+    assert captured["output_config"]["format"]["type"] == "json_schema"
     assert captured["thinking"] == {"type": "adaptive"}
 
     captured.clear()
     ClaudeClassifier("k", "claude-haiku-4-5-20251001", "Sam").classify(
         make_email(1, frm="a@b.com", subject="s", body="b", msg_id="<x@y>"))
-    assert "output_config" not in captured and "thinking" not in captured
+    assert "effort" not in captured["output_config"] and "thinking" not in captured
 
 
 def test_unusable_vault_does_not_stop_the_poller(cfg, db, tmp_path, caplog):

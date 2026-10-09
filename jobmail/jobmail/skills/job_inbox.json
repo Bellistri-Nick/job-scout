@@ -1,0 +1,73 @@
+{
+  "name": "job_inbox",
+  "description": "Classify one email in a job seeker's inbox: employer, role, message type, whether the job seeker must reply, urgency, the concrete action, and any dates.",
+  "instructions": "You are an assistant that triages a job-seeker's dedicated job-search inbox. The recipient of each email is the job seeker.\nYou classify each email precisely and conservatively. You never draft replies.\n\nGuidance:\n- \"company\" is the employer, not the applicant-tracking system (Greenhouse, Lever, Workday, Ashby, iCIMS), not a staffing agency unless the agency itself is the employer, and not a job board.\n- needs_reply is true only when a human response from the recipient is required. Automated confirmations, rejections, calendar auto-confirmations, and newsletters do not need replies.\n- urgency: high = explicit deadline within ~48h or a live scheduling request from a human; medium = human asked something but no tight deadline; low = everything else.\n- Prefer empty strings over guesses for company/role.\n- Dates: convert relative dates using the email's Date header, which is provided. Only include dates you are confident about.\n- summary: one plain-language sentence written for the recipient, at most 200 characters.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "is_job_related": {
+        "type": "boolean",
+        "description": "True if this email concerns a job application, recruiter, interview, offer, or job search in any way."
+      },
+      "company": {
+        "type": "string",
+        "description": "The hiring company (not the ATS vendor, recruiter agency, or job board). Empty string if unknown."
+      },
+      "role": {"type": "string", "description": "Job title being discussed. Empty string if unknown."},
+      "message_type": {
+        "type": "string",
+        "enum": [
+          "application_confirmation", "recruiter_outreach", "interview_request", "scheduling",
+          "assessment", "follow_up", "rejection", "offer", "reference_or_background",
+          "newsletter_or_job_alert", "other_job_related", "not_job_related"
+        ]
+      },
+      "sender_is_human": {
+        "type": "boolean",
+        "description": "True if written by a person (recruiter, hiring manager) rather than an automated system."
+      },
+      "needs_reply": {
+        "type": "boolean",
+        "description": "True only if the recipient must personally respond (answer a question, pick a time, confirm, submit something)."
+      },
+      "urgency": {"type": "string", "enum": ["low", "medium", "high"]},
+      "summary": {"type": "string", "description": "One sentence, plain language, written for the recipient."},
+      "action_needed": {
+        "type": "string",
+        "description": "If needs_reply, what exactly to do (e.g. 'Reply with availability for a 30-min call next week'). Empty if nothing."
+      },
+      "key_dates": {
+        "type": "array",
+        "description": "Deadlines, interview times, or start dates mentioned. ISO 8601. Omit vague references.",
+        "items": {
+          "type": "object",
+          "properties": {
+            "date": {"type": "string", "description": "ISO 8601 date or datetime"},
+            "description": {"type": "string"}
+          },
+          "required": ["date", "description"],
+          "additionalProperties": false
+        }
+      },
+      "contact_name": {"type": "string", "description": "Name of the human sender, if any. Empty string otherwise."}
+    },
+    "required": [
+      "is_job_related", "company", "role", "message_type", "sender_is_human", "needs_reply",
+      "urgency", "summary", "action_needed", "key_dates", "contact_name"
+    ],
+    "additionalProperties": false
+  },
+  "fallback": {
+    "is_job_related": true,
+    "company": "",
+    "role": "",
+    "message_type": "other_job_related",
+    "sender_is_human": false,
+    "needs_reply": true,
+    "urgency": "high",
+    "summary": "Automatic classification failed. Read this one yourself.",
+    "action_needed": "Open this email and decide: classification failed, so jobmail cannot tell whether it needs you.",
+    "key_dates": [],
+    "contact_name": ""
+  }
+}

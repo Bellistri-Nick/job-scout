@@ -16,6 +16,7 @@ from .db import Database, now_iso
 from .mail import SENT_FOLDER_CANDIDATES, MailClient, ParsedMessage
 from .matcher import Matcher, normalise_company
 from .obsidian import ObsidianWriter
+from .triage import SkillSpec
 
 log = logging.getLogger("jobmail")
 
@@ -56,9 +57,13 @@ class Pipeline:
             cls = self.classifier.classify(msg)
         except Exception as exc:
             log.exception("Classification failed for UID %s: %s", msg.uid, exc)
-            cls = Classification.from_dict({"is_job_related": True, "message_type": "other_job_related",
-                                            "needs_reply": False, "urgency": "low",
-                                            "summary": "Classification failed; review manually."})
+            # Fail loud: the skill's fallback asks for a human, so a broken
+            # classifier pages you instead of quietly marking mail as handled.
+            cls = Classification.from_dict(SkillSpec.load("job_inbox").fallback)
+            cls.failed = True
+        if cls.failed:
+            log.warning("UID %s fell back to manual review: %s", msg.uid,
+                        getattr(getattr(self.classifier, "last_result", None), "error", "") or "exception")
 
         match = self.matcher.match(msg, cls)
         app_id = match.application_id

@@ -1,7 +1,10 @@
 """Classify inbound mail with Claude, returning a strict JSON structure.
 
-Uses forced tool use so the response is always schema-conformant; the
-"tool" is just a container for the classification.
+The schema and instructions live in skills/job_inbox.json and run through the
+reusable Triage engine (triage.py), which uses structured outputs so every
+answer is schema-valid. The first version forced a tool call to get JSON
+back; current models reject forced tool use with a 400, and a broad except
+turned that into silent "nothing needs a reply". See the eval for the case.
 """
 
 from __future__ import annotations
@@ -12,6 +15,7 @@ from dataclasses import dataclass, field
 from typing import Any, Protocol
 
 from .mail import ParsedMessage
+from .triage import SkillSpec, Triage, TriageResult, supports_effort  # noqa: F401  (re-exported)
 
 log = logging.getLogger(__name__)
 
@@ -41,82 +45,6 @@ STAGE_FOR_TYPE = {
     "reference_or_background": "offer",
 }
 
-CLASSIFICATION_TOOL: dict[str, Any] = {
-    "name": "record_classification",
-    "description": "Record the structured classification of one job-search email.",
-    "input_schema": {
-        "type": "object",
-        "properties": {
-            "is_job_related": {
-                "type": "boolean",
-                "description": "True if this email concerns a job application, recruiter, interview, offer, or job search in any way.",
-            },
-            "company": {
-                "type": "string",
-                "description": "The hiring company (not the ATS vendor, recruiter agency, or job board). Empty string if unknown.",
-            },
-            "role": {
-                "type": "string",
-                "description": "Job title being discussed. Empty string if unknown.",
-            },
-            "message_type": {"type": "string", "enum": MESSAGE_TYPES},
-            "sender_is_human": {
-                "type": "boolean",
-                "description": "True if written by a person (recruiter, hiring manager) rather than an automated system.",
-            },
-            "needs_reply": {
-                "type": "boolean",
-                "description": "True only if the recipient must personally respond (answer a question, pick a time, confirm, submit something). Auto-acks, rejections, and newsletters are false.",
-            },
-            "urgency": {"type": "string", "enum": ["low", "medium", "high"]},
-            "summary": {
-                "type": "string",
-                "description": "One sentence, plain language, written for the recipient. Max 200 characters.",
-            },
-            "action_needed": {
-                "type": "string",
-                "description": "If needs_reply, what exactly to do (e.g. 'Reply with availability for a 30-min call next week'). Empty if nothing.",
-            },
-            "key_dates": {
-                "type": "array",
-                "description": "Deadlines, interview times, or start dates mentioned. Use ISO 8601. Omit vague references.",
-                "items": {
-                    "type": "object",
-                    "properties": {
-                        "date": {"type": "string", "description": "ISO 8601 date or datetime"},
-                        "description": {"type": "string"},
-                    },
-                    "required": ["date", "description"],
-                },
-            },
-            "contact_name": {"type": "string", "description": "Name of the human sender, if any."},
-        },
-        "required": [
-            "is_job_related",
-            "company",
-            "role",
-            "message_type",
-            "sender_is_human",
-            "needs_reply",
-            "urgency",
-            "summary",
-            "action_needed",
-            "key_dates",
-        ],
-    },
-}
-
-SYSTEM_PROMPT = """You are an assistant that triages a job-seeker's dedicated job-search inbox.
-You classify each email precisely and conservatively. You never draft replies.
-
-Guidance:
-- "company" is the employer, not the applicant-tracking system (Greenhouse, Lever, Workday, Ashby, iCIMS), not a staffing agency unless the agency itself is the employer, and not a job board.
-- needs_reply is true only when a human response from the recipient is required. Automated confirmations, rejections, calendar auto-confirmations, and newsletters do not need replies.
-- urgency: high = explicit deadline within ~48h or a live scheduling request from a human; medium = human asked something but no tight deadline; low = everything else.
-- Prefer empty strings over guesses for company/role.
-- Dates: convert relative dates using the email's Date header, which is provided. Only include dates you are confident about.
-"""
-
 
 @dataclass
 class Classification:
@@ -132,6 +60,7 @@ class Classification:
     key_dates: list[dict[str, str]] = field(default_factory=list)
     contact_name: str = ""
     raw: dict[str, Any] = field(default_factory=dict)
+    failed: bool = False          # True when the skill fell back instead of classifying
 
     @classmethod
     def from_dict(cls, d: dict[str, Any]) -> "Classification":
@@ -162,24 +91,23 @@ class Classifier(Protocol):
     def classify(self, msg: ParsedMessage) -> Classification: ...
 
 
-# Effort is rejected by pre-4.6 models, which also don't think unless asked.
-NO_EFFORT_MODELS = ("sonnet-4-5", "haiku-4-5", "opus-4-1", "haiku-3", "sonnet-3", "opus-3")
-
-
-def supports_effort(model: str) -> bool:
-    return not any(m in model for m in NO_EFFORT_MODELS)
-
-
 class ClaudeClassifier:
-    def __init__(self, api_key: str, model: str, owner_name: str = "", max_body_chars: int = 12000,
-                 effort: str = "low"):
-        from anthropic import Anthropic
+    """jobmail's classifier: the `job_inbox` triage skill, adapted to Classification.
 
-        self.client = Anthropic(api_key=api_key)
+    All the Claude-facing work (request shape, structured outputs, effort,
+    fallback on failure) lives in the reusable Triage engine. This class only
+    renders an email into text and maps the record onto jobmail's dataclass.
+    """
+
+    def __init__(self, api_key: str, model: str, owner_name: str = "", max_body_chars: int = 12000,
+                 effort: str = "low", client: Any = None, spec: SkillSpec | None = None):
+        self.spec = spec or SkillSpec.load("job_inbox")
+        self.triage = Triage(self.spec, api_key=api_key, model=model, effort=effort,
+                             max_input_chars=max_body_chars + 500, client=client)
         self.model = model
         self.owner_name = owner_name
         self.max_body_chars = max_body_chars
-        self.effort = effort
+        self.last_result: TriageResult | None = None
 
     def _render(self, msg: ParsedMessage) -> str:
         body = msg.body_text
@@ -196,27 +124,7 @@ class ClaudeClassifier:
         )
 
     def classify(self, msg: ParsedMessage) -> Classification:
-        kwargs: dict[str, Any] = {}
-        if supports_effort(self.model):
-            # Triage against a fixed schema with forced tool use. It is a
-            # classification route, which is exactly the shape that does not
-            # repay deep reasoning, and this runs once per email forever.
-            # Left unset, current models think at `high` by default and the
-            # billed output tokens roughly triple for no gain in accuracy.
-            kwargs["thinking"] = {"type": "adaptive"}
-            kwargs["output_config"] = {"effort": self.effort}
-
-        resp = self.client.messages.create(
-            model=self.model,
-            max_tokens=2048,
-            system=SYSTEM_PROMPT,
-            tools=[CLASSIFICATION_TOOL],
-            tool_choice={"type": "tool", "name": "record_classification"},
-            messages=[{"role": "user", "content": self._render(msg)}],
-            **kwargs,
-        )
-        for block in resp.content:
-            if getattr(block, "type", None) == "tool_use" and block.name == "record_classification":
-                return Classification.from_dict(dict(block.input))
-        log.error("Claude returned no tool_use block; treating as not job related")
-        return Classification.from_dict({"is_job_related": False, "message_type": "not_job_related"})
+        self.last_result = self.triage.run(self._render(msg))
+        cls = Classification.from_dict(self.last_result.record)
+        cls.failed = not self.last_result.ok
+        return cls
