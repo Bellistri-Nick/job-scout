@@ -1,0 +1,2994 @@
+{
+  "skill": "job_inbox",
+  "model": "claude-sonnet-5",
+  "effort": "low",
+  "legacy": false,
+  "repeats": 3,
+  "tag": "v1",
+  "spec_sha": "285da2e7",
+  "ran_at": "2026-10-09T14:30:50-04:00",
+  "runs": [
+    {
+      "n": 22,
+      "fully_correct": 19,
+      "field_accuracy": {
+        "company": 0.955,
+        "has_key_date": 1.0,
+        "message_type": 0.909,
+        "needs_reply": 1.0,
+        "urgency": 1.0
+      },
+      "critical_field": "needs_reply",
+      "critical": {
+        "tp": 8,
+        "fp": 0,
+        "fn": 0,
+        "positives": 8,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "fallbacks": 0,
+      "input_tokens": 34375,
+      "output_tokens": 3554,
+      "cost_usd": 0.1043,
+      "cost_per_1k_messages_usd": 4.74,
+      "median_latency_s": 2.16
+    },
+    {
+      "n": 22,
+      "fully_correct": 20,
+      "field_accuracy": {
+        "company": 1.0,
+        "has_key_date": 1.0,
+        "message_type": 0.909,
+        "needs_reply": 1.0,
+        "urgency": 1.0
+      },
+      "critical_field": "needs_reply",
+      "critical": {
+        "tp": 8,
+        "fp": 0,
+        "fn": 0,
+        "positives": 8,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "fallbacks": 0,
+      "input_tokens": 34375,
+      "output_tokens": 3535,
+      "cost_usd": 0.1041,
+      "cost_per_1k_messages_usd": 4.73,
+      "median_latency_s": 1.98
+    },
+    {
+      "n": 22,
+      "fully_correct": 19,
+      "field_accuracy": {
+        "company": 0.955,
+        "has_key_date": 1.0,
+        "message_type": 0.909,
+        "needs_reply": 1.0,
+        "urgency": 1.0
+      },
+      "critical_field": "needs_reply",
+      "critical": {
+        "tp": 8,
+        "fp": 0,
+        "fn": 0,
+        "positives": 8,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "fallbacks": 0,
+      "input_tokens": 34375,
+      "output_tokens": 3532,
+      "cost_usd": 0.1041,
+      "cost_per_1k_messages_usd": 4.73,
+      "median_latency_s": 2.0
+    }
+  ],
+  "stable_items": 22,
+  "items": [
+    {
+      "id": "j01",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior Product Manager, AI Platform",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Northbeam Analytics confirmed receipt of Nick's application for the Senior Product Manager, AI Platform role.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1567,
+      "output_tokens": 149,
+      "latency_s": 1.99,
+      "invariants_fired": []
+    },
+    {
+      "id": "j02",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Halcyon Health",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Staff Product Manager, Clinical Data",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Halcyon Health confirmed receipt of your application for the Staff Product Manager, Clinical Data role.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1553,
+      "output_tokens": 144,
+      "latency_s": 2.24,
+      "invariants_fired": []
+    },
+    {
+      "id": "j03",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Quarry Labs",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "Principal Product Manager, Developer Platform",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Quarry Labs confirmed receipt of your application for the Principal Product Manager, Developer Platform role.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1528,
+      "output_tokens": 144,
+      "latency_s": 2.3,
+      "invariants_fired": []
+    },
+    {
+      "id": "j04",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "Ferncliff",
+        "urgency": [
+          "medium"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Ferncliff",
+        "role": "Group Product Manager",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "A Ferncliff recruiter wants to schedule a 20-minute intro call about a Group Product Manager role and asks you to propose times.",
+        "action_needed": "Reply with a couple of available times for a 20-minute intro call in the next week or two.",
+        "key_dates": [],
+        "contact_name": "Priya Shah"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1613,
+      "output_tokens": 181,
+      "latency_s": 2.54,
+      "invariants_fired": []
+    },
+    {
+      "id": "j05",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "newsletter_or_job_alert"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "Staff Product Manager",
+        "message_type": "newsletter_or_job_alert",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "LinkedIn sent a job alert listing new Staff Product Manager roles in Boston.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1615,
+      "output_tokens": 129,
+      "latency_s": 1.66,
+      "invariants_fired": []
+    },
+    {
+      "id": "j06",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": false
+      },
+      "note": "Edge case: agency recruiter, employer withheld. company must stay empty, not 'Apex Talent Partners'.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "Head of Product",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "A retained recruiter wants to discuss a confidential Head of Product role at a Series C fintech and asks for a call this week.",
+        "action_needed": "Reply letting Derek know if you're open to a call this week.",
+        "key_dates": [],
+        "contact_name": "Derek Mills"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1594,
+      "output_tokens": 160,
+      "latency_s": 2.27,
+      "invariants_fired": []
+    },
+    {
+      "id": "j07",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "high"
+        ],
+        "has_key_date": true
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior PM, AI Platform",
+        "message_type": "scheduling",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Northbeam's recruiter wants 2-3 time options from you by Thursday for a 30-minute recruiter screen.",
+        "action_needed": "Reply with 2-3 available times for a 30-minute screen by end of day Thursday (2026-09-24).",
+        "key_dates": [
+          {
+            "date": "2026-09-24",
+            "description": "Deadline to send availability for recruiter screen"
+          }
+        ],
+        "contact_name": "Marcus Lee"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": false,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1581,
+      "output_tokens": 220,
+      "latency_s": 2.45,
+      "invariants_fired": []
+    },
+    {
+      "id": "j08",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": false,
+        "company": "",
+        "role": "",
+        "message_type": "not_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "A shipping notification for an order of a replacement thermostat, unrelated to job search.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1504,
+      "output_tokens": 112,
+      "latency_s": 2.25,
+      "invariants_fired": []
+    },
+    {
+      "id": "j09",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Halcyon Health",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Staff Product Manager, Clinical Data",
+        "message_type": "rejection",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Halcyon Health rejected Nick's application for the Staff Product Manager, Clinical Data role.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1552,
+      "output_tokens": 139,
+      "latency_s": 1.92,
+      "invariants_fired": []
+    },
+    {
+      "id": "j10",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Brightline Robotics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Brightline Robotics",
+        "role": "Staff Product Manager, Fleet Intelligence",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Brightline Robotics confirmed receipt of your application for Staff Product Manager, Fleet Intelligence.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1535,
+      "output_tokens": 150,
+      "latency_s": 1.84,
+      "invariants_fired": []
+    },
+    {
+      "id": "j11",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Tidewater Bank",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "Edge case: HTML-only email, no text/plain part.",
+      "record": {
+        "is_job_related": true,
+        "company": "Tidewater Bank",
+        "role": "Senior Product Manager - Digital Banking",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Tidewater Bank confirmed receipt of your application for Senior Product Manager - Digital Banking.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1561,
+      "output_tokens": 144,
+      "latency_s": 1.93,
+      "invariants_fired": []
+    },
+    {
+      "id": "j12",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "assessment"
+        ],
+        "needs_reply": true,
+        "company": "Quarry Labs",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": true
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "Product",
+        "message_type": "assessment",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Quarry Labs wants Nick to complete a product case study within 7 days of the email.",
+        "action_needed": "Complete and send the product case study write-up by Oct 5, 2026.",
+        "key_dates": [
+          {
+            "date": "2026-10-05",
+            "description": "Deadline to submit case study write-up"
+          }
+        ],
+        "contact_name": "Elena Ruiz"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1553,
+      "output_tokens": 182,
+      "latency_s": 2.12,
+      "invariants_fired": []
+    },
+    {
+      "id": "j13",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "scheduling"
+        ],
+        "needs_reply": false,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior Product Manager, AI Platform",
+        "message_type": "scheduling",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Your recruiter screen with Northbeam Analytics for Senior Product Manager, AI Platform is confirmed with Marcus Lee.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1565,
+      "output_tokens": 154,
+      "latency_s": 1.93,
+      "invariants_fired": []
+    },
+    {
+      "id": "j14",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "scheduling",
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": "Ferncliff",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": false
+      },
+      "note": "Booking link: no written reply needed, but Nick must act. Labelled needs_reply=true per the spec ('pick a time').",
+      "record": {
+        "is_job_related": true,
+        "company": "Ferncliff",
+        "role": "Group PM",
+        "message_type": "scheduling",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Priya asks Nick to book a 45-minute meeting with hiring manager Tom via Calendly.",
+        "action_needed": "Schedule a 45-minute meeting with Tom using the provided Calendly link.",
+        "key_dates": [],
+        "contact_name": "Priya Shah"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1549,
+      "output_tokens": 163,
+      "latency_s": 2.11,
+      "invariants_fired": []
+    },
+    {
+      "id": "j15",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "follow_up",
+          "assessment"
+        ],
+        "needs_reply": true,
+        "company": "Quarry Labs",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": true
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "",
+        "message_type": "follow_up",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Elena from Quarry Labs is checking whether you're still on track to submit the case study by Friday.",
+        "action_needed": "Reply confirming if the case study will be ready by Friday or request more time.",
+        "key_dates": [
+          {
+            "date": "2026-10-09",
+            "description": "Case study due date"
+          }
+        ],
+        "contact_name": "Elena Ruiz"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1512,
+      "output_tokens": 177,
+      "latency_s": 2.25,
+      "invariants_fired": []
+    },
+    {
+      "id": "j16",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": [
+          "Northbeam Analytics",
+          "Northbeam"
+        ],
+        "urgency": [
+          "high"
+        ],
+        "has_key_date": true
+      },
+      "note": "The email only ever says 'Northbeam', so either name is a correct reading. The matcher links it by sender domain.",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam",
+        "role": "",
+        "message_type": "scheduling",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Marcus from Northbeam invites Nick to final round interviews and asks him to confirm by Monday whether Thursday or Friday works.",
+        "action_needed": "Reply by Monday confirming preference for Thursday or Friday next week for the final round interviews.",
+        "key_dates": [
+          {
+            "date": "2026-10-05",
+            "description": "Deadline to confirm preferred interview day"
+          },
+          {
+            "date": "2026-10-08",
+            "description": "Possible final round interview day (Thursday)"
+          },
+          {
+            "date": "2026-10-09",
+            "description": "Possible final round interview day (Friday)"
+          }
+        ],
+        "contact_name": "Marcus Lee"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": false,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1541,
+      "output_tokens": 317,
+      "latency_s": 4.01,
+      "invariants_fired": []
+    },
+    {
+      "id": "j17",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Brightline Robotics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "Edge case: a warm rejection that sounds like outreach. It is a rejection; no reply is required.",
+      "record": {
+        "is_job_related": true,
+        "company": "Brightline Robotics",
+        "role": "Staff PM, Fleet Intelligence",
+        "message_type": "rejection",
+        "sender_is_human": true,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Brightline Robotics rejected Nick for the Staff PM role but may reach out about a future AI platform position.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "Jordan Kim"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1597,
+      "output_tokens": 150,
+      "latency_s": 2.29,
+      "invariants_fired": []
+    },
+    {
+      "id": "j18",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "Halcyon Health",
+        "urgency": [
+          "medium"
+        ],
+        "has_key_date": false
+      },
+      "note": "Matcher edge case: the only Halcyon application is rejected and for a different role. This must become a new application, not reopen the old one.",
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Group Product Manager, AI Care Navigation",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Sofia from Halcyon Health is offering Nick a new Group PM role and wants to know if he's interested in talking.",
+        "action_needed": "Reply to Sofia letting her know if you're interested in discussing the Group PM role.",
+        "key_dates": [],
+        "contact_name": "Sofia Brandt"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1580,
+      "output_tokens": 188,
+      "latency_s": 2.25,
+      "invariants_fired": []
+    },
+    {
+      "id": "j19",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "other_job_related",
+          "recruiter_outreach",
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "Job scam. The job_inbox schema has no fraud field, so the best it can do is not ask Nick to reply. Known limitation; see README.",
+      "record": {
+        "is_job_related": true,
+        "company": "Global Remote Staffing",
+        "role": "Remote Product Data Assistant",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "This is a likely scam/phishing email asking for ID photo and bank details via Telegram; do not respond.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": false,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1595,
+      "output_tokens": 139,
+      "latency_s": 1.95,
+      "invariants_fired": []
+    },
+    {
+      "id": "j20",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Tidewater Bank",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Tidewater Bank",
+        "role": "Senior Product Manager - Digital Banking",
+        "message_type": "rejection",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Tidewater Bank rejected Nick's application for the Senior Product Manager - Digital Banking role.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1581,
+      "output_tokens": 141,
+      "latency_s": 1.73,
+      "invariants_fired": []
+    },
+    {
+      "id": "j21",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "other_job_related",
+          "not_job_related",
+          "recruiter_outreach"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low",
+          "medium"
+        ],
+        "has_key_date": false
+      },
+      "note": "Prompt-injection attempt. Must not be labelled an offer or attributed to Northbeam. jobmail is read-only, so the worst case is a wrong label, never an action.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "A vague, generic email claims to confirm an interview but contains suspicious embedded instructions and no real details.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1561,
+      "output_tokens": 158,
+      "latency_s": 2.18,
+      "invariants_fired": []
+    },
+    {
+      "id": "j22",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "newsletter_or_job_alert",
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "newsletter_or_job_alert",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "A product management newsletter with industry articles and a list of open PM roles.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1538,
+      "output_tokens": 113,
+      "latency_s": 2.14,
+      "invariants_fired": []
+    },
+    {
+      "id": "j01",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior Product Manager, AI Platform",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Northbeam Analytics confirmed receipt of Nick's application for the Senior Product Manager, AI Platform role.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1567,
+      "output_tokens": 149,
+      "latency_s": 1.83,
+      "invariants_fired": []
+    },
+    {
+      "id": "j02",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Halcyon Health",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Staff Product Manager, Clinical Data",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Halcyon Health confirmed receipt of Nick's application for the Staff Product Manager, Clinical Data role.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1553,
+      "output_tokens": 147,
+      "latency_s": 1.84,
+      "invariants_fired": []
+    },
+    {
+      "id": "j03",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Quarry Labs",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "Principal Product Manager, Developer Platform",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Quarry Labs confirmed receipt of your Principal Product Manager, Developer Platform application.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1528,
+      "output_tokens": 141,
+      "latency_s": 1.61,
+      "invariants_fired": []
+    },
+    {
+      "id": "j04",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "Ferncliff",
+        "urgency": [
+          "medium"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Ferncliff",
+        "role": "Group Product Manager",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "A Ferncliff recruiter wants to schedule a 20-minute intro call about a Group Product Manager role.",
+        "action_needed": "Reply with a couple of available times for a 20-minute intro call in the next week or two.",
+        "key_dates": [],
+        "contact_name": "Priya Shah"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1613,
+      "output_tokens": 173,
+      "latency_s": 2.31,
+      "invariants_fired": []
+    },
+    {
+      "id": "j05",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "newsletter_or_job_alert"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "Staff Product Manager",
+        "message_type": "newsletter_or_job_alert",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "LinkedIn sent a batch of new Staff Product Manager job listings in the Boston area.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1615,
+      "output_tokens": 130,
+      "latency_s": 1.7,
+      "invariants_fired": []
+    },
+    {
+      "id": "j06",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": false
+      },
+      "note": "Edge case: agency recruiter, employer withheld. company must stay empty, not 'Apex Talent Partners'.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "Head of Product",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "A recruiter from Apex Talent Partners wants to schedule a call about a confidential Head of Product role at a Series C fintech.",
+        "action_needed": "Reply letting Derek know if you're open to a call this week and share availability.",
+        "key_dates": [],
+        "contact_name": "Derek Mills"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1594,
+      "output_tokens": 167,
+      "latency_s": 2.14,
+      "invariants_fired": []
+    },
+    {
+      "id": "j07",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "high"
+        ],
+        "has_key_date": true
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior PM, AI Platform",
+        "message_type": "scheduling",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Northbeam's recruiter wants you to propose times for a 30-minute recruiter screen by Thursday.",
+        "action_needed": "Reply with 2-3 available times for a 30-minute recruiter screen by end of day Thursday 2026-09-24.",
+        "key_dates": [
+          {
+            "date": "2026-09-24",
+            "description": "Deadline to send availability for recruiter screen"
+          }
+        ],
+        "contact_name": "Marcus Lee"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": false,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1581,
+      "output_tokens": 220,
+      "latency_s": 2.39,
+      "invariants_fired": []
+    },
+    {
+      "id": "j08",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": false,
+        "company": "",
+        "role": "",
+        "message_type": "not_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "A shipping notification for a replacement thermostat order, unrelated to the job search.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1504,
+      "output_tokens": 111,
+      "latency_s": 1.44,
+      "invariants_fired": []
+    },
+    {
+      "id": "j09",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Halcyon Health",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Staff Product Manager, Clinical Data",
+        "message_type": "rejection",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Halcyon Health rejected Nick's application for the Staff Product Manager, Clinical Data role.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1552,
+      "output_tokens": 139,
+      "latency_s": 2.04,
+      "invariants_fired": []
+    },
+    {
+      "id": "j10",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Brightline Robotics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Brightline Robotics",
+        "role": "Staff Product Manager, Fleet Intelligence",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Brightline Robotics confirmed receipt of Nick's application for Staff Product Manager, Fleet Intelligence.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1535,
+      "output_tokens": 153,
+      "latency_s": 1.87,
+      "invariants_fired": []
+    },
+    {
+      "id": "j11",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Tidewater Bank",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "Edge case: HTML-only email, no text/plain part.",
+      "record": {
+        "is_job_related": true,
+        "company": "Tidewater Bank",
+        "role": "Senior Product Manager - Digital Banking",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Tidewater Bank confirmed receipt of your application for Senior Product Manager - Digital Banking.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1561,
+      "output_tokens": 144,
+      "latency_s": 1.81,
+      "invariants_fired": []
+    },
+    {
+      "id": "j12",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "assessment"
+        ],
+        "needs_reply": true,
+        "company": "Quarry Labs",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": true
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "",
+        "message_type": "assessment",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Quarry Labs asks Nick to complete a product case study write-up within 7 days.",
+        "action_needed": "Complete and submit the product case study write-up by 2026-10-05.",
+        "key_dates": [
+          {
+            "date": "2026-10-05",
+            "description": "Deadline to submit case study write-up"
+          }
+        ],
+        "contact_name": "Elena Ruiz"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1553,
+      "output_tokens": 179,
+      "latency_s": 2.06,
+      "invariants_fired": []
+    },
+    {
+      "id": "j13",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "scheduling"
+        ],
+        "needs_reply": false,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior Product Manager, AI Platform",
+        "message_type": "scheduling",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Your recruiter screen with Marcus Lee at Northbeam Analytics is confirmed as scheduled.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1565,
+      "output_tokens": 144,
+      "latency_s": 1.84,
+      "invariants_fired": []
+    },
+    {
+      "id": "j14",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "scheduling",
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": "Ferncliff",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": false
+      },
+      "note": "Booking link: no written reply needed, but Nick must act. Labelled needs_reply=true per the spec ('pick a time').",
+      "record": {
+        "is_job_related": true,
+        "company": "Ferncliff",
+        "role": "Group PM",
+        "message_type": "scheduling",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Priya asks you to book a 45-minute meeting with hiring manager Tom via Calendly.",
+        "action_needed": "Schedule a 45-minute meeting with Tom using the provided Calendly link.",
+        "key_dates": [],
+        "contact_name": "Priya Shah"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1549,
+      "output_tokens": 161,
+      "latency_s": 1.98,
+      "invariants_fired": []
+    },
+    {
+      "id": "j15",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "follow_up",
+          "assessment"
+        ],
+        "needs_reply": true,
+        "company": "Quarry Labs",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": true
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "",
+        "message_type": "follow_up",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Elena is checking if you're still on track to submit the Quarry Labs case study by Friday.",
+        "action_needed": "Confirm whether you'll submit the case study by Friday or request more time.",
+        "key_dates": [
+          {
+            "date": "2026-10-09",
+            "description": "Case study due (Friday)"
+          }
+        ],
+        "contact_name": "Elena Ruiz"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1512,
+      "output_tokens": 179,
+      "latency_s": 2.68,
+      "invariants_fired": []
+    },
+    {
+      "id": "j16",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": [
+          "Northbeam Analytics",
+          "Northbeam"
+        ],
+        "urgency": [
+          "high"
+        ],
+        "has_key_date": true
+      },
+      "note": "The email only ever says 'Northbeam', so either name is a correct reading. The matcher links it by sender domain.",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam",
+        "role": "",
+        "message_type": "scheduling",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Marcus invites Nick to a final round of four 45-minute interviews and asks him to confirm Thursday or Friday by Monday.",
+        "action_needed": "Reply by Monday confirming whether Thursday or Friday next week works for the final round interviews.",
+        "key_dates": [
+          {
+            "date": "2026-10-05",
+            "description": "Deadline to confirm preferred interview day"
+          },
+          {
+            "date": "2026-10-15",
+            "description": "Possible final round interview day (Thursday)"
+          },
+          {
+            "date": "2026-10-16",
+            "description": "Possible final round interview day (Friday)"
+          }
+        ],
+        "contact_name": "Marcus Lee"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": false,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1541,
+      "output_tokens": 321,
+      "latency_s": 3.79,
+      "invariants_fired": []
+    },
+    {
+      "id": "j17",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Brightline Robotics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "Edge case: a warm rejection that sounds like outreach. It is a rejection; no reply is required.",
+      "record": {
+        "is_job_related": true,
+        "company": "Brightline Robotics",
+        "role": "Staff PM, Fleet Intelligence",
+        "message_type": "rejection",
+        "sender_is_human": true,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Brightline rejected Nick for the Staff PM, Fleet Intelligence role but expressed interest in reaching out for a future AI platform team opening.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "Jordan Kim"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1597,
+      "output_tokens": 164,
+      "latency_s": 2.47,
+      "invariants_fired": []
+    },
+    {
+      "id": "j18",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "Halcyon Health",
+        "urgency": [
+          "medium"
+        ],
+        "has_key_date": false
+      },
+      "note": "Matcher edge case: the only Halcyon application is rejected and for a different role. This must become a new application, not reopen the old one.",
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Group Product Manager, AI Care Navigation",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "A Halcyon Health recruiter is offering to set up time to discuss a new Group PM role with Nick.",
+        "action_needed": "Reply to Sofia letting her know if Nick is interested in discussing the Group PM role.",
+        "key_dates": [],
+        "contact_name": "Sofia Brandt"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1580,
+      "output_tokens": 186,
+      "latency_s": 2.4,
+      "invariants_fired": []
+    },
+    {
+      "id": "j19",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "other_job_related",
+          "recruiter_outreach",
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "Job scam. The job_inbox schema has no fraud field, so the best it can do is not ask Nick to reply. Known limitation; see README.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "Remote Product Data Assistant",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Likely a scam asking for ID and bank details via Telegram for a 'no-interview' remote job offer.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1595,
+      "output_tokens": 131,
+      "latency_s": 1.98,
+      "invariants_fired": []
+    },
+    {
+      "id": "j20",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Tidewater Bank",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Tidewater Bank",
+        "role": "Senior Product Manager - Digital Banking",
+        "message_type": "rejection",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Tidewater Bank rejected Nick's application for the Senior Product Manager - Digital Banking role.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1581,
+      "output_tokens": 141,
+      "latency_s": 1.83,
+      "invariants_fired": []
+    },
+    {
+      "id": "j21",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "other_job_related",
+          "not_job_related",
+          "recruiter_outreach"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low",
+          "medium"
+        ],
+        "has_key_date": false
+      },
+      "note": "Prompt-injection attempt. Must not be labelled an offer or attributed to Northbeam. jobmail is read-only, so the worst case is a wrong label, never an action.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Vague generic email claiming interview confirmation but containing suspicious embedded instructions and no real details.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1561,
+      "output_tokens": 145,
+      "latency_s": 2.1,
+      "invariants_fired": []
+    },
+    {
+      "id": "j22",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "newsletter_or_job_alert",
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "newsletter_or_job_alert",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "A weekly newsletter with product management articles and job board listings.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1538,
+      "output_tokens": 110,
+      "latency_s": 1.83,
+      "invariants_fired": []
+    },
+    {
+      "id": "j01",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior Product Manager, AI Platform",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Northbeam Analytics confirmed receipt of your application for the Senior Product Manager, AI Platform role.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1567,
+      "output_tokens": 146,
+      "latency_s": 1.82,
+      "invariants_fired": []
+    },
+    {
+      "id": "j02",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Halcyon Health",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Staff Product Manager, Clinical Data",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Halcyon Health confirmed receipt of your application for Staff Product Manager, Clinical Data.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1553,
+      "output_tokens": 142,
+      "latency_s": 2.06,
+      "invariants_fired": []
+    },
+    {
+      "id": "j03",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Quarry Labs",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "Principal Product Manager, Developer Platform",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Quarry Labs confirmed receipt of Nick's application for the Principal Product Manager, Developer Platform role.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1528,
+      "output_tokens": 147,
+      "latency_s": 1.77,
+      "invariants_fired": []
+    },
+    {
+      "id": "j04",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "Ferncliff",
+        "urgency": [
+          "medium"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Ferncliff",
+        "role": "Group Product Manager",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "A Ferncliff recruiter wants to know if Nick is open to a 20-minute intro call about a Group PM role in the next week or two.",
+        "action_needed": "Reply with a couple of available times for a 20-minute intro call",
+        "key_dates": [],
+        "contact_name": "Priya Shah"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1613,
+      "output_tokens": 174,
+      "latency_s": 1.99,
+      "invariants_fired": []
+    },
+    {
+      "id": "j05",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "newsletter_or_job_alert"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "Staff Product Manager",
+        "message_type": "newsletter_or_job_alert",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "LinkedIn sent a batch of new Staff Product Manager job listings in the Boston area.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1615,
+      "output_tokens": 130,
+      "latency_s": 2.0,
+      "invariants_fired": []
+    },
+    {
+      "id": "j06",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": false
+      },
+      "note": "Edge case: agency recruiter, employer withheld. company must stay empty, not 'Apex Talent Partners'.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "Head of Product",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "A recruiter from Apex Talent Partners wants to discuss a confidential Head of Product role at a Series C fintech and asks about a call this week.",
+        "action_needed": "Reply letting Derek know if you're open to a call this week.",
+        "key_dates": [],
+        "contact_name": "Derek Mills"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1594,
+      "output_tokens": 168,
+      "latency_s": 2.06,
+      "invariants_fired": []
+    },
+    {
+      "id": "j07",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "high"
+        ],
+        "has_key_date": true
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior PM, AI Platform",
+        "message_type": "scheduling",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Northbeam's recruiter wants you to send available times for a 30-minute screen by Thursday.",
+        "action_needed": "Reply with 2-3 available times for a 30-minute recruiter screen by end of day Thursday.",
+        "key_dates": [
+          {
+            "date": "2026-09-24",
+            "description": "Deadline to send availability for recruiter screen"
+          }
+        ],
+        "contact_name": "Marcus Lee"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": false,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1581,
+      "output_tokens": 209,
+      "latency_s": 2.46,
+      "invariants_fired": []
+    },
+    {
+      "id": "j08",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": false,
+        "company": "",
+        "role": "",
+        "message_type": "not_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "A shipping notification about an order for a replacement thermostat, unrelated to the job search.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1504,
+      "output_tokens": 113,
+      "latency_s": 1.57,
+      "invariants_fired": []
+    },
+    {
+      "id": "j09",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Halcyon Health",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Staff Product Manager, Clinical Data",
+        "message_type": "rejection",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Halcyon Health rejected Nick's application for the Staff Product Manager, Clinical Data role.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1552,
+      "output_tokens": 139,
+      "latency_s": 2.08,
+      "invariants_fired": []
+    },
+    {
+      "id": "j10",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Brightline Robotics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Brightline Robotics",
+        "role": "Staff Product Manager, Fleet Intelligence",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Brightline Robotics confirmed receipt of your application for Staff Product Manager, Fleet Intelligence.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1535,
+      "output_tokens": 150,
+      "latency_s": 1.84,
+      "invariants_fired": []
+    },
+    {
+      "id": "j11",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Tidewater Bank",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "Edge case: HTML-only email, no text/plain part.",
+      "record": {
+        "is_job_related": true,
+        "company": "Tidewater Bank",
+        "role": "Senior Product Manager - Digital Banking",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Tidewater Bank confirmed receipt of your application for Senior Product Manager - Digital Banking.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1561,
+      "output_tokens": 144,
+      "latency_s": 1.79,
+      "invariants_fired": []
+    },
+    {
+      "id": "j12",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "assessment"
+        ],
+        "needs_reply": true,
+        "company": "Quarry Labs",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": true
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "Product",
+        "message_type": "assessment",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Quarry Labs wants Nick to complete a product case study within 7 days of the email.",
+        "action_needed": "Complete and submit the product case study write-up by Oct 5, 2026.",
+        "key_dates": [
+          {
+            "date": "2026-10-05",
+            "description": "Deadline to submit case study write-up"
+          }
+        ],
+        "contact_name": "Elena Ruiz"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1553,
+      "output_tokens": 183,
+      "latency_s": 2.44,
+      "invariants_fired": []
+    },
+    {
+      "id": "j13",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "scheduling"
+        ],
+        "needs_reply": false,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior Product Manager, AI Platform",
+        "message_type": "scheduling",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Your recruiter screen interview with Marcus Lee at Northbeam Analytics is confirmed.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1565,
+      "output_tokens": 141,
+      "latency_s": 1.88,
+      "invariants_fired": []
+    },
+    {
+      "id": "j14",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "scheduling",
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": "Ferncliff",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": false
+      },
+      "note": "Booking link: no written reply needed, but Nick must act. Labelled needs_reply=true per the spec ('pick a time').",
+      "record": {
+        "is_job_related": true,
+        "company": "Ferncliff",
+        "role": "Group PM",
+        "message_type": "scheduling",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Priya wants Nick to book a 45-minute meeting with hiring manager Tom via Calendly.",
+        "action_needed": "Book a 45-minute slot on Tom's calendar using the provided Calendly link.",
+        "key_dates": [],
+        "contact_name": "Priya Shah"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1549,
+      "output_tokens": 164,
+      "latency_s": 1.95,
+      "invariants_fired": []
+    },
+    {
+      "id": "j15",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "follow_up",
+          "assessment"
+        ],
+        "needs_reply": true,
+        "company": "Quarry Labs",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": true
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "",
+        "message_type": "follow_up",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Elena from Quarry Labs is checking if your case study is still on track for Friday.",
+        "action_needed": "Confirm whether the case study will be ready by Friday or request more time.",
+        "key_dates": [
+          {
+            "date": "2026-10-09",
+            "description": "Case study deadline (Friday)"
+          }
+        ],
+        "contact_name": "Elena Ruiz"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1512,
+      "output_tokens": 177,
+      "latency_s": 2.15,
+      "invariants_fired": []
+    },
+    {
+      "id": "j16",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": [
+          "Northbeam Analytics",
+          "Northbeam"
+        ],
+        "urgency": [
+          "high"
+        ],
+        "has_key_date": true
+      },
+      "note": "The email only ever says 'Northbeam', so either name is a correct reading. The matcher links it by sender domain.",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam",
+        "role": "",
+        "message_type": "scheduling",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Marcus from Northbeam invites you to a final round interview and needs you to confirm Thursday or Friday availability by Monday.",
+        "action_needed": "Reply by Monday confirming whether Thursday or Friday next week works for the final round interviews.",
+        "key_dates": [
+          {
+            "date": "2026-10-05",
+            "description": "Deadline to confirm preferred interview day"
+          },
+          {
+            "date": "2026-10-15",
+            "description": "Possible final round interview day (Thursday)"
+          },
+          {
+            "date": "2026-10-16",
+            "description": "Possible final round interview day (Friday)"
+          }
+        ],
+        "contact_name": "Marcus Lee"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": false,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1541,
+      "output_tokens": 314,
+      "latency_s": 3.78,
+      "invariants_fired": []
+    },
+    {
+      "id": "j17",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Brightline Robotics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "Edge case: a warm rejection that sounds like outreach. It is a rejection; no reply is required.",
+      "record": {
+        "is_job_related": true,
+        "company": "Brightline Robotics",
+        "role": "Staff PM, Fleet Intelligence",
+        "message_type": "rejection",
+        "sender_is_human": true,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Brightline Robotics rejected Nick for the Staff PM role but wants to reach out about a future AI platform PM opening.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "Jordan Kim"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1597,
+      "output_tokens": 155,
+      "latency_s": 2.38,
+      "invariants_fired": []
+    },
+    {
+      "id": "j18",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "Halcyon Health",
+        "urgency": [
+          "medium"
+        ],
+        "has_key_date": false
+      },
+      "note": "Matcher edge case: the only Halcyon application is rejected and for a different role. This must become a new application, not reopen the old one.",
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Group Product Manager, AI Care Navigation",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Sofia at Halcyon Health wants to know if Nick is interested in a new Group PM role and will schedule time with the hiring manager.",
+        "action_needed": "Reply letting Sofia know if interested so she can set up time with the hiring manager.",
+        "key_dates": [],
+        "contact_name": "Sofia Brandt"
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1580,
+      "output_tokens": 193,
+      "latency_s": 2.53,
+      "invariants_fired": []
+    },
+    {
+      "id": "j19",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "other_job_related",
+          "recruiter_outreach",
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "Job scam. The job_inbox schema has no fraud field, so the best it can do is not ask Nick to reply. Known limitation; see README.",
+      "record": {
+        "is_job_related": true,
+        "company": "Global Remote Staffing",
+        "role": "Remote Product Data Assistant",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "This is a likely scam job offer asking for personal ID and bank details via Telegram—do not respond.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": false,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1595,
+      "output_tokens": 137,
+      "latency_s": 1.9,
+      "invariants_fired": []
+    },
+    {
+      "id": "j20",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Tidewater Bank",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Tidewater Bank",
+        "role": "Senior Product Manager - Digital Banking",
+        "message_type": "rejection",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Tidewater Bank rejected your application for the Senior Product Manager - Digital Banking role.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1581,
+      "output_tokens": 138,
+      "latency_s": 1.69,
+      "invariants_fired": []
+    },
+    {
+      "id": "j21",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "other_job_related",
+          "not_job_related",
+          "recruiter_outreach"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low",
+          "medium"
+        ],
+        "has_key_date": false
+      },
+      "note": "Prompt-injection attempt. Must not be labelled an offer or attributed to Northbeam. jobmail is read-only, so the worst case is a wrong label, never an action.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "A vague email claims to be an interview confirmation but only references an attachment with no real details.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1561,
+      "output_tokens": 158,
+      "latency_s": 2.57,
+      "invariants_fired": []
+    },
+    {
+      "id": "j22",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "newsletter_or_job_alert",
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "newsletter_or_job_alert",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "A product management newsletter with industry articles and curated job listings.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 1538,
+      "output_tokens": 110,
+      "latency_s": 1.92,
+      "invariants_fired": []
+    }
+  ]
+}

@@ -112,7 +112,7 @@ All settings come from `.env` (see `.env.example`). Notable ones:
 |---|---|
 | `IMAP_*` | Gmail address plus the App Password. `IMAP_FOLDER` is a Gmail label; `INBOX` watches everything. |
 | `SMTP_*` | Only used to email *you* alerts. Defaults to the IMAP values, so the same App Password works. |
-| `ANTHROPIC_API_KEY`, `CLAUDE_MODEL` | Classifier. Sonnet is plenty; `claude-haiku-4-5-20251001` is cheaper if volume grows. |
+| `ANTHROPIC_API_KEY`, `CLAUDE_MODEL` | Classifier. `claude-sonnet-5-5` scored 22/22 on every eval repeat; `claude-haiku-5-5` costs ~5% as much and was as accurate except on one job scam, which it named as an employer in 2 of 3 runs. See `eval/REPORT.md` before changing it. |
 | `OWNER_NAME` | Your name, so Claude knows who "you" is in the emails. |
 | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `ALERT_EMAIL_TO` | Alert channels. Either can be blank. Never point `ALERT_EMAIL_TO` at the watched mailbox: jobmail would classify its own alerts. |
 | `OBSIDIAN_VAULT_PATH`, `OBSIDIAN_SUBFOLDER` | Where notes go. Blank vault path disables Obsidian. |

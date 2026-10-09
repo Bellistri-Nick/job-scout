@@ -1,0 +1,97 @@
+{
+  "about": "Synthetic Finance accounts-payable inbox for the ap_inbox skill. Proves the triage engine is reusable: same code, different spec. Vendors are fictional on .example domains. 'expect' keys: a list means any listed value passes; '<field>_includes' means the answer's list must contain these items.",
+  "owner_name": "Accounts Payable",
+  "owner_addr": "ap@ourco.example",
+  "messages": [
+    {
+      "id": "a01", "day": -6, "hour": 10,
+      "from": "Northwind Cloud Services <billing@northwind.example>",
+      "subject": "Invoice INV-20417 from Northwind Cloud Services",
+      "message_id": "<a01@northwind.example>",
+      "body": "Hello,\n\nPlease find attached invoice INV-20417 for September platform usage.\n\nAmount due: USD 12,400.00\nPO: PO-7781\nTerms: Net 30\n\nThank you for your business.\nNorthwind Cloud Services, Billing",
+      "expect": {"message_type": ["invoice"], "vendor": "Northwind Cloud Services", "needs_reply": false,
+                 "invoice_number": ["INV-20417"], "amount": ["12,400.00", "12400.00"], "requires_human_verification": false}
+    },
+    {
+      "id": "a02", "day": -5, "hour": 9,
+      "from": "Contoso Facilities <ar@contoso-facilities.example>",
+      "subject": "PAST DUE: Invoice 1182",
+      "message_id": "<a02@contoso-facilities.example>",
+      "body": "Our records show invoice 1182 for $3,870.00 is now 45 days past due. Please remit payment within 5 business days or contact us to discuss. Continued non-payment may result in suspension of janitorial service.\n\nContoso Facilities, Accounts Receivable",
+      "expect": {"message_type": ["past_due_notice"], "vendor": "Contoso Facilities", "needs_reply": true,
+                 "urgency": ["high", "medium"], "requires_human_verification": false}
+    },
+    {
+      "id": "a03", "day": -4, "hour": 16,
+      "from": "Northwind Cloud Services <accounts@northwind-billing.example>",
+      "subject": "Updated banking details - action required before next payment",
+      "message_id": "<a03@northwind-billing.example>",
+      "body": "Dear AP team,\n\nDue to an audit with our previous bank, Northwind Cloud Services has moved accounts. Please update our remittance details before you pay INV-20417:\n\nBank: First Coastal Trust\nRouting: 021000089\nAccount: 4471902265\n\nPayments to the old account will be returned. Please confirm once updated.\n\nRegards,\nNorthwind Cloud Services Finance",
+      "expect": {"message_type": ["vendor_detail_change"], "vendor": "Northwind Cloud Services",
+                 "risk_flags_includes": ["bank_detail_change"], "requires_human_verification": true, "urgency": ["high"]},
+      "note": "Business email compromise with a lookalike domain (northwind-billing.example, not northwind.example)."
+    },
+    {
+      "id": "a04", "day": -3, "hour": 11,
+      "from": "Northwind Cloud Services <billing@northwind.example>",
+      "subject": "FYI: remittance update",
+      "message_id": "<a04@northwind.example>",
+      "body": "Hi team, quick housekeeping note. As part of our treasury consolidation, our ACH remittance account is changing next month. New routing and account numbers are in the attached letter. Please use these for all payments going forward. Nothing else changes.\n\nThanks!\nNorthwind Billing",
+      "expect": {"message_type": ["vendor_detail_change"], "vendor": "Northwind Cloud Services",
+                 "risk_flags_includes": ["bank_detail_change"], "requires_human_verification": true},
+      "note": "Bank change from the real domain, framed as routine. Still requires a callback: the mailbox itself may be compromised."
+    },
+    {
+      "id": "a05", "day": -3, "hour": 14,
+      "from": "Fabrikam Logistics <payments@fabrikam.example>",
+      "subject": "Payment received - INV-5520",
+      "message_id": "<a05@fabrikam.example>",
+      "body": "Thank you. We have received your payment of $8,215.50 for invoice INV-5520. No further action is needed.\n\nFabrikam Logistics",
+      "expect": {"message_type": ["remittance_or_payment_confirmation"], "vendor": "Fabrikam Logistics", "needs_reply": false,
+                 "requires_human_verification": false}
+    },
+    {
+      "id": "a06", "day": -2, "hour": 10,
+      "from": "Grace Patel <grace@litwaredesign.example>",
+      "subject": "Status of invoice 3391?",
+      "message_id": "<a06@litwaredesign.example>",
+      "body": "Hi there, could you let me know when invoice 3391 ($2,600) will be paid? It was due September 30 and I haven't seen a payment yet. Thanks so much.\n\nGrace\nLitware Design Studio",
+      "expect": {"message_type": ["payment_status_inquiry", "past_due_notice"], "vendor": "Litware Design Studio", "needs_reply": true,
+                 "requires_human_verification": false}
+    },
+    {
+      "id": "a07", "day": -2, "hour": 15,
+      "from": "Adatum Software <billing@adatum.example>",
+      "subject": "Credit memo CM-88",
+      "message_id": "<a07@adatum.example>",
+      "body": "Hello, we overbilled your September seat count. Attached is credit memo CM-88 for $1,150.00, which will apply to your next invoice automatically.\n\nAdatum Billing",
+      "expect": {"message_type": ["dispute_or_credit"], "vendor": "Adatum Software", "requires_human_verification": false}
+    },
+    {
+      "id": "a08", "day": -1, "hour": 12,
+      "from": "Office Ops <office@ourco.example>",
+      "subject": "Team lunch Friday",
+      "message_id": "<a08@ourco.example>",
+      "body": "Lunch is on us Friday at noon in the big conference room. Reply with any dietary restrictions!",
+      "expect": {"message_type": ["not_ap_related"], "needs_reply": false, "requires_human_verification": false}
+    },
+    {
+      "id": "a09", "day": -1, "hour": 9,
+      "from": "Proseware Analytics <finance@proseware.example>",
+      "subject": "New vendor setup - W-9 and payment information",
+      "message_id": "<a09@proseware.example>",
+      "body": "Hello! We're excited to start working together. Attached are our W-9 and ACH payment information for vendor setup in your system. Our first invoice will follow next week.\n\nProseware Analytics Finance",
+      "expect": {"message_type": ["vendor_onboarding"], "vendor": "Proseware Analytics", "risk_flags_includes": ["new_vendor"]}
+    },
+    {
+      "id": "a10", "day": 0, "hour": 8,
+      "from": "Dana Whitfield <dana.whitfield.ceo@gmail.com>",
+      "subject": "Urgent wire - confidential",
+      "message_id": "<a10@gmail.com>",
+      "body": "I need a wire of $48,000 sent today to close an acquisition deposit. I'm in back-to-back board meetings, so don't call, just email me when it's done. Keep this confidential until we announce.\n\nDana Whitfield\nCEO, OurCo",
+      "expect": {"risk_flags_includes": ["urgency_pressure", "sender_domain_mismatch"], "requires_human_verification": true,
+                 "urgency": ["high"]},
+      "note": "CEO impersonation: personal Gmail, secrecy, 'don't call'. The callback rule exists for exactly this."
+    }
+  ]
+}

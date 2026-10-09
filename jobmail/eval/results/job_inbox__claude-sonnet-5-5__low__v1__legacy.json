@@ -1,0 +1,980 @@
+{
+  "skill": "job_inbox",
+  "model": "claude-sonnet-5-5",
+  "effort": "low",
+  "legacy": true,
+  "repeats": 1,
+  "tag": "v1",
+  "spec_sha": "285da2e7",
+  "ran_at": "2026-10-09T14:33:47-04:00",
+  "runs": [
+    {
+      "n": 22,
+      "fully_correct": 2,
+      "field_accuracy": {
+        "company": 0.273,
+        "has_key_date": 0.818,
+        "message_type": 0.091,
+        "needs_reply": 0.636,
+        "urgency": 0.636
+      },
+      "critical_field": "needs_reply",
+      "critical": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 8,
+        "positives": 8,
+        "precision": null,
+        "recall": 0.0
+      },
+      "fallbacks": 22,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": 0.0,
+      "cost_per_1k_messages_usd": 0.0,
+      "median_latency_s": null
+    }
+  ],
+  "stable_items": 22,
+  "items": [
+    {
+      "id": "j01",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9J7Yd2QzZyuSgk9Uyw'}",
+      "score": {
+        "message_type": false,
+        "needs_reply": true,
+        "company": false,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.4,
+      "invariants_fired": []
+    },
+    {
+      "id": "j02",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Halcyon Health",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9J7XdTCxi1E4DY6eUi'}",
+      "score": {
+        "message_type": false,
+        "needs_reply": true,
+        "company": false,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.41,
+      "invariants_fired": []
+    },
+    {
+      "id": "j03",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Quarry Labs",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9J7Zc4DqKYFT6PQVek'}",
+      "score": {
+        "message_type": false,
+        "needs_reply": true,
+        "company": false,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.41,
+      "invariants_fired": []
+    },
+    {
+      "id": "j04",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "Ferncliff",
+        "urgency": [
+          "medium"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9J7XNeafuh87MKEzx1'}",
+      "score": {
+        "message_type": false,
+        "needs_reply": false,
+        "company": false,
+        "urgency": false,
+        "has_key_date": true
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.4,
+      "invariants_fired": []
+    },
+    {
+      "id": "j05",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "newsletter_or_job_alert"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9J8uUAYVDkXRbTe2RR'}",
+      "score": {
+        "message_type": false,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.19,
+      "invariants_fired": []
+    },
+    {
+      "id": "j06",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": false
+      },
+      "note": "Edge case: agency recruiter, employer withheld. company must stay empty, not 'Apex Talent Partners'.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9J8uENXqL6vGKrKQNm'}",
+      "score": {
+        "message_type": false,
+        "needs_reply": false,
+        "company": true,
+        "urgency": false,
+        "has_key_date": true
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.2,
+      "invariants_fired": []
+    },
+    {
+      "id": "j07",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "high"
+        ],
+        "has_key_date": true
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9J8xwbCiPEwfFfU3fg'}",
+      "score": {
+        "message_type": false,
+        "needs_reply": false,
+        "company": false,
+        "urgency": false,
+        "has_key_date": false
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.2,
+      "invariants_fired": []
+    },
+    {
+      "id": "j08",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9J8yw7P6zLgmDqABtN'}",
+      "score": {
+        "message_type": false,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.21,
+      "invariants_fired": []
+    },
+    {
+      "id": "j09",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Halcyon Health",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9J9jL51gTGD5PewvkX'}",
+      "score": {
+        "message_type": false,
+        "needs_reply": true,
+        "company": false,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.2,
+      "invariants_fired": []
+    },
+    {
+      "id": "j10",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Brightline Robotics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9J9mp2dNpqWncQAmoU'}",
+      "score": {
+        "message_type": false,
+        "needs_reply": true,
+        "company": false,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.2,
+      "invariants_fired": []
+    },
+    {
+      "id": "j11",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Tidewater Bank",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "Edge case: HTML-only email, no text/plain part.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9J9n48XzNLW4szxA7R'}",
+      "score": {
+        "message_type": false,
+        "needs_reply": true,
+        "company": false,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.19,
+      "invariants_fired": []
+    },
+    {
+      "id": "j12",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "assessment"
+        ],
+        "needs_reply": true,
+        "company": "Quarry Labs",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": true
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9J9pXyRFS1Ys6QqAKB'}",
+      "score": {
+        "message_type": false,
+        "needs_reply": false,
+        "company": false,
+        "urgency": false,
+        "has_key_date": false
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.2,
+      "invariants_fired": []
+    },
+    {
+      "id": "j13",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "scheduling"
+        ],
+        "needs_reply": false,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9JAd9yMh5gZYqX5kpx'}",
+      "score": {
+        "message_type": false,
+        "needs_reply": true,
+        "company": false,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.2,
+      "invariants_fired": []
+    },
+    {
+      "id": "j14",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "scheduling",
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": "Ferncliff",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": false
+      },
+      "note": "Booking link: no written reply needed, but Nick must act. Labelled needs_reply=true per the spec ('pick a time').",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9JAcvLjxAnJPiLd3bD'}",
+      "score": {
+        "message_type": false,
+        "needs_reply": false,
+        "company": false,
+        "urgency": false,
+        "has_key_date": true
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.2,
+      "invariants_fired": []
+    },
+    {
+      "id": "j15",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "follow_up",
+          "assessment"
+        ],
+        "needs_reply": true,
+        "company": "Quarry Labs",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": true
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9JAhNXdQsLFBBqDxNM'}",
+      "score": {
+        "message_type": false,
+        "needs_reply": false,
+        "company": false,
+        "urgency": false,
+        "has_key_date": false
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.24,
+      "invariants_fired": []
+    },
+    {
+      "id": "j16",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": [
+          "Northbeam Analytics",
+          "Northbeam"
+        ],
+        "urgency": [
+          "high"
+        ],
+        "has_key_date": true
+      },
+      "note": "The email only ever says 'Northbeam', so either name is a correct reading. The matcher links it by sender domain.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9JAirj3D3A9YPzZQf1'}",
+      "score": {
+        "message_type": false,
+        "needs_reply": false,
+        "company": false,
+        "urgency": false,
+        "has_key_date": false
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.21,
+      "invariants_fired": []
+    },
+    {
+      "id": "j17",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Brightline Robotics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "Edge case: a warm rejection that sounds like outreach. It is a rejection; no reply is required.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9JBYj4kTSdhP8VGP7x'}",
+      "score": {
+        "message_type": false,
+        "needs_reply": true,
+        "company": false,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.21,
+      "invariants_fired": []
+    },
+    {
+      "id": "j18",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "Halcyon Health",
+        "urgency": [
+          "medium"
+        ],
+        "has_key_date": false
+      },
+      "note": "Matcher edge case: the only Halcyon application is rejected and for a different role. This must become a new application, not reopen the old one.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9JBWVNRb6MjvjoNHTe'}",
+      "score": {
+        "message_type": false,
+        "needs_reply": false,
+        "company": false,
+        "urgency": false,
+        "has_key_date": true
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.2,
+      "invariants_fired": []
+    },
+    {
+      "id": "j19",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "other_job_related",
+          "recruiter_outreach",
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "Job scam. The job_inbox schema has no fraud field, so the best it can do is not ask Nick to reply. Known limitation; see README.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9JBdgrfMXeQjrxtkuM'}",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.21,
+      "invariants_fired": []
+    },
+    {
+      "id": "j20",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Tidewater Bank",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9JBgQkCjS2nbU1YW9D'}",
+      "score": {
+        "message_type": false,
+        "needs_reply": true,
+        "company": false,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.19,
+      "invariants_fired": []
+    },
+    {
+      "id": "j21",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "other_job_related",
+          "not_job_related",
+          "recruiter_outreach"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low",
+          "medium"
+        ],
+        "has_key_date": false
+      },
+      "note": "Prompt-injection attempt. Must not be labelled an offer or attributed to Northbeam. jobmail is read-only, so the worst case is a wrong label, never an action.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9JCJMqzo5WV7GMLQBh'}",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.18,
+      "invariants_fired": []
+    },
+    {
+      "id": "j22",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "newsletter_or_job_alert",
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Classification failed; review manually.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": false,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'tool_choice: type \"tool\" and \"any\" are not supported for this model.'}, 'request_id': 'req_011Cfs9JCRK2Z16qx3SWzPSn'}",
+      "score": {
+        "message_type": false,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "latency_s": 0.22,
+      "invariants_fired": []
+    }
+  ]
+}

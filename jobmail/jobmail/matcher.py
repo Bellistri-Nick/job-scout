@@ -69,10 +69,18 @@ def normalise_company(name: str) -> str:
     return " ".join(s.split())
 
 
+# Recruiters abbreviate; postings don't. Without this, "Senior PM, AI Platform"
+# and "Senior Product Manager, AI Platform" score 0.4 and read as two roles.
+_ROLE_ABBREVIATIONS = {
+    "pm": "product manager", "tpm": "technical product manager", "gpm": "group product manager",
+    "spm": "senior product manager", "sr": "senior", "mgr": "manager", "eng": "engineering",
+}
+
+
 def normalise_role(role: str) -> str:
     s = role.lower()
     s = re.sub(r"[^a-z0-9]+", " ", s)
-    return " ".join(s.split())
+    return " ".join(_ROLE_ABBREVIATIONS.get(t, t) for t in s.split())
 
 
 def roles_similar(a: str, b: str) -> bool:

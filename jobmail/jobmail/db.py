@@ -220,7 +220,7 @@ class Database:
             app_id = int(cur.lastrowid)
             c.execute(
                 "INSERT INTO events(application_id, kind, detail, to_stage, at) VALUES (?,?,?,?,?)",
-                (app_id, "created", f"{company} — {role or 'unknown role'}", stage, ts),
+                (app_id, "created", f"{company} — {role or 'unknown role'}", stage, applied_at or ts),
             )
         return app_id
 
@@ -266,25 +266,30 @@ class Database:
             domains.add(domain)
             self.update_application(app_id, sender_domains=json.dumps(sorted(domains)))
 
-    def set_stage(self, app_id: int, stage: str, reason: str | None = None) -> bool:
+    def set_stage(self, app_id: int, stage: str, reason: str | None = None, at: str | None = None) -> bool:
+        """`at` is when it happened (the email's date), not when jobmail noticed.
+
+        The two differ by hours on a normal poll and by weeks on a backfill,
+        and the funnel's days-to-first-response is computed from event times.
+        """
         app = self.get_application(app_id)
         if not app or app["stage"] == stage:
             return False
         fields: dict[str, Any] = {"stage": stage}
         if stage not in OPEN_STAGES:
-            fields["closed_at"] = now_iso()
+            fields["closed_at"] = at or now_iso()
         self.update_application(app_id, **fields)
         self.add_event(app_id, "stage_change",
                        f"{app['stage']} → {stage}" + (f" ({reason})" if reason else ""),
-                       to_stage=stage)
+                       to_stage=stage, at=at)
         return True
 
     def add_event(self, app_id: int | None, kind: str, detail: str,
-                  to_stage: str | None = None) -> None:
+                  to_stage: str | None = None, at: str | None = None) -> None:
         with self.tx() as c:
             c.execute(
                 "INSERT INTO events(application_id, kind, detail, to_stage, at) VALUES (?,?,?,?,?)",
-                (app_id, kind, detail, to_stage, now_iso()),
+                (app_id, kind, detail, to_stage, at or now_iso()),
             )
 
     def list_events(self, app_id: int) -> list[sqlite3.Row]:

@@ -146,7 +146,8 @@
       "subject": "Northbeam: final round",
       "message_id": "<j16@northbeam.example>",
       "body": "Hi Nick,\n\nThe team really enjoyed your conversations. We'd like to invite you to a final round: four 45-minute sessions, virtual. Can you confirm by Monday whether Thursday or Friday next week works better?\n\nMarcus",
-      "expect": {"message_type": ["interview_request"], "needs_reply": true, "company": "Northbeam Analytics", "urgency": ["high"], "has_key_date": true}
+      "expect": {"message_type": ["interview_request"], "needs_reply": true, "company": ["Northbeam Analytics", "Northbeam"], "urgency": ["high"], "has_key_date": true},
+      "note": "The email only ever says 'Northbeam', so either name is a correct reading. The matcher links it by sender domain."
     },
     {
       "id": "j17", "run": 2, "folder": "INBOX", "day": -5, "hour": 17,

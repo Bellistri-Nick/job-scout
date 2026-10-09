@@ -70,8 +70,11 @@ def test_every_object_in_every_spec_is_closed():
         elif isinstance(node, list):
             for i, v in enumerate(node):
                 walk(v, f"{path}[{i}]")
-    for name in ("job_inbox", "ap_inbox"):
-        walk(SkillSpec.load(name).schema, name)
+    from jobmail.triage import SPEC_DIR
+    specs = sorted(SPEC_DIR.glob("*.json"))
+    assert len(specs) >= 3
+    for path in specs:
+        walk(SkillSpec.load(path).schema, path.stem)
 
 
 def test_job_inbox_enum_matches_pipeline_types():

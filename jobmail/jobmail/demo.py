@@ -44,6 +44,11 @@ def load_samples(path: Path = SAMPLES) -> dict[str, Any]:
 
 
 def build_message(m: dict[str, Any], uid: int, owner_addr: str, now: datetime) -> ParsedMessage:
+    e, folder = build_email(m, owner_addr, now)
+    return parse_message(e.as_bytes(), uid, folder)
+
+
+def build_email(m: dict[str, Any], owner_addr: str, now: datetime) -> tuple[EmailMessage, str]:
     when = (now + timedelta(days=m["day"])).replace(hour=m["hour"], minute=0, second=0, microsecond=0)
     e = EmailMessage()
     e["From"] = m["from"]
@@ -59,8 +64,24 @@ def build_message(m: dict[str, Any], uid: int, owner_addr: str, now: datetime) -
         e.set_content(m["body"], subtype="html")
     else:
         e.set_content(m["body"])
-    folder = "INBOX" if m["folder"] == "INBOX" else "[Gmail]/Sent Mail"
-    return parse_message(e.as_bytes(), uid, folder)
+    folder = "INBOX" if m.get("folder", "INBOX") == "INBOX" else "[Gmail]/Sent Mail"
+    return e, folder
+
+
+def export_eml(out_dir: Path) -> list[Path]:
+    """Write every sample as a real .eml file, for `python -m jobmail.triage <skill> <file>`."""
+    now = datetime.now().astimezone()
+    written = []
+    for name in ("job_inbox", "ap_inbox"):
+        data = load_samples(ROOT / "samples" / f"{name}.json")
+        d = out_dir / name
+        d.mkdir(parents=True, exist_ok=True)
+        for m in data["messages"]:
+            e, _ = build_email(m, data["owner_addr"], now)
+            p = d / f"{m['id']}.eml"
+            p.write_bytes(e.as_bytes())
+            written.append(p)
+    return written
 
 
 def uid_for(data: dict[str, Any], sample_id: str) -> int:
@@ -204,10 +225,11 @@ def run(run_no: int, mode: str, reset: bool, env: str | None, model: str, effort
         lines.append(f"  #{a['id']:<3} {a['company']:22} {(a['role'] or '-')[:40]:40} {a['stage']}")
 
     if isinstance(classifier, RecordingClassifier):
-        # Sonnet 5: $2 / $10 per million tokens
-        cost = classifier.input_tokens * 2e-6 + classifier.output_tokens * 10e-6
+        from .evaluate import PRICES
+        pin, pout = PRICES.get(model, (0.0, 0.0))
+        cost = classifier.input_tokens * pin / 1e6 + classifier.output_tokens * pout / 1e6
         lines += ["", f"TOKENS  in={classifier.input_tokens:,}  out={classifier.output_tokens:,}  "
-                      f"~${cost:.4f} at Sonnet 5 list price"]
+                      f"~${cost:.4f} at {model} list price"]
         if mode == "record":
             cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {"answers": {}}
             cache["answers"].update(classifier.recorded)
@@ -224,18 +246,25 @@ def run(run_no: int, mode: str, reset: bool, env: str | None, model: str, effort
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="jobmail-demo", description=__doc__.split("\n\n")[0])
-    ap.add_argument("--run", type=int, choices=[1, 2], required=True)
+    ap.add_argument("--run", type=int, choices=[1, 2])
+    ap.add_argument("--export-eml", action="store_true", help="write samples as .eml files to demo_out/eml")
     ap.add_argument("--reset", action="store_true", help="start from an empty database")
-    g = ap.add_mutually_exclusive_group(required=True)
+    g = ap.add_mutually_exclusive_group()
     g.add_argument("--live", action="store_const", dest="mode", const="live", help="call Claude")
     g.add_argument("--record", action="store_const", dest="mode", const="record",
                    help="call Claude and save the answers for --replay")
     g.add_argument("--replay", action="store_const", dest="mode", const="replay", help="no API calls")
     ap.add_argument("--env", help=".env file holding ANTHROPIC_API_KEY")
-    ap.add_argument("--model", default="claude-sonnet-5")
+    ap.add_argument("--model", default="claude-sonnet-5-5")
     ap.add_argument("--effort", default="low")
     args = ap.parse_args(argv)
     use_utf8_io()
+    if args.export_eml:
+        files = export_eml(OUT / "eml")
+        print(f"wrote {len(files)} .eml files under {OUT / 'eml'}")
+        return 0
+    if not (args.run and args.mode):
+        ap.error("--run and one of --live/--record/--replay are required")
     logging.basicConfig(level=logging.WARNING, format="%(levelname)s %(name)s: %(message)s")
     print(run(args.run, args.mode, args.reset, args.env, args.model, args.effort))
     return 0

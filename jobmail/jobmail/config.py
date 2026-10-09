@@ -57,7 +57,7 @@ class Config:
 
     # --- Claude ---
     anthropic_api_key: str = ""
-    claude_model: str = "claude-sonnet-5"
+    claude_model: str = "claude-sonnet-5-5"
     claude_effort: str = "low"  # classification does not repay deeper thinking
 
     # --- Storage ---
@@ -108,7 +108,7 @@ class Config:
             smtp_user=_env("SMTP_USER") or _env("IMAP_USER"),
             smtp_password=_env("SMTP_PASSWORD") or _env("IMAP_PASSWORD"),
             anthropic_api_key=_env("ANTHROPIC_API_KEY"),
-            claude_model=_env("CLAUDE_MODEL", "claude-sonnet-5"),
+            claude_model=_env("CLAUDE_MODEL", "claude-sonnet-5-5"),
             claude_effort=_env("CLAUDE_EFFORT", "low"),
             data_dir=data_dir,
             db_path=Path(_env("JOBMAIL_DB_PATH", str(data_dir / "jobmail.db"))).expanduser(),

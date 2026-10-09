@@ -22,6 +22,9 @@ def test_roles_similar():
     assert roles_similar("Product Manager, Growth", "Senior Product Manager - Growth")
     assert not roles_similar("Product Manager", "Software Engineer")
     assert roles_similar("", "anything")
+    assert roles_similar("Senior Product Manager, AI Platform", "Senior PM, AI Platform")
+    assert roles_similar("Staff Product Manager, Fleet Intelligence", "Staff PM - Fleet Intelligence")
+    assert not roles_similar("Staff Product Manager, Clinical Data", "Group PM, AI Care Navigation")
 
 
 def test_html_body_extraction():
@@ -569,3 +572,16 @@ def test_open_asks_clear_when_the_conversation_moves_on(cfg, db, days_ago):
     p.process_outbound(make_email(9, frm="me@gmail.com", to="e@quarry.example", subject="Case study attached",
                                   body=".", msg_id="<o9@me>", folder="Sent", when=days_ago(1)))
     assert db.list_needs_reply() == []
+
+
+def test_stage_events_carry_the_email_date_not_the_poll_time(cfg, db, days_ago):
+    """Backfill processes weeks of mail at once; the funnel's timing must not collapse to today."""
+    p, _, _ = _pipeline(cfg, db, {
+        "applied": {"company": "Acme", "role": "PM", "message_type": "application_confirmation"},
+        "screen": {"company": "Acme", "role": "PM", "message_type": "interview_request"},
+    })
+    p.process_inbound(make_email(1, frm="x@lever.co", subject="applied", body=".", msg_id="<t1@l>", when=days_ago(30)))
+    p.process_inbound(make_email(2, frm="r@acme.example", subject="screen", body=".", msg_id="<t2@a>", when=days_ago(20)))
+    ev = [e for e in db.list_events(1) if e["kind"] == "stage_change"]
+    assert ev and ev[0]["at"][:10] == days_ago(20).date().isoformat()
+    assert 9 <= db.outcome_stats()["median_days_to_response"] <= 11

@@ -107,16 +107,16 @@ class Pipeline:
 
         new_stage = STAGE_FOR_TYPE.get(cls.message_type)
         if new_stage and not match.created:
-            self._advance_stage(app_id, new_stage, cls.message_type)
+            self._advance_stage(app_id, new_stage, cls.message_type, msg.sent_at)
         elif new_stage and match.created and new_stage != "applied":
-            self.db.set_stage(app_id, new_stage, cls.message_type)
+            self.db.set_stage(app_id, new_stage, cls.message_type, at=msg.sent_at)
 
         for kd in cls.key_dates:
             self.db.add_key_date(app_id, msg_id, kd["date"], kd["description"])
 
         return msg_id
 
-    def _advance_stage(self, app_id: int, new_stage: str, reason: str) -> None:
+    def _advance_stage(self, app_id: int, new_stage: str, reason: str, at: str | None = None) -> None:
         """Only move forward (or to a terminal stage); never regress interviewing → applied."""
         from .db import STAGES
         app = self.db.get_application(app_id)
@@ -124,7 +124,7 @@ class Pipeline:
         if cur in {"rejected", "withdrawn", "closed"} and new_stage not in {"offer"}:
             return  # a closed app gets no auto-revival except an actual offer
         if new_stage in {"rejected", "offer"} or STAGES.index(new_stage) > STAGES.index(cur):
-            self.db.set_stage(app_id, new_stage, reason)
+            self.db.set_stage(app_id, new_stage, reason, at=at)
 
     # ------------------------------------------------------------ outbound
     def process_outbound(self, msg: ParsedMessage) -> None:

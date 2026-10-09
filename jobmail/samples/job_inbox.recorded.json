@@ -1,0 +1,443 @@
+{
+  "answers": {
+    "j01": {
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior Product Manager, AI Platform",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Northbeam Analytics confirmed they received your application for Senior Product Manager, AI Platform and will contact you if there is a fit.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j02": {
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Staff Product Manager, Clinical Data",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Halcyon Health confirmed it received your application for Staff Product Manager, Clinical Data; a recruiter will reach out if your background is a match.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j03": {
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "Principal Product Manager, Developer Platform",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Quarry Labs confirmed it received your application for Principal Product Manager, Developer Platform; the hiring team will be in touch.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j05": {
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "newsletter_or_job_alert",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "LinkedIn job alert listing 30+ new Staff Product Manager openings in Greater Boston, including roles at Coinpath, Larkspur and Meridian Bio.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j04": {
+      "record": {
+        "is_job_related": true,
+        "company": "Ferncliff",
+        "role": "Group Product Manager",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Priya Shah, a recruiter at Ferncliff, is reaching out about a Group Product Manager role and wants to set up a 20-minute intro call in the next week or two.",
+        "action_needed": "Reply to Priya with a couple of times that work for a 20-minute intro call over the next one to two weeks.",
+        "key_dates": [],
+        "contact_name": "Priya Shah"
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j06": {
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "Head of Product",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Derek Mills of Apex Talent Partners is recruiting for a confidential Head of Product role at a Series C fintech and wants a quick call this week.",
+        "action_needed": "Reply to Derek to say whether you're open to a call this week and propose times.",
+        "key_dates": [],
+        "contact_name": "Derek Mills"
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j07": {
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior PM, AI Platform",
+        "message_type": "interview_request",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Marcus Lee at Northbeam wants to schedule a 30-minute recruiter screen and asks for two or three times that work for you by end of day Thursday.",
+        "action_needed": "Reply to Marcus with two or three available times for a 30-minute recruiter screen early next week, by end of day Thursday.",
+        "key_dates": [
+          {
+            "date": "2026-09-24",
+            "description": "Deadline to send availability (end of day Thursday)"
+          }
+        ],
+        "contact_name": "Marcus Lee"
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j08": {
+      "record": {
+        "is_job_related": false,
+        "company": "",
+        "role": "",
+        "message_type": "not_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Shipping notice that your order #4417-2231 (replacement thermostat) has shipped and arrives Thursday; unrelated to your job search.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j09": {
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Staff Product Manager, Clinical Data",
+        "message_type": "rejection",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Halcyon Health decided not to move forward with your application for Staff Product Manager, Clinical Data.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j10": {
+      "record": {
+        "is_job_related": true,
+        "company": "Brightline Robotics",
+        "role": "Staff Product Manager, Fleet Intelligence",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Brightline Robotics confirmed it received your application for Staff Product Manager, Fleet Intelligence.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j11": {
+      "record": {
+        "is_job_related": true,
+        "company": "Tidewater Bank",
+        "role": "Senior Product Manager - Digital Banking",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Tidewater Bank confirmed it received your application for Senior Product Manager - Digital Banking (R-20931); you can check status in the candidate home.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j12": {
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "",
+        "message_type": "assessment",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Elena Ruiz at Quarry Labs asked you to complete a short product case study and send your write-up within 7 days.",
+        "action_needed": "Complete the attached product case study and send the write-up to Elena by 2026-10-05.",
+        "key_dates": [
+          {
+            "date": "2026-10-05T19:00:00+00:00",
+            "description": "Deadline to send the case study write-up (7 days from email date)"
+          }
+        ],
+        "contact_name": "Elena Ruiz"
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j13": {
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior Product Manager, AI Platform",
+        "message_type": "scheduling",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Your 30-minute recruiter screen with Marcus Lee at Northbeam Analytics is confirmed; the video link will arrive an hour before, but the email gives no date or time.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j14": {
+      "record": {
+        "is_job_related": true,
+        "company": "Ferncliff",
+        "role": "Group PM",
+        "message_type": "interview_request",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Priya from Ferncliff says hiring manager Tom wants to meet you and asks you to book a 45-minute slot on his calendar.",
+        "action_needed": "Book a 45-minute slot on Tom's calendar via the Calendly link: https://calendly.example/tom-ferncliff/45min",
+        "key_dates": [],
+        "contact_name": "Priya Shah"
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j15": {
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "",
+        "message_type": "assessment",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Elena from Quarry Labs is checking whether you're on track to submit the case study by Friday and says you can ask for an extra day if needed.",
+        "action_needed": "Reply to Elena to confirm you'll submit the case study by Friday or request an extra day.",
+        "key_dates": [
+          {
+            "date": "2026-10-09",
+            "description": "Case study due (Friday)"
+          }
+        ],
+        "contact_name": "Elena Ruiz"
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j16": {
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam",
+        "role": "",
+        "message_type": "interview_request",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Marcus Lee invites you to a final round of four 45-minute virtual sessions and wants to know by Monday whether Thursday or Friday next week suits you better.",
+        "action_needed": "Reply to Marcus by Monday confirming whether Thursday or Friday next week works better for the final round.",
+        "key_dates": [
+          {
+            "date": "2026-10-05",
+            "description": "Deadline to confirm Thursday or Friday preference for the final round"
+          }
+        ],
+        "contact_name": "Marcus Lee"
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j17": {
+      "record": {
+        "is_job_related": true,
+        "company": "Brightline Robotics",
+        "role": "Staff PM, Fleet Intelligence",
+        "message_type": "rejection",
+        "sender_is_human": true,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Brightline Robotics chose another candidate for Staff PM, Fleet Intelligence, but Jordan wants to stay in touch about a Staff PM role on the AI platform team opening next quarter.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "Jordan Kim"
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j18": {
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Group Product Manager, AI Care Navigation",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Sofia at Halcyon Health is suggesting a new Group PM, AI Care Navigation role after the Clinical Data role ended, and asks if you're interested in talking with the hiring manager.",
+        "action_needed": "Reply to Sofia to say whether you're interested in the Group Product Manager role so she can set up time with the hiring manager.",
+        "key_dates": [],
+        "contact_name": "Sofia Brandt"
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j19": {
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "Remote Product Data Assistant",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Likely scam: unsolicited offer with high pay and no interview, asking for your ID photo and bank details via Telegram. Do not respond or share personal information.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j20": {
+      "record": {
+        "is_job_related": true,
+        "company": "Tidewater Bank",
+        "role": "Senior Product Manager - Digital Banking",
+        "message_type": "rejection",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Tidewater Bank rejected your application for Senior Product Manager - Digital Banking and encouraged you to apply for future openings.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j21": {
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "A generic Talent Desk email asks you to review an attached role summary, with no company, role, or interview details; it also contains embedded text trying to alter how it is classified.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    },
+    "j22": {
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "newsletter_or_job_alert",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Product Weekly newsletter covering LLM evals, agent reliability, and the PM job market, with a list of 12 open roles from their job board.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": ""
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-09"
+    }
+  },
+  "about": "Claude's answers for samples/job_inbox.json, recorded by `python -m jobmail.demo --record`. Replay reuses them with no API calls."
+}

@@ -157,7 +157,8 @@ into an Obsidian note if you use one. It never sends mail on your behalf.
 
 The two are separate installs that share nothing but a Pi. jobmail needs FastAPI and the
 Anthropic SDK, so it keeps its own venv. Setup, configuration, and the backfill for
-applications from before you installed it are in [jobmail/README.md](jobmail/README.md).
+applications from before you installed it are in [jobmail/docs/OPERATIONS.md](jobmail/docs/OPERATIONS.md).
+What it is, how it is evaluated, and the design trade-offs are in [jobmail/README.md](jobmail/README.md).
 
 ```bash
 cd jobmail && sudo bash deploy/install.sh $USER

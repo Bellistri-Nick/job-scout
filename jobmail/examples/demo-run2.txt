@@ -1,0 +1,43 @@
+RUN 2: 10 inbound, 1 sent  (classifier: replay, claude-sonnet-5-5, effort=low)
+
+id   type                       company                linked by          app  reply?
+----------------------------------------------------------------------------------
+j13  scheduling                 Northbeam Analytics    thread               1   
+j14  interview_request          Ferncliff              thread               4  YES high 
+j15  assessment                 Quarry Labs            thread               3  YES medium 
+j16  interview_request          Northbeam Analytics    domain               1  YES high 
+j17  rejection                  Brightline Robotics    company              5   
+j18  recruiter_outreach         Halcyon Health         created(new role)    7  YES medium 
+j19  other_job_related          -                      no_company           -   
+j20  rejection                  Tidewater Bank         company              6   
+j21  other_job_related          -                      no_company           -   
+j22  newsletter_or_job_alert    -                      not_job_related      -   
+s02  (your reply)               -> marcus.lee@northbeam.example  clears needs-reply on <j16@northbeam.example>
+
+STAGE CHANGES THIS RUN
+  #6   Tidewater Bank              applied -> rejected
+  #7   Halcyon Health                (new) -> screening
+  #5   Brightline Robotics         applied -> rejected
+  #4   Ferncliff                 screening -> interviewing
+
+ALERTS SENT (5)
+  [jobmail] Scheduling: Northbeam Analytics — Senior Product Manager, AI Platform
+  [jobmail] Reply needed: Ferncliff — Group Product Manager
+  [jobmail] Reply needed: Quarry Labs — Principal Product Manager, Developer Platform
+  [jobmail] Reply needed: Halcyon Health — Group Product Manager, AI Care Navigation
+  [jobmail] Upcoming: Quarry Labs — Principal Product Manager, Developer Platform
+
+STILL NEEDS YOU
+  [high] Ferncliff              Book a 45-minute slot on Tom's calendar via the Calendly link: https://calendly.example/tom-ferncliff/45min
+  [high] unlinked               Reply to Derek to say whether you're open to a call this week and propose times.
+  [medium] Halcyon Health         Reply to Sofia to say whether you're interested in the Group Product Manager role so she can set up time with the hiring manager.
+  [medium] Quarry Labs            Reply to Elena to confirm you'll submit the case study by Friday or request an extra day.
+
+PIPELINE
+  #6   Tidewater Bank         Senior Product Manager - Digital Banking rejected
+  #1   Northbeam Analytics    Senior Product Manager, AI Platform      interviewing
+  #7   Halcyon Health         Group Product Manager, AI Care Navigatio screening
+  #5   Brightline Robotics    Staff Product Manager, Fleet Intelligenc rejected
+  #3   Quarry Labs            Principal Product Manager, Developer Pla assessment
+  #4   Ferncliff              Group Product Manager                    interviewing
+  #2   Halcyon Health         Staff Product Manager, Clinical Data     rejected

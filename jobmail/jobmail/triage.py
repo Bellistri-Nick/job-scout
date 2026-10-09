@@ -107,7 +107,7 @@ class TriageResult:
 class Triage:
     """Run a SkillSpec against text with Claude."""
 
-    def __init__(self, spec: SkillSpec, api_key: str | None = None, model: str = "claude-sonnet-5",
+    def __init__(self, spec: SkillSpec, api_key: str | None = None, model: str = "claude-sonnet-5-5",
                  effort: str = "low", max_input_chars: int = 12000, client: Any = None):
         if client is None:
             from anthropic import Anthropic
@@ -181,7 +181,7 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="triage", description="Run a triage skill on one message.")
     ap.add_argument("skill", help="spec name in jobmail/skills/ or a path to a spec .json")
     ap.add_argument("file", help=".eml or plain-text file")
-    ap.add_argument("--model", default="claude-sonnet-5")
+    ap.add_argument("--model", default="claude-sonnet-5-5")
     ap.add_argument("--effort", default="low")
     ap.add_argument("--env", help=".env file holding ANTHROPIC_API_KEY")
     args = ap.parse_args(argv)

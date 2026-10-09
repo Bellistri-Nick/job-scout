@@ -1,0 +1,44 @@
+RUN 1: 12 inbound, 1 sent  (classifier: replay, claude-sonnet-5-5, effort=low)
+
+id   type                       company                linked by          app  reply?
+----------------------------------------------------------------------------------
+j01  application_confirmation   Northbeam Analytics    created              1   
+j02  application_confirmation   Halcyon Health         created              2   
+j03  application_confirmation   Quarry Labs            created              3   
+j05  newsletter_or_job_alert    -                      not_job_related      -   
+j04  recruiter_outreach         Ferncliff              created              4  YES medium 
+j06  recruiter_outreach         -                      no_company           -  YES high 
+j07  interview_request          Northbeam Analytics    company              1  YES high 
+j08  not_job_related            -                      not_job_related      -   
+j09  rejection                  Halcyon Health         company              2   
+j10  application_confirmation   Brightline Robotics    created              5   
+j11  application_confirmation   Tidewater Bank         created              6   
+j12  assessment                 Quarry Labs            company              3  YES medium 
+s01  (your reply)               -> priya.shah@ferncliff.example  clears needs-reply on <j04@ferncliff.example>
+
+STAGE CHANGES THIS RUN
+  #3   Quarry Labs                   (new) -> assessment
+  #6   Tidewater Bank                (new) -> applied
+  #5   Brightline Robotics           (new) -> applied
+  #2   Halcyon Health                (new) -> rejected
+  #1   Northbeam Analytics           (new) -> interviewing
+  #4   Ferncliff                     (new) -> screening
+
+ALERTS SENT (4)
+  [jobmail] Reply needed: Unknown company
+  [jobmail] Reply needed: Northbeam Analytics — Senior Product Manager, AI Platform
+  [jobmail] Reply needed: Quarry Labs — Principal Product Manager, Developer Platform
+  [jobmail] 2 stale application(s)
+
+STILL NEEDS YOU
+  [high] Northbeam Analytics    Reply to Marcus with two or three available times for a 30-minute recruiter screen early next week, by end of day Thursday.
+  [high] unlinked               Reply to Derek to say whether you're open to a call this week and propose times.
+  [medium] Quarry Labs            Complete the attached product case study and send the write-up to Elena by 2026-10-05.
+
+PIPELINE
+  #3   Quarry Labs            Principal Product Manager, Developer Pla assessment
+  #6   Tidewater Bank         Senior Product Manager - Digital Banking applied
+  #5   Brightline Robotics    Staff Product Manager, Fleet Intelligenc applied
+  #2   Halcyon Health         Staff Product Manager, Clinical Data     rejected
+  #1   Northbeam Analytics    Senior Product Manager, AI Platform      interviewing
+  #4   Ferncliff              Group Product Manager                    screening
