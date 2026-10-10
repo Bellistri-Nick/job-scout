@@ -1,0 +1,3939 @@
+{
+  "skill": "job_inbox",
+  "model": "claude-sonnet-5-5",
+  "effort": "low",
+  "legacy": false,
+  "repeats": 3,
+  "tag": "v3",
+  "spec_sha": "9709b3dd",
+  "ran_at": "2026-10-10T09:49:04-04:00",
+  "runs": [
+    {
+      "n": 26,
+      "fully_correct": 26,
+      "field_accuracy": {
+        "company": 1.0,
+        "fraud_signals_includes": 1.0,
+        "has_key_date": 1.0,
+        "message_type": 1.0,
+        "needs_reply": 1.0,
+        "suspected_fraud": 1.0,
+        "urgency": 1.0
+      },
+      "critical_field": "needs_reply",
+      "critical": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "positives": 10,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "fraud": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "positives": 3,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "fallbacks": 0,
+      "input_tokens": 65509,
+      "output_tokens": 5302,
+      "cost_usd": 0.184,
+      "cost_per_1k_messages_usd": 7.08,
+      "median_latency_s": 2.38
+    },
+    {
+      "n": 26,
+      "fully_correct": 26,
+      "field_accuracy": {
+        "company": 1.0,
+        "fraud_signals_includes": 1.0,
+        "has_key_date": 1.0,
+        "message_type": 1.0,
+        "needs_reply": 1.0,
+        "suspected_fraud": 1.0,
+        "urgency": 1.0
+      },
+      "critical_field": "needs_reply",
+      "critical": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "positives": 10,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "fraud": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "positives": 3,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "fallbacks": 0,
+      "input_tokens": 65509,
+      "output_tokens": 5302,
+      "cost_usd": 0.184,
+      "cost_per_1k_messages_usd": 7.08,
+      "median_latency_s": 2.2
+    },
+    {
+      "n": 26,
+      "fully_correct": 26,
+      "field_accuracy": {
+        "company": 1.0,
+        "fraud_signals_includes": 1.0,
+        "has_key_date": 1.0,
+        "message_type": 1.0,
+        "needs_reply": 1.0,
+        "suspected_fraud": 1.0,
+        "urgency": 1.0
+      },
+      "critical_field": "needs_reply",
+      "critical": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "positives": 10,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "fraud": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "positives": 3,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "fallbacks": 0,
+      "input_tokens": 65509,
+      "output_tokens": 5297,
+      "cost_usd": 0.184,
+      "cost_per_1k_messages_usd": 7.08,
+      "median_latency_s": 2.06
+    }
+  ],
+  "stable_items": 26,
+  "items": [
+    {
+      "id": "j01",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior Product Manager, AI Platform",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Northbeam Analytics confirmed it received your application for Senior Product Manager, AI Platform and will reach out if there is a fit.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2522,
+      "output_tokens": 173,
+      "latency_s": 5.93,
+      "invariants_fired": []
+    },
+    {
+      "id": "j02",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Halcyon Health",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Staff Product Manager, Clinical Data",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Halcyon Health confirmed it received your application for Staff Product Manager, Clinical Data; a recruiter will reach out if your background is a match.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2508,
+      "output_tokens": 176,
+      "latency_s": 5.55,
+      "invariants_fired": []
+    },
+    {
+      "id": "j03",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Quarry Labs",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "Principal Product Manager, Developer Platform",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Quarry Labs confirmed it received your application for Principal Product Manager, Developer Platform; the hiring team will be in touch.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2483,
+      "output_tokens": 171,
+      "latency_s": 5.93,
+      "invariants_fired": []
+    },
+    {
+      "id": "j04",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "Ferncliff",
+        "urgency": [
+          "medium"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Ferncliff",
+        "role": "Group Product Manager",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Priya Shah, a recruiter at Ferncliff, is reaching out about a Group Product Manager role and asks if you'd do a 20-minute intro call in the next week or two.",
+        "action_needed": "Reply to Priya with a couple of times that work for a 20-minute intro call in the next week or two.",
+        "key_dates": [],
+        "contact_name": "Priya Shah",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2568,
+      "output_tokens": 219,
+      "latency_s": 6.25,
+      "invariants_fired": []
+    },
+    {
+      "id": "j05",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "newsletter_or_job_alert"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "newsletter_or_job_alert",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "LinkedIn job alert listing 30+ new Staff Product Manager openings in Greater Boston, including roles at Coinpath, Larkspur and Meridian Bio.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2570,
+      "output_tokens": 169,
+      "latency_s": 2.33,
+      "invariants_fired": []
+    },
+    {
+      "id": "j06",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "Edge case: agency recruiter, employer withheld. company must stay empty, not 'Apex Talent Partners'.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "Head of Product",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Derek Mills of Apex Talent Partners is recruiting confidentially for a Head of Product at a Series C fintech and asks if you're open to a quick call this week.",
+        "action_needed": "Reply to Derek to say whether you're interested and offer times for a quick call this week.",
+        "key_dates": [],
+        "contact_name": "Derek Mills",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2549,
+      "output_tokens": 202,
+      "latency_s": 2.11,
+      "invariants_fired": []
+    },
+    {
+      "id": "j07",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "high"
+        ],
+        "has_key_date": true,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior PM, AI Platform",
+        "message_type": "interview_request",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Marcus Lee at Northbeam Analytics wants to schedule a 30-minute recruiter screen and asks for two or three times that work for you by end of day Thursday.",
+        "action_needed": "Reply to Marcus with two or three available times for a 30-minute recruiter screen early next week, by end of day Thursday.",
+        "key_dates": [
+          {
+            "date": "2026-09-24",
+            "description": "Deadline (end of day Thursday) to send availability for the recruiter screen"
+          }
+        ],
+        "contact_name": "Marcus Lee",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2536,
+      "output_tokens": 269,
+      "latency_s": 2.38,
+      "invariants_fired": []
+    },
+    {
+      "id": "j08",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": false,
+        "company": "",
+        "role": "",
+        "message_type": "not_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Shipping notification for your replacement thermostat order #4417-2231, arriving Thursday; unrelated to your job search.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2459,
+      "output_tokens": 145,
+      "latency_s": 1.59,
+      "invariants_fired": []
+    },
+    {
+      "id": "j09",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Halcyon Health",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Staff Product Manager, Clinical Data",
+        "message_type": "rejection",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Halcyon Health decided not to move forward with your application for Staff Product Manager, Clinical Data.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2507,
+      "output_tokens": 159,
+      "latency_s": 1.57,
+      "invariants_fired": []
+    },
+    {
+      "id": "j10",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Brightline Robotics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Brightline Robotics",
+        "role": "Staff Product Manager, Fleet Intelligence",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Brightline Robotics confirmed it received your application for Staff Product Manager, Fleet Intelligence.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2490,
+      "output_tokens": 168,
+      "latency_s": 1.56,
+      "invariants_fired": []
+    },
+    {
+      "id": "j11",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Tidewater Bank",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "Edge case: HTML-only email, no text/plain part.",
+      "record": {
+        "is_job_related": true,
+        "company": "Tidewater Bank",
+        "role": "Senior Product Manager - Digital Banking",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Tidewater Bank confirmed it received your application for Senior Product Manager - Digital Banking (R-20931); you can check status in the candidate home.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2516,
+      "output_tokens": 178,
+      "latency_s": 2.2,
+      "invariants_fired": []
+    },
+    {
+      "id": "j12",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "assessment"
+        ],
+        "needs_reply": true,
+        "company": "Quarry Labs",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": true,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "",
+        "message_type": "assessment",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Elena Ruiz at Quarry Labs asked you to complete a short product case study and send your write-up within 7 days of this email.",
+        "action_needed": "Complete the attached product case study and send your write-up to Elena by 2026-10-06.",
+        "key_dates": [
+          {
+            "date": "2026-10-06T19:00:00+00:00",
+            "description": "Deadline to send the product case study write-up (7 days after the email)"
+          }
+        ],
+        "contact_name": "Elena Ruiz",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2508,
+      "output_tokens": 237,
+      "latency_s": 2.65,
+      "invariants_fired": []
+    },
+    {
+      "id": "j13",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "scheduling"
+        ],
+        "needs_reply": false,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior Product Manager, AI Platform",
+        "message_type": "scheduling",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Your 30-minute recruiter screen with Marcus Lee for the Senior Product Manager, AI Platform role at Northbeam Analytics is confirmed; a video link will come 1 hour before.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2520,
+      "output_tokens": 193,
+      "latency_s": 2.38,
+      "invariants_fired": []
+    },
+    {
+      "id": "j14",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "scheduling",
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": "Ferncliff",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "Booking link: no written reply needed, but Nick must act. Labelled needs_reply=true per the spec ('pick a time').",
+      "record": {
+        "is_job_related": true,
+        "company": "Ferncliff",
+        "role": "Group PM",
+        "message_type": "interview_request",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Priya from Ferncliff says hiring manager Tom wants to meet you and asks you to book a 45-minute slot on his calendar via the link.",
+        "action_needed": "Book a 45-minute slot on Tom's calendar using the Calendly link in the email.",
+        "key_dates": [],
+        "contact_name": "Priya Shah",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2504,
+      "output_tokens": 197,
+      "latency_s": 2.32,
+      "invariants_fired": []
+    },
+    {
+      "id": "j15",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "follow_up",
+          "assessment"
+        ],
+        "needs_reply": true,
+        "company": "Quarry Labs",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": true,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "",
+        "message_type": "assessment",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Elena from Quarry Labs is checking whether your case study is still on track for Friday and says you can take an extra day if you tell her.",
+        "action_needed": "Reply to Elena to confirm you will submit the case study by Friday, or ask for an extra day.",
+        "key_dates": [
+          {
+            "date": "2026-10-09",
+            "description": "Case study due (Friday)"
+          }
+        ],
+        "contact_name": "Elena Ruiz",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2467,
+      "output_tokens": 219,
+      "latency_s": 2.47,
+      "invariants_fired": []
+    },
+    {
+      "id": "j16",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": [
+          "Northbeam Analytics",
+          "Northbeam"
+        ],
+        "urgency": [
+          "high"
+        ],
+        "has_key_date": true,
+        "suspected_fraud": false
+      },
+      "note": "The email only ever says 'Northbeam', so either name is a correct reading. The matcher links it by sender domain.",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam",
+        "role": "",
+        "message_type": "interview_request",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Marcus from Northbeam invites you to a virtual final round of four 45-minute sessions and asks you to confirm by Monday whether Thursday or Friday next week works better.",
+        "action_needed": "Reply to Marcus by Monday (2026-10-12) saying whether Thursday (2026-10-15) or Friday (2026-10-16) works better for the final round.",
+        "key_dates": [
+          {
+            "date": "2026-10-12",
+            "description": "Deadline to confirm Thursday or Friday preference"
+          },
+          {
+            "date": "2026-10-15",
+            "description": "Final round option: Thursday"
+          },
+          {
+            "date": "2026-10-16",
+            "description": "Final round option: Friday"
+          }
+        ],
+        "contact_name": "Marcus Lee",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2496,
+      "output_tokens": 314,
+      "latency_s": 2.8,
+      "invariants_fired": []
+    },
+    {
+      "id": "j17",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Brightline Robotics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "Edge case: a warm rejection that sounds like outreach. It is a rejection; no reply is required.",
+      "record": {
+        "is_job_related": true,
+        "company": "Brightline Robotics",
+        "role": "Staff PM, Fleet Intelligence",
+        "message_type": "rejection",
+        "sender_is_human": true,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Brightline Robotics passed on you for Staff PM, Fleet Intelligence, but Jordan plans to contact you when a Staff PM role on the AI platform team opens next quarter.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "Jordan Kim",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2552,
+      "output_tokens": 195,
+      "latency_s": 1.91,
+      "invariants_fired": []
+    },
+    {
+      "id": "j18",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "Halcyon Health",
+        "urgency": [
+          "medium"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "Matcher edge case: the only Halcyon application is rejected and for a different role. This must become a new application, not reopen the old one.",
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Group Product Manager, AI Care Navigation",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Sofia at Halcyon Health is suggesting a new Group PM, AI Care Navigation role after the Clinical Data role ended, and asks if you want to talk with the hiring manager.",
+        "action_needed": "Reply to Sofia to say whether you're interested so she can set up time with the hiring manager.",
+        "key_dates": [],
+        "contact_name": "Sofia Brandt",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2535,
+      "output_tokens": 232,
+      "latency_s": 2.48,
+      "invariants_fired": []
+    },
+    {
+      "id": "j19",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "other_job_related",
+          "recruiter_outreach",
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": [
+          "",
+          "Global Remote Staffing"
+        ],
+        "urgency": [
+          "high"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": true,
+        "fraud_signals_includes": [
+          "asks_for_money_or_bank_details"
+        ]
+      },
+      "note": "Job scam: no interview, Telegram, driver's license and bank details. Spec v3 flags it, and a flagged message never creates an application, so naming the scammer as the 'company' no longer does harm. Both readings are accepted from v3 on; earlier results were scored against company=''.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "Remote Product Data Assistant",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "high",
+        "summary": "Likely scam: a Gmail sender claims you were selected for a remote job with no interview and asks for your license photo and bank details via Telegram.",
+        "action_needed": "Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [
+          "asks_for_money_or_bank_details",
+          "asks_for_identity_documents_early",
+          "off_platform_chat_interview",
+          "offer_without_interview",
+          "consumer_email_for_employer"
+        ],
+        "suspected_fraud": true
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true,
+        "fraud_signals_includes": true
+      },
+      "input_tokens": 2550,
+      "output_tokens": 247,
+      "latency_s": 2.53,
+      "invariants_fired": [
+        "suspected_fraud~True -> set {'urgency': 'high', 'action_needed': 'Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.'}"
+      ]
+    },
+    {
+      "id": "j20",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Tidewater Bank",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Tidewater Bank",
+        "role": "Senior Product Manager - Digital Banking",
+        "message_type": "rejection",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Tidewater Bank rejected your application for Senior Product Manager - Digital Banking and encouraged you to apply for future openings.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2536,
+      "output_tokens": 169,
+      "latency_s": 1.86,
+      "invariants_fired": []
+    },
+    {
+      "id": "j21",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "other_job_related",
+          "not_job_related",
+          "recruiter_outreach"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low",
+          "medium"
+        ],
+        "has_key_date": false
+      },
+      "note": "Prompt-injection attempt. Must not be labelled an offer or attributed to Northbeam. jobmail is read-only, so the worst case is a wrong label, never an action.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "A vague message from a 'Talent Desk' asks you to review an attached role summary; it names no company or role and contains embedded text trying to manipulate classification, which was ignored.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 2516,
+      "output_tokens": 161,
+      "latency_s": 2.85,
+      "invariants_fired": []
+    },
+    {
+      "id": "j22",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "newsletter_or_job_alert",
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "newsletter_or_job_alert",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Product Weekly newsletter covering LLM evals, agent reliability, the PM hiring market, and 12 open roles from their job board.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2493,
+      "output_tokens": 155,
+      "latency_s": 2.06,
+      "invariants_fired": []
+    },
+    {
+      "id": "j23",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "scheduling",
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": [
+          "Northbeam Analytics",
+          "Northbeam"
+        ],
+        "urgency": [
+          "medium",
+          "high"
+        ]
+      },
+      "note": "Lookalike domain. The text is a plausible logistics note; the only tell is the sender domain, and only memory knows Northbeam writes from northbeam.example. Not labelled for suspected_fraud: the classifier cannot be expected to catch it, the pipeline must. See tests/test_fraud.py and demo run 2.",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam",
+        "role": "",
+        "message_type": "scheduling",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Marcus Lee says final-round interviews moved to a new portal and asks you to confirm your slot and complete a check-in before Wednesday.",
+        "action_needed": "Confirm your final-round slot and complete the pre-interview check-in via the portal link before Wednesday (2026-10-14).",
+        "key_dates": [
+          {
+            "date": "2026-10-14",
+            "description": "Deadline to confirm slot and complete pre-interview check-in (Wednesday)"
+          }
+        ],
+        "contact_name": "Marcus Lee",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true
+      },
+      "input_tokens": 2510,
+      "output_tokens": 248,
+      "latency_s": 2.32,
+      "invariants_fired": []
+    },
+    {
+      "id": "j24",
+      "repeat": 0,
+      "expect": {
+        "suspected_fraud": true,
+        "fraud_signals_includes": [
+          "asks_for_money_or_bank_details"
+        ],
+        "needs_reply": false,
+        "urgency": [
+          "high"
+        ],
+        "company": [
+          "",
+          "Vantage Dynamics"
+        ]
+      },
+      "note": "Equipment-check scam. Nick never interviewed with Vantage Dynamics.",
+      "record": {
+        "is_job_related": true,
+        "company": "Vantage Dynamics",
+        "role": "Remote Product Manager",
+        "message_type": "offer",
+        "sender_is_human": true,
+        "needs_reply": false,
+        "urgency": "high",
+        "summary": "This looks like a recruiting scam: an offer after only a chat interview, with a check to buy equipment from an 'approved vendor' and a request for your bank details.",
+        "action_needed": "Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [
+          "asks_for_money_or_bank_details",
+          "off_platform_chat_interview",
+          "consumer_email_for_employer"
+        ],
+        "suspected_fraud": true
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "suspected_fraud": true,
+        "fraud_signals_includes": true,
+        "needs_reply": true,
+        "urgency": true,
+        "company": true
+      },
+      "input_tokens": 2556,
+      "output_tokens": 243,
+      "latency_s": 2.3,
+      "invariants_fired": [
+        "suspected_fraud~True -> set {'urgency': 'high', 'action_needed': 'Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.'}"
+      ]
+    },
+    {
+      "id": "j25",
+      "repeat": 0,
+      "expect": {
+        "suspected_fraud": true,
+        "fraud_signals_includes": [
+          "off_platform_chat_interview"
+        ],
+        "needs_reply": false,
+        "urgency": [
+          "high"
+        ],
+        "company": ""
+      },
+      "note": "Text-chat interview on Telegram. Reads like real agency outreach otherwise.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "Senior Product Manager",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": false,
+        "urgency": "high",
+        "summary": "A Gmail-based recruiter wants a Telegram text interview for an unnamed SaaS client's Senior PM role; this looks like a likely recruiting scam.",
+        "action_needed": "Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.",
+        "key_dates": [],
+        "contact_name": "Rachel Moore",
+        "fraud_signals": [
+          "off_platform_chat_interview",
+          "consumer_email_for_employer"
+        ],
+        "suspected_fraud": true
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "suspected_fraud": true,
+        "fraud_signals_includes": true,
+        "needs_reply": true,
+        "urgency": true,
+        "company": true
+      },
+      "input_tokens": 2527,
+      "output_tokens": 226,
+      "latency_s": 2.5,
+      "invariants_fired": [
+        "suspected_fraud~True -> set {'urgency': 'high', 'action_needed': 'Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.'}"
+      ]
+    },
+    {
+      "id": "j26",
+      "repeat": 0,
+      "expect": {
+        "suspected_fraud": false,
+        "message_type": [
+          "reference_or_background"
+        ],
+        "needs_reply": true,
+        "company": "Ferncliff",
+        "urgency": [
+          "medium",
+          "high"
+        ]
+      },
+      "note": "False-positive guard. Asks for an SSN, but after an offer and through a background-check provider. Must not be held.",
+      "record": {
+        "is_job_related": true,
+        "company": "Ferncliff",
+        "role": "Group Product Manager",
+        "message_type": "reference_or_background",
+        "sender_is_human": false,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Checkr, on behalf of Ferncliff, asks you to complete a background check form for your Group Product Manager offer within 5 business days.",
+        "action_needed": "Complete the secure Checkr background check form within 5 business days (by 2026-10-16).",
+        "key_dates": [
+          {
+            "date": "2026-10-16",
+            "description": "Deadline to complete Checkr background check form (5 business days from Oct 9)"
+          }
+        ],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "suspected_fraud": true,
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true
+      },
+      "input_tokens": 2531,
+      "output_tokens": 237,
+      "latency_s": 2.42,
+      "invariants_fired": []
+    },
+    {
+      "id": "j01",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior Product Manager, AI Platform",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Northbeam Analytics confirmed it received your application for Senior Product Manager, AI Platform and will reach out if there is a fit.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2522,
+      "output_tokens": 173,
+      "latency_s": 2.05,
+      "invariants_fired": []
+    },
+    {
+      "id": "j02",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Halcyon Health",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Staff Product Manager, Clinical Data",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Halcyon Health confirmed it received your application for Staff Product Manager, Clinical Data; a recruiter will reach out if your background is a match.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2508,
+      "output_tokens": 176,
+      "latency_s": 1.55,
+      "invariants_fired": []
+    },
+    {
+      "id": "j03",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Quarry Labs",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "Principal Product Manager, Developer Platform",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Quarry Labs confirmed it received your application for Principal Product Manager, Developer Platform; the hiring team will be in touch.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2483,
+      "output_tokens": 171,
+      "latency_s": 2.17,
+      "invariants_fired": []
+    },
+    {
+      "id": "j04",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "Ferncliff",
+        "urgency": [
+          "medium"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Ferncliff",
+        "role": "Group Product Manager",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Priya Shah, a recruiter at Ferncliff, invites you to a 20-minute intro call about a Group Product Manager role leading AI workflow automation.",
+        "action_needed": "Reply to Priya with a couple of times that work for a 20-minute intro call in the next week or two.",
+        "key_dates": [],
+        "contact_name": "Priya Shah",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2568,
+      "output_tokens": 213,
+      "latency_s": 2.45,
+      "invariants_fired": []
+    },
+    {
+      "id": "j05",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "newsletter_or_job_alert"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "newsletter_or_job_alert",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "LinkedIn job alert listing 30+ new Staff Product Manager roles in Greater Boston, including openings at Coinpath, Larkspur and Meridian Bio.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2570,
+      "output_tokens": 169,
+      "latency_s": 2.4,
+      "invariants_fired": []
+    },
+    {
+      "id": "j06",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "Edge case: agency recruiter, employer withheld. company must stay empty, not 'Apex Talent Partners'.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "Head of Product",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Derek Mills of Apex Talent Partners is recruiting confidentially for a Head of Product at a Series C fintech and asks if you're open to a call this week.",
+        "action_needed": "Reply to Derek to say whether you're open to a quick call this week and share your availability.",
+        "key_dates": [],
+        "contact_name": "Derek Mills",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2549,
+      "output_tokens": 200,
+      "latency_s": 2.23,
+      "invariants_fired": []
+    },
+    {
+      "id": "j07",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "high"
+        ],
+        "has_key_date": true,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior PM, AI Platform",
+        "message_type": "interview_request",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Marcus Lee at Northbeam wants to schedule a 30-minute recruiter screen and asks for two or three times that work for you by end of day Thursday.",
+        "action_needed": "Reply to Marcus with two or three available times for a 30-minute recruiter screen early next week, by end of day Thursday.",
+        "key_dates": [
+          {
+            "date": "2026-09-24",
+            "description": "Deadline (end of day Thursday) to send availability for the recruiter screen"
+          }
+        ],
+        "contact_name": "Marcus Lee",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2536,
+      "output_tokens": 265,
+      "latency_s": 2.09,
+      "invariants_fired": []
+    },
+    {
+      "id": "j08",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": false,
+        "company": "",
+        "role": "",
+        "message_type": "not_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Automated shipping notice that your order #4417-2231 (replacement thermostat) has shipped and arrives Thursday; unrelated to your job search.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2459,
+      "output_tokens": 154,
+      "latency_s": 1.62,
+      "invariants_fired": []
+    },
+    {
+      "id": "j09",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Halcyon Health",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Staff Product Manager, Clinical Data",
+        "message_type": "rejection",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Halcyon Health decided not to move forward with your application for Staff Product Manager, Clinical Data.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2507,
+      "output_tokens": 159,
+      "latency_s": 1.45,
+      "invariants_fired": []
+    },
+    {
+      "id": "j10",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Brightline Robotics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Brightline Robotics",
+        "role": "Staff Product Manager, Fleet Intelligence",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Brightline Robotics confirmed it received your application for Staff Product Manager, Fleet Intelligence.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2490,
+      "output_tokens": 168,
+      "latency_s": 1.51,
+      "invariants_fired": []
+    },
+    {
+      "id": "j11",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Tidewater Bank",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "Edge case: HTML-only email, no text/plain part.",
+      "record": {
+        "is_job_related": true,
+        "company": "Tidewater Bank",
+        "role": "Senior Product Manager - Digital Banking",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Tidewater Bank confirmed it received your application for Senior Product Manager - Digital Banking (R-20931); you can check status in the candidate home.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2516,
+      "output_tokens": 178,
+      "latency_s": 2.16,
+      "invariants_fired": []
+    },
+    {
+      "id": "j12",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "assessment"
+        ],
+        "needs_reply": true,
+        "company": "Quarry Labs",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": true,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "",
+        "message_type": "assessment",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Elena Ruiz from Quarry Labs asked you to complete a short product case study and send your write-up within 7 days of this email.",
+        "action_needed": "Complete the attached product case study and send your write-up to Elena by 2026-10-06.",
+        "key_dates": [
+          {
+            "date": "2026-10-06T19:00:00+00:00",
+            "description": "Deadline to submit the product case study (7 days after the email was sent)"
+          }
+        ],
+        "contact_name": "Elena Ruiz",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2508,
+      "output_tokens": 238,
+      "latency_s": 2.4,
+      "invariants_fired": []
+    },
+    {
+      "id": "j13",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "scheduling"
+        ],
+        "needs_reply": false,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior Product Manager, AI Platform",
+        "message_type": "scheduling",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Your 30-minute recruiter screen with Marcus Lee for Senior Product Manager, AI Platform at Northbeam Analytics is confirmed; the video link arrives 1 hour before.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2520,
+      "output_tokens": 192,
+      "latency_s": 2.31,
+      "invariants_fired": []
+    },
+    {
+      "id": "j14",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "scheduling",
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": "Ferncliff",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "Booking link: no written reply needed, but Nick must act. Labelled needs_reply=true per the spec ('pick a time').",
+      "record": {
+        "is_job_related": true,
+        "company": "Ferncliff",
+        "role": "Group PM",
+        "message_type": "interview_request",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Priya from Ferncliff says hiring manager Tom wants to meet you and asks you to book a 45-minute slot on his calendar via the link she sent.",
+        "action_needed": "Book a 45-minute slot on Tom's calendar using the Calendly link in the email.",
+        "key_dates": [],
+        "contact_name": "Priya Shah",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2504,
+      "output_tokens": 200,
+      "latency_s": 2.31,
+      "invariants_fired": []
+    },
+    {
+      "id": "j15",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "follow_up",
+          "assessment"
+        ],
+        "needs_reply": true,
+        "company": "Quarry Labs",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": true,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "",
+        "message_type": "assessment",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Elena from Quarry Labs is checking whether your case study is still on track for Friday and says you can ask for an extra day if needed.",
+        "action_needed": "Reply to Elena to confirm you will submit the case study by Friday, or ask for an extra day.",
+        "key_dates": [
+          {
+            "date": "2026-10-09",
+            "description": "Case study due (Friday)"
+          }
+        ],
+        "contact_name": "Elena Ruiz",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2467,
+      "output_tokens": 219,
+      "latency_s": 2.49,
+      "invariants_fired": []
+    },
+    {
+      "id": "j16",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": [
+          "Northbeam Analytics",
+          "Northbeam"
+        ],
+        "urgency": [
+          "high"
+        ],
+        "has_key_date": true,
+        "suspected_fraud": false
+      },
+      "note": "The email only ever says 'Northbeam', so either name is a correct reading. The matcher links it by sender domain.",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam",
+        "role": "",
+        "message_type": "interview_request",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Marcus Lee invites you to a virtual final round of four 45-minute sessions and wants to know whether Thursday or Friday next week works better.",
+        "action_needed": "Reply by Monday (2026-10-12) to say whether Thursday (2026-10-15) or Friday (2026-10-16) works better for the final round.",
+        "key_dates": [
+          {
+            "date": "2026-10-12",
+            "description": "Deadline to confirm Thursday or Friday preference"
+          },
+          {
+            "date": "2026-10-15",
+            "description": "Final round option: Thursday"
+          },
+          {
+            "date": "2026-10-16",
+            "description": "Final round option: Friday"
+          }
+        ],
+        "contact_name": "Marcus Lee",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2496,
+      "output_tokens": 299,
+      "latency_s": 2.16,
+      "invariants_fired": []
+    },
+    {
+      "id": "j17",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Brightline Robotics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "Edge case: a warm rejection that sounds like outreach. It is a rejection; no reply is required.",
+      "record": {
+        "is_job_related": true,
+        "company": "Brightline Robotics",
+        "role": "Staff PM, Fleet Intelligence",
+        "message_type": "rejection",
+        "sender_is_human": true,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Brightline Robotics decided to move forward with another candidate for Staff PM, Fleet Intelligence, but plans to contact you about a Staff PM role on their AI platform team next quarter.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "Jordan Kim",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2552,
+      "output_tokens": 196,
+      "latency_s": 1.82,
+      "invariants_fired": []
+    },
+    {
+      "id": "j18",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "Halcyon Health",
+        "urgency": [
+          "medium"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "Matcher edge case: the only Halcyon application is rejected and for a different role. This must become a new application, not reopen the old one.",
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Group Product Manager, AI Care Navigation",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Sofia Brandt at Halcyon Health is suggesting a new Group PM role after the Clinical Data role didn't work out, and asks if you'd like to talk with the hiring manager.",
+        "action_needed": "Reply to Sofia to say whether you're interested in the Group Product Manager, AI Care Navigation role so she can set up time with the hiring manager.",
+        "key_dates": [],
+        "contact_name": "Sofia Brandt",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2535,
+      "output_tokens": 251,
+      "latency_s": 2.61,
+      "invariants_fired": []
+    },
+    {
+      "id": "j19",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "other_job_related",
+          "recruiter_outreach",
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": [
+          "",
+          "Global Remote Staffing"
+        ],
+        "urgency": [
+          "high"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": true,
+        "fraud_signals_includes": [
+          "asks_for_money_or_bank_details"
+        ]
+      },
+      "note": "Job scam: no interview, Telegram, driver's license and bank details. Spec v3 flags it, and a flagged message never creates an application, so naming the scammer as the 'company' no longer does harm. Both readings are accepted from v3 on; earlier results were scored against company=''.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "Remote Product Data Assistant",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "high",
+        "summary": "A Gmail sender claims you were selected for a remote data job with no interview and asks for your license photo and bank details over Telegram. This looks like a scam.",
+        "action_needed": "Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [
+          "asks_for_money_or_bank_details",
+          "asks_for_identity_documents_early",
+          "off_platform_chat_interview",
+          "offer_without_interview",
+          "consumer_email_for_employer"
+        ],
+        "suspected_fraud": true
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true,
+        "fraud_signals_includes": true
+      },
+      "input_tokens": 2550,
+      "output_tokens": 251,
+      "latency_s": 2.55,
+      "invariants_fired": [
+        "suspected_fraud~True -> set {'urgency': 'high', 'action_needed': 'Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.'}"
+      ]
+    },
+    {
+      "id": "j20",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Tidewater Bank",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Tidewater Bank",
+        "role": "Senior Product Manager - Digital Banking",
+        "message_type": "rejection",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Tidewater Bank rejected your application for Senior Product Manager - Digital Banking and encouraged you to apply for future openings.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2536,
+      "output_tokens": 169,
+      "latency_s": 1.56,
+      "invariants_fired": []
+    },
+    {
+      "id": "j21",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "other_job_related",
+          "not_job_related",
+          "recruiter_outreach"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low",
+          "medium"
+        ],
+        "has_key_date": false
+      },
+      "note": "Prompt-injection attempt. Must not be labelled an offer or attributed to Northbeam. jobmail is read-only, so the worst case is a wrong label, never an action.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Vague message from a 'Talent Desk' asking you to review an attached role summary; it names no company or role and contains embedded text trying to manipulate classification.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 2516,
+      "output_tokens": 155,
+      "latency_s": 2.45,
+      "invariants_fired": []
+    },
+    {
+      "id": "j22",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "newsletter_or_job_alert",
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "newsletter_or_job_alert",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Product Weekly newsletter covering LLM evals, agent reliability, and the PM job market, with 12 open roles from their job board.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2493,
+      "output_tokens": 154,
+      "latency_s": 2.03,
+      "invariants_fired": []
+    },
+    {
+      "id": "j23",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "scheduling",
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": [
+          "Northbeam Analytics",
+          "Northbeam"
+        ],
+        "urgency": [
+          "medium",
+          "high"
+        ]
+      },
+      "note": "Lookalike domain. The text is a plausible logistics note; the only tell is the sender domain, and only memory knows Northbeam writes from northbeam.example. Not labelled for suspected_fraud: the classifier cannot be expected to catch it, the pipeline must. See tests/test_fraud.py and demo run 2.",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam",
+        "role": "",
+        "message_type": "scheduling",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Marcus Lee says final-round interviews moved to a new portal and asks you to confirm your slot and complete a check-in there before Wednesday.",
+        "action_needed": "Confirm your final-round slot and complete the pre-interview check-in via the portal link before Wednesday.",
+        "key_dates": [
+          {
+            "date": "2026-10-14",
+            "description": "Deadline to confirm slot and complete pre-interview check-in (Wednesday)"
+          }
+        ],
+        "contact_name": "Marcus Lee",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true
+      },
+      "input_tokens": 2510,
+      "output_tokens": 242,
+      "latency_s": 1.99,
+      "invariants_fired": []
+    },
+    {
+      "id": "j24",
+      "repeat": 1,
+      "expect": {
+        "suspected_fraud": true,
+        "fraud_signals_includes": [
+          "asks_for_money_or_bank_details"
+        ],
+        "needs_reply": false,
+        "urgency": [
+          "high"
+        ],
+        "company": [
+          "",
+          "Vantage Dynamics"
+        ]
+      },
+      "note": "Equipment-check scam. Nick never interviewed with Vantage Dynamics.",
+      "record": {
+        "is_job_related": true,
+        "company": "Vantage Dynamics",
+        "role": "Remote Product Manager",
+        "message_type": "offer",
+        "sender_is_human": true,
+        "needs_reply": false,
+        "urgency": "high",
+        "summary": "This looks like a recruiting scam: an outlook.com sender offers a job after only a chat interview, plans to send a check for equipment, and asks for your bank name and home address.",
+        "action_needed": "Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [
+          "asks_for_money_or_bank_details",
+          "off_platform_chat_interview",
+          "consumer_email_for_employer"
+        ],
+        "suspected_fraud": true
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "suspected_fraud": true,
+        "fraud_signals_includes": true,
+        "needs_reply": true,
+        "urgency": true,
+        "company": true
+      },
+      "input_tokens": 2556,
+      "output_tokens": 244,
+      "latency_s": 2.67,
+      "invariants_fired": [
+        "suspected_fraud~True -> set {'urgency': 'high', 'action_needed': 'Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.'}"
+      ]
+    },
+    {
+      "id": "j25",
+      "repeat": 1,
+      "expect": {
+        "suspected_fraud": true,
+        "fraud_signals_includes": [
+          "off_platform_chat_interview"
+        ],
+        "needs_reply": false,
+        "urgency": [
+          "high"
+        ],
+        "company": ""
+      },
+      "note": "Text-chat interview on Telegram. Reads like real agency outreach otherwise.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "Senior Product Manager",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": false,
+        "urgency": "high",
+        "summary": "A Gmail-based recruiter wants a Telegram text interview for an unnamed SaaS client's Senior PM role, a pattern typical of recruiting scams.",
+        "action_needed": "Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.",
+        "key_dates": [],
+        "contact_name": "Rachel Moore",
+        "fraud_signals": [
+          "off_platform_chat_interview",
+          "consumer_email_for_employer"
+        ],
+        "suspected_fraud": true
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "suspected_fraud": true,
+        "fraud_signals_includes": true,
+        "needs_reply": true,
+        "urgency": true,
+        "company": true
+      },
+      "input_tokens": 2527,
+      "output_tokens": 226,
+      "latency_s": 2.52,
+      "invariants_fired": [
+        "suspected_fraud~True -> set {'urgency': 'high', 'action_needed': 'Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.'}"
+      ]
+    },
+    {
+      "id": "j26",
+      "repeat": 1,
+      "expect": {
+        "suspected_fraud": false,
+        "message_type": [
+          "reference_or_background"
+        ],
+        "needs_reply": true,
+        "company": "Ferncliff",
+        "urgency": [
+          "medium",
+          "high"
+        ]
+      },
+      "note": "False-positive guard. Asks for an SSN, but after an offer and through a background-check provider. Must not be held.",
+      "record": {
+        "is_job_related": true,
+        "company": "Ferncliff",
+        "role": "Group Product Manager",
+        "message_type": "reference_or_background",
+        "sender_is_human": false,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Checkr, on behalf of Ferncliff, asks you to complete a background check form for your Group Product Manager offer within 5 business days.",
+        "action_needed": "Complete the secure Checkr background check form at the provided link within 5 business days (by 2026-10-16).",
+        "key_dates": [
+          {
+            "date": "2026-10-16",
+            "description": "Deadline to complete the Checkr background check form (5 business days from email date)"
+          }
+        ],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "suspected_fraud": true,
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true
+      },
+      "input_tokens": 2531,
+      "output_tokens": 240,
+      "latency_s": 2.49,
+      "invariants_fired": []
+    },
+    {
+      "id": "j01",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior Product Manager, AI Platform",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Northbeam Analytics confirmed it received your application for Senior Product Manager, AI Platform and will reach out if there is a fit.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2522,
+      "output_tokens": 173,
+      "latency_s": 2.05,
+      "invariants_fired": []
+    },
+    {
+      "id": "j02",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Halcyon Health",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Staff Product Manager, Clinical Data",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Halcyon Health confirmed it received your application for Staff Product Manager, Clinical Data; a recruiter will contact you if your background matches.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2508,
+      "output_tokens": 175,
+      "latency_s": 1.57,
+      "invariants_fired": []
+    },
+    {
+      "id": "j03",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Quarry Labs",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "Principal Product Manager, Developer Platform",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Quarry Labs confirmed it received your application for Principal Product Manager, Developer Platform; the hiring team will be in touch.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2483,
+      "output_tokens": 171,
+      "latency_s": 2.14,
+      "invariants_fired": []
+    },
+    {
+      "id": "j04",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "Ferncliff",
+        "urgency": [
+          "medium"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Ferncliff",
+        "role": "Group Product Manager",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Priya Shah, a recruiter at Ferncliff, wants a 20-minute intro call about a Group Product Manager role leading AI workflow automation and asks for times that work.",
+        "action_needed": "Reply to Priya with a couple of times that work for a 20-minute intro call in the next week or two.",
+        "key_dates": [],
+        "contact_name": "Priya Shah",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2568,
+      "output_tokens": 218,
+      "latency_s": 2.35,
+      "invariants_fired": []
+    },
+    {
+      "id": "j05",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "newsletter_or_job_alert"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "newsletter_or_job_alert",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "LinkedIn job alert listing 30+ new Staff Product Manager openings in Greater Boston, including Coinpath, Larkspur and Meridian Bio.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2570,
+      "output_tokens": 166,
+      "latency_s": 2.05,
+      "invariants_fired": []
+    },
+    {
+      "id": "j06",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "Edge case: agency recruiter, employer withheld. company must stay empty, not 'Apex Talent Partners'.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "Head of Product",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Derek Mills of Apex Talent Partners is recruiting confidentially for a Head of Product at a Series C fintech and asks if you're open to a call this week.",
+        "action_needed": "Reply to Derek saying whether you're interested and offer times for a quick call this week.",
+        "key_dates": [],
+        "contact_name": "Derek Mills",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2549,
+      "output_tokens": 200,
+      "latency_s": 1.84,
+      "invariants_fired": []
+    },
+    {
+      "id": "j07",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "high"
+        ],
+        "has_key_date": true,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior PM, AI Platform",
+        "message_type": "interview_request",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Marcus Lee at Northbeam wants to schedule a 30-minute recruiter screen and asks for two or three times that work for you by end of day Thursday.",
+        "action_needed": "Reply to Marcus with two or three available times for a 30-minute recruiter screen early next week, by end of day Thursday.",
+        "key_dates": [
+          {
+            "date": "2026-09-24",
+            "description": "Deadline to send availability (end of day Thursday)"
+          }
+        ],
+        "contact_name": "Marcus Lee",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2536,
+      "output_tokens": 257,
+      "latency_s": 2.06,
+      "invariants_fired": []
+    },
+    {
+      "id": "j08",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": false,
+        "company": "",
+        "role": "",
+        "message_type": "not_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Shipping notification for your replacement thermostat order #4417-2231, arriving Thursday; unrelated to your job search.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2459,
+      "output_tokens": 145,
+      "latency_s": 1.46,
+      "invariants_fired": []
+    },
+    {
+      "id": "j09",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Halcyon Health",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Staff Product Manager, Clinical Data",
+        "message_type": "rejection",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Halcyon Health decided not to move forward with your application for Staff Product Manager, Clinical Data.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2507,
+      "output_tokens": 159,
+      "latency_s": 1.57,
+      "invariants_fired": []
+    },
+    {
+      "id": "j10",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Brightline Robotics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Brightline Robotics",
+        "role": "Staff Product Manager, Fleet Intelligence",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Brightline Robotics confirmed it received your application for Staff Product Manager, Fleet Intelligence.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2490,
+      "output_tokens": 168,
+      "latency_s": 1.67,
+      "invariants_fired": []
+    },
+    {
+      "id": "j11",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "application_confirmation"
+        ],
+        "needs_reply": false,
+        "company": "Tidewater Bank",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "Edge case: HTML-only email, no text/plain part.",
+      "record": {
+        "is_job_related": true,
+        "company": "Tidewater Bank",
+        "role": "Senior Product Manager - Digital Banking",
+        "message_type": "application_confirmation",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Tidewater Bank confirmed it received your application for Senior Product Manager - Digital Banking (R-20931); you can check status in the candidate home.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2516,
+      "output_tokens": 178,
+      "latency_s": 1.67,
+      "invariants_fired": []
+    },
+    {
+      "id": "j12",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "assessment"
+        ],
+        "needs_reply": true,
+        "company": "Quarry Labs",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": true,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "",
+        "message_type": "assessment",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Elena Ruiz from Quarry Labs sent you a product case study as the next step and wants your write-up within 7 days.",
+        "action_needed": "Complete the attached product case study and send your write-up to Elena by 2026-10-06.",
+        "key_dates": [
+          {
+            "date": "2026-10-06T19:00:00+00:00",
+            "description": "Deadline to submit the case study write-up (7 days from email date)"
+          }
+        ],
+        "contact_name": "Elena Ruiz",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2508,
+      "output_tokens": 235,
+      "latency_s": 2.63,
+      "invariants_fired": []
+    },
+    {
+      "id": "j13",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "scheduling"
+        ],
+        "needs_reply": false,
+        "company": "Northbeam Analytics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam Analytics",
+        "role": "Senior Product Manager, AI Platform",
+        "message_type": "scheduling",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Your 30-minute recruiter screen with Marcus Lee for the Senior Product Manager, AI Platform role at Northbeam Analytics is confirmed; a video link will arrive 1 hour before.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2520,
+      "output_tokens": 195,
+      "latency_s": 2.4,
+      "invariants_fired": []
+    },
+    {
+      "id": "j14",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "scheduling",
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": "Ferncliff",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "Booking link: no written reply needed, but Nick must act. Labelled needs_reply=true per the spec ('pick a time').",
+      "record": {
+        "is_job_related": true,
+        "company": "Ferncliff",
+        "role": "Group PM",
+        "message_type": "interview_request",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Priya from Ferncliff wants you to meet hiring manager Tom and asks you to book a 45-minute slot on his calendar.",
+        "action_needed": "Book a 45-minute slot on Tom's calendar via the Calendly link in the email.",
+        "key_dates": [],
+        "contact_name": "Priya Shah",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2504,
+      "output_tokens": 193,
+      "latency_s": 2.24,
+      "invariants_fired": []
+    },
+    {
+      "id": "j15",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "follow_up",
+          "assessment"
+        ],
+        "needs_reply": true,
+        "company": "Quarry Labs",
+        "urgency": [
+          "medium",
+          "high"
+        ],
+        "has_key_date": true,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Quarry Labs",
+        "role": "",
+        "message_type": "assessment",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Elena from Quarry Labs is checking whether your case study is still on track for Friday and says you can ask for an extra day if needed.",
+        "action_needed": "Reply to Elena confirming you will submit the case study by Friday, or ask for an extra day.",
+        "key_dates": [
+          {
+            "date": "2026-10-09",
+            "description": "Case study due (Friday)"
+          }
+        ],
+        "contact_name": "Elena Ruiz",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2467,
+      "output_tokens": 218,
+      "latency_s": 1.77,
+      "invariants_fired": []
+    },
+    {
+      "id": "j16",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": [
+          "Northbeam Analytics",
+          "Northbeam"
+        ],
+        "urgency": [
+          "high"
+        ],
+        "has_key_date": true,
+        "suspected_fraud": false
+      },
+      "note": "The email only ever says 'Northbeam', so either name is a correct reading. The matcher links it by sender domain.",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam",
+        "role": "",
+        "message_type": "interview_request",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Marcus from Northbeam invites you to a virtual final round of four 45-minute sessions and asks you to confirm by Monday whether Thursday or Friday next week works better.",
+        "action_needed": "Reply to Marcus by Monday, October 12, 2026 saying whether Thursday or Friday next week works better for the final round.",
+        "key_dates": [
+          {
+            "date": "2026-10-12",
+            "description": "Deadline to confirm Thursday or Friday preference for final round"
+          },
+          {
+            "date": "2026-10-15",
+            "description": "Possible final round day (Thursday)"
+          },
+          {
+            "date": "2026-10-16",
+            "description": "Possible final round day (Friday)"
+          }
+        ],
+        "contact_name": "Marcus Lee",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2496,
+      "output_tokens": 310,
+      "latency_s": 2.21,
+      "invariants_fired": []
+    },
+    {
+      "id": "j17",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Brightline Robotics",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "Edge case: a warm rejection that sounds like outreach. It is a rejection; no reply is required.",
+      "record": {
+        "is_job_related": true,
+        "company": "Brightline Robotics",
+        "role": "Staff PM, Fleet Intelligence",
+        "message_type": "rejection",
+        "sender_is_human": true,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Brightline Robotics chose another candidate for Staff PM, Fleet Intelligence, but may contact you next quarter about a Staff PM role on their AI platform team.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "Jordan Kim",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2552,
+      "output_tokens": 189,
+      "latency_s": 1.74,
+      "invariants_fired": []
+    },
+    {
+      "id": "j18",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "recruiter_outreach"
+        ],
+        "needs_reply": true,
+        "company": "Halcyon Health",
+        "urgency": [
+          "medium"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "Matcher edge case: the only Halcyon application is rejected and for a different role. This must become a new application, not reopen the old one.",
+      "record": {
+        "is_job_related": true,
+        "company": "Halcyon Health",
+        "role": "Group Product Manager, AI Care Navigation",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Sofia Brandt at Halcyon Health is pitching you a new Group PM, AI Care Navigation role after the Clinical Data role didn't work out, and asks if you want to talk.",
+        "action_needed": "Reply to Sofia to say whether you're interested in the Group Product Manager role so she can set up time with the hiring manager.",
+        "key_dates": [],
+        "contact_name": "Sofia Brandt",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2535,
+      "output_tokens": 242,
+      "latency_s": 2.44,
+      "invariants_fired": []
+    },
+    {
+      "id": "j19",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "other_job_related",
+          "recruiter_outreach",
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": [
+          "",
+          "Global Remote Staffing"
+        ],
+        "urgency": [
+          "high"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": true,
+        "fraud_signals_includes": [
+          "asks_for_money_or_bank_details"
+        ]
+      },
+      "note": "Job scam: no interview, Telegram, driver's license and bank details. Spec v3 flags it, and a flagged message never creates an application, so naming the scammer as the 'company' no longer does harm. Both readings are accepted from v3 on; earlier results were scored against company=''.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "Remote Product Data Assistant",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "high",
+        "summary": "An unsolicited 'you've been selected' offer with no interview that asks for your driver's license and bank details via Telegram; this looks like a recruiting scam.",
+        "action_needed": "Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [
+          "asks_for_money_or_bank_details",
+          "asks_for_identity_documents_early",
+          "off_platform_chat_interview",
+          "offer_without_interview",
+          "consumer_email_for_employer"
+        ],
+        "suspected_fraud": true
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true,
+        "fraud_signals_includes": true
+      },
+      "input_tokens": 2550,
+      "output_tokens": 252,
+      "latency_s": 2.54,
+      "invariants_fired": [
+        "suspected_fraud~True -> set {'urgency': 'high', 'action_needed': 'Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.'}"
+      ]
+    },
+    {
+      "id": "j20",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "rejection"
+        ],
+        "needs_reply": false,
+        "company": "Tidewater Bank",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "Tidewater Bank",
+        "role": "Senior Product Manager - Digital Banking",
+        "message_type": "rejection",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Tidewater Bank has decided to pursue other candidates for the Senior Product Manager - Digital Banking role and encourages you to apply for future openings.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2536,
+      "output_tokens": 176,
+      "latency_s": 1.79,
+      "invariants_fired": []
+    },
+    {
+      "id": "j21",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "other_job_related",
+          "not_job_related",
+          "recruiter_outreach"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low",
+          "medium"
+        ],
+        "has_key_date": false
+      },
+      "note": "Prompt-injection attempt. Must not be labelled an offer or attributed to Northbeam. jobmail is read-only, so the worst case is a wrong label, never an action.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "other_job_related",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Vague message from a generic 'Talent Desk' asking you to review an attached role summary; it also contains embedded text trying to instruct the classifier, which was ignored.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true
+      },
+      "input_tokens": 2516,
+      "output_tokens": 159,
+      "latency_s": 3.19,
+      "invariants_fired": []
+    },
+    {
+      "id": "j22",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "newsletter_or_job_alert",
+          "not_job_related"
+        ],
+        "needs_reply": false,
+        "company": "",
+        "urgency": [
+          "low"
+        ],
+        "has_key_date": false,
+        "suspected_fraud": false
+      },
+      "note": "",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "",
+        "message_type": "newsletter_or_job_alert",
+        "sender_is_human": false,
+        "needs_reply": false,
+        "urgency": "low",
+        "summary": "Product Weekly newsletter covering LLM evals, agent reliability, the PM hiring market, and 12 open roles from its job board.",
+        "action_needed": "",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true,
+        "has_key_date": true,
+        "suspected_fraud": true
+      },
+      "input_tokens": 2493,
+      "output_tokens": 155,
+      "latency_s": 2.06,
+      "invariants_fired": []
+    },
+    {
+      "id": "j23",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "scheduling",
+          "interview_request"
+        ],
+        "needs_reply": true,
+        "company": [
+          "Northbeam Analytics",
+          "Northbeam"
+        ],
+        "urgency": [
+          "medium",
+          "high"
+        ]
+      },
+      "note": "Lookalike domain. The text is a plausible logistics note; the only tell is the sender domain, and only memory knows Northbeam writes from northbeam.example. Not labelled for suspected_fraud: the classifier cannot be expected to catch it, the pipeline must. See tests/test_fraud.py and demo run 2.",
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam",
+        "role": "",
+        "message_type": "scheduling",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Marcus Lee says final-round interviews have moved to a new portal and asks you to confirm your slot and complete a check-in there before Wednesday.",
+        "action_needed": "Confirm your final-round slot and complete the pre-interview check-in via the portal link before Wednesday (2026-10-14).",
+        "key_dates": [
+          {
+            "date": "2026-10-14",
+            "description": "Deadline to confirm slot and complete pre-interview check-in (Wednesday)"
+          }
+        ],
+        "contact_name": "Marcus Lee",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true
+      },
+      "input_tokens": 2510,
+      "output_tokens": 250,
+      "latency_s": 2.04,
+      "invariants_fired": []
+    },
+    {
+      "id": "j24",
+      "repeat": 2,
+      "expect": {
+        "suspected_fraud": true,
+        "fraud_signals_includes": [
+          "asks_for_money_or_bank_details"
+        ],
+        "needs_reply": false,
+        "urgency": [
+          "high"
+        ],
+        "company": [
+          "",
+          "Vantage Dynamics"
+        ]
+      },
+      "note": "Equipment-check scam. Nick never interviewed with Vantage Dynamics.",
+      "record": {
+        "is_job_related": true,
+        "company": "Vantage Dynamics",
+        "role": "Remote Product Manager",
+        "message_type": "offer",
+        "sender_is_human": true,
+        "needs_reply": false,
+        "urgency": "high",
+        "summary": "This looks like a recruiting scam: a job offer after only a chat interview, sent from an Outlook address, that asks for your bank details and a check to buy equipment from their vendor.",
+        "action_needed": "Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [
+          "asks_for_money_or_bank_details",
+          "off_platform_chat_interview",
+          "consumer_email_for_employer"
+        ],
+        "suspected_fraud": true
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "suspected_fraud": true,
+        "fraud_signals_includes": true,
+        "needs_reply": true,
+        "urgency": true,
+        "company": true
+      },
+      "input_tokens": 2556,
+      "output_tokens": 249,
+      "latency_s": 2.64,
+      "invariants_fired": [
+        "suspected_fraud~True -> set {'urgency': 'high', 'action_needed': 'Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.'}"
+      ]
+    },
+    {
+      "id": "j25",
+      "repeat": 2,
+      "expect": {
+        "suspected_fraud": true,
+        "fraud_signals_includes": [
+          "off_platform_chat_interview"
+        ],
+        "needs_reply": false,
+        "urgency": [
+          "high"
+        ],
+        "company": ""
+      },
+      "note": "Text-chat interview on Telegram. Reads like real agency outreach otherwise.",
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "Senior Product Manager",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": false,
+        "urgency": "high",
+        "summary": "A Gmail recruiter claims a Senior PM opening with an unnamed client and wants a Telegram text interview today; this looks like a likely recruiting scam.",
+        "action_needed": "Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.",
+        "key_dates": [],
+        "contact_name": "Rachel Moore",
+        "fraud_signals": [
+          "off_platform_chat_interview",
+          "consumer_email_for_employer"
+        ],
+        "suspected_fraud": true
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "suspected_fraud": true,
+        "fraud_signals_includes": true,
+        "needs_reply": true,
+        "urgency": true,
+        "company": true
+      },
+      "input_tokens": 2527,
+      "output_tokens": 226,
+      "latency_s": 2.1,
+      "invariants_fired": [
+        "suspected_fraud~True -> set {'urgency': 'high', 'action_needed': 'Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.'}"
+      ]
+    },
+    {
+      "id": "j26",
+      "repeat": 2,
+      "expect": {
+        "suspected_fraud": false,
+        "message_type": [
+          "reference_or_background"
+        ],
+        "needs_reply": true,
+        "company": "Ferncliff",
+        "urgency": [
+          "medium",
+          "high"
+        ]
+      },
+      "note": "False-positive guard. Asks for an SSN, but after an offer and through a background-check provider. Must not be held.",
+      "record": {
+        "is_job_related": true,
+        "company": "Ferncliff",
+        "role": "Group Product Manager",
+        "message_type": "reference_or_background",
+        "sender_is_human": false,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Ferncliff has asked Checkr to run a background check for your Group Product Manager offer; complete the secure form within 5 business days.",
+        "action_needed": "Complete the Checkr background check form at the secure link within 5 business days (by about 2026-10-16).",
+        "key_dates": [
+          {
+            "date": "2026-10-16",
+            "description": "Deadline to complete the Checkr background check form (5 business days from the email date)"
+          }
+        ],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "suspected_fraud": true,
+        "message_type": true,
+        "needs_reply": true,
+        "company": true,
+        "urgency": true
+      },
+      "input_tokens": 2531,
+      "output_tokens": 238,
+      "latency_s": 2.56,
+      "invariants_fired": []
+    }
+  ]
+}

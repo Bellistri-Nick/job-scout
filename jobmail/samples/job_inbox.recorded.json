@@ -9,15 +9,17 @@
         "sender_is_human": false,
         "needs_reply": false,
         "urgency": "low",
-        "summary": "Northbeam Analytics confirmed they received your application for Senior Product Manager, AI Platform and will contact you if there is a fit.",
+        "summary": "Northbeam Analytics confirmed it received your application for Senior Product Manager, AI Platform and will reach out if there is a fit.",
         "action_needed": "",
         "key_dates": [],
-        "contact_name": ""
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j02": {
       "record": {
@@ -31,12 +33,14 @@
         "summary": "Halcyon Health confirmed it received your application for Staff Product Manager, Clinical Data; a recruiter will reach out if your background is a match.",
         "action_needed": "",
         "key_dates": [],
-        "contact_name": ""
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j03": {
       "record": {
@@ -47,15 +51,17 @@
         "sender_is_human": false,
         "needs_reply": false,
         "urgency": "low",
-        "summary": "Quarry Labs confirmed it received your application for Principal Product Manager, Developer Platform; the hiring team will be in touch.",
+        "summary": "Quarry Labs confirmed it received your application for Principal Product Manager, Developer Platform; the hiring team will follow up.",
         "action_needed": "",
         "key_dates": [],
-        "contact_name": ""
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j05": {
       "record": {
@@ -66,15 +72,17 @@
         "sender_is_human": false,
         "needs_reply": false,
         "urgency": "low",
-        "summary": "LinkedIn job alert listing 30+ new Staff Product Manager openings in Greater Boston, including roles at Coinpath, Larkspur and Meridian Bio.",
+        "summary": "LinkedIn job alert listing 30+ new Staff Product Manager roles in Greater Boston, including openings at Coinpath, Larkspur and Meridian Bio.",
         "action_needed": "",
         "key_dates": [],
-        "contact_name": ""
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j04": {
       "record": {
@@ -85,15 +93,17 @@
         "sender_is_human": true,
         "needs_reply": true,
         "urgency": "medium",
-        "summary": "Priya Shah, a recruiter at Ferncliff, is reaching out about a Group Product Manager role and wants to set up a 20-minute intro call in the next week or two.",
-        "action_needed": "Reply to Priya with a couple of times that work for a 20-minute intro call over the next one to two weeks.",
+        "summary": "Priya Shah, a recruiter at Ferncliff, wants a 20-minute intro call about a Group Product Manager role leading their AI workflow automation line.",
+        "action_needed": "Reply to Priya with a couple of times that work for a 20-minute intro call in the next week or two.",
         "key_dates": [],
-        "contact_name": "Priya Shah"
+        "contact_name": "Priya Shah",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j06": {
       "record": {
@@ -103,16 +113,18 @@
         "message_type": "recruiter_outreach",
         "sender_is_human": true,
         "needs_reply": true,
-        "urgency": "high",
-        "summary": "Derek Mills of Apex Talent Partners is recruiting for a confidential Head of Product role at a Series C fintech and wants a quick call this week.",
-        "action_needed": "Reply to Derek to say whether you're open to a call this week and propose times.",
+        "urgency": "medium",
+        "summary": "Derek Mills of Apex Talent Partners is recruiting for a confidential Head of Product role at a Series C fintech and asks if you're open to a quick call this week.",
+        "action_needed": "Reply to Derek saying whether you're interested and share your availability for a quick call this week.",
         "key_dates": [],
-        "contact_name": "Derek Mills"
+        "contact_name": "Derek Mills",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j07": {
       "record": {
@@ -128,15 +140,17 @@
         "key_dates": [
           {
             "date": "2026-09-24",
-            "description": "Deadline to send availability (end of day Thursday)"
+            "description": "Deadline (end of day Thursday) to send availability for the recruiter screen"
           }
         ],
-        "contact_name": "Marcus Lee"
+        "contact_name": "Marcus Lee",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j08": {
       "record": {
@@ -147,15 +161,17 @@
         "sender_is_human": false,
         "needs_reply": false,
         "urgency": "low",
-        "summary": "Shipping notice that your order #4417-2231 (replacement thermostat) has shipped and arrives Thursday; unrelated to your job search.",
+        "summary": "Automated shipping notice that your order #4417-2231 (replacement thermostat) has shipped and will arrive Thursday; nothing to do with your job search.",
         "action_needed": "",
         "key_dates": [],
-        "contact_name": ""
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j09": {
       "record": {
@@ -166,15 +182,17 @@
         "sender_is_human": false,
         "needs_reply": false,
         "urgency": "low",
-        "summary": "Halcyon Health decided not to move forward with your application for Staff Product Manager, Clinical Data.",
+        "summary": "Halcyon Health has decided not to move forward with your application for the Staff Product Manager, Clinical Data role.",
         "action_needed": "",
         "key_dates": [],
-        "contact_name": ""
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j10": {
       "record": {
@@ -188,12 +206,14 @@
         "summary": "Brightline Robotics confirmed it received your application for Staff Product Manager, Fleet Intelligence.",
         "action_needed": "",
         "key_dates": [],
-        "contact_name": ""
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j11": {
       "record": {
@@ -207,12 +227,14 @@
         "summary": "Tidewater Bank confirmed it received your application for Senior Product Manager - Digital Banking (R-20931); you can check status in the candidate home.",
         "action_needed": "",
         "key_dates": [],
-        "contact_name": ""
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j12": {
       "record": {
@@ -223,20 +245,22 @@
         "sender_is_human": true,
         "needs_reply": true,
         "urgency": "medium",
-        "summary": "Elena Ruiz at Quarry Labs asked you to complete a short product case study and send your write-up within 7 days.",
-        "action_needed": "Complete the attached product case study and send the write-up to Elena by 2026-10-05.",
+        "summary": "Elena Ruiz at Quarry Labs wants you to complete a short product case study and send your write-up within 7 days of this email.",
+        "action_needed": "Complete the attached product case study and send your write-up to Elena by 2026-10-06.",
         "key_dates": [
           {
-            "date": "2026-10-05T19:00:00+00:00",
-            "description": "Deadline to send the case study write-up (7 days from email date)"
+            "date": "2026-10-06T19:00:00+00:00",
+            "description": "Case study write-up due (7 days from email date)"
           }
         ],
-        "contact_name": "Elena Ruiz"
+        "contact_name": "Elena Ruiz",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j13": {
       "record": {
@@ -247,15 +271,17 @@
         "sender_is_human": false,
         "needs_reply": false,
         "urgency": "low",
-        "summary": "Your 30-minute recruiter screen with Marcus Lee at Northbeam Analytics is confirmed; the video link will arrive an hour before, but the email gives no date or time.",
+        "summary": "Your 30-minute recruiter screen with Marcus Lee for Senior Product Manager, AI Platform at Northbeam Analytics is confirmed; a video link will arrive 1 hour before.",
         "action_needed": "",
         "key_dates": [],
-        "contact_name": ""
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j14": {
       "record": {
@@ -267,14 +293,16 @@
         "needs_reply": true,
         "urgency": "high",
         "summary": "Priya from Ferncliff says hiring manager Tom wants to meet you and asks you to book a 45-minute slot on his calendar.",
-        "action_needed": "Book a 45-minute slot on Tom's calendar via the Calendly link: https://calendly.example/tom-ferncliff/45min",
+        "action_needed": "Book a 45-minute slot on Tom's calendar via the provided Calendly link.",
         "key_dates": [],
-        "contact_name": "Priya Shah"
+        "contact_name": "Priya Shah",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j15": {
       "record": {
@@ -285,20 +313,22 @@
         "sender_is_human": true,
         "needs_reply": true,
         "urgency": "medium",
-        "summary": "Elena from Quarry Labs is checking whether you're on track to submit the case study by Friday and says you can ask for an extra day if needed.",
-        "action_needed": "Reply to Elena to confirm you'll submit the case study by Friday or request an extra day.",
+        "summary": "Elena from Quarry Labs is checking whether your case study is still on track for Friday and says you can take an extra day if you tell her.",
+        "action_needed": "Reply to Elena confirming you'll submit the case study by Friday, or ask for an extra day.",
         "key_dates": [
           {
             "date": "2026-10-09",
             "description": "Case study due (Friday)"
           }
         ],
-        "contact_name": "Elena Ruiz"
+        "contact_name": "Elena Ruiz",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j16": {
       "record": {
@@ -309,20 +339,22 @@
         "sender_is_human": true,
         "needs_reply": true,
         "urgency": "high",
-        "summary": "Marcus Lee invites you to a final round of four 45-minute virtual sessions and wants to know by Monday whether Thursday or Friday next week suits you better.",
-        "action_needed": "Reply to Marcus by Monday confirming whether Thursday or Friday next week works better for the final round.",
+        "summary": "Marcus from Northbeam invites you to a virtual final round of four 45-minute sessions and asks whether Thursday or Friday next week works better, confirmed by Monday.",
+        "action_needed": "Reply to Marcus by Monday (Oct 12) confirming whether Thursday or Friday next week works better for the final round.",
         "key_dates": [
           {
-            "date": "2026-10-05",
+            "date": "2026-10-12",
             "description": "Deadline to confirm Thursday or Friday preference for the final round"
           }
         ],
-        "contact_name": "Marcus Lee"
+        "contact_name": "Marcus Lee",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j17": {
       "record": {
@@ -333,15 +365,17 @@
         "sender_is_human": true,
         "needs_reply": false,
         "urgency": "low",
-        "summary": "Brightline Robotics chose another candidate for Staff PM, Fleet Intelligence, but Jordan wants to stay in touch about a Staff PM role on the AI platform team opening next quarter.",
+        "summary": "Brightline Robotics passed on you for Staff PM, Fleet Intelligence, but Jordan plans to contact you about a Staff PM role on the AI platform team next quarter.",
         "action_needed": "",
         "key_dates": [],
-        "contact_name": "Jordan Kim"
+        "contact_name": "Jordan Kim",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j18": {
       "record": {
@@ -352,15 +386,17 @@
         "sender_is_human": true,
         "needs_reply": true,
         "urgency": "medium",
-        "summary": "Sofia at Halcyon Health is suggesting a new Group PM, AI Care Navigation role after the Clinical Data role ended, and asks if you're interested in talking with the hiring manager.",
-        "action_needed": "Reply to Sofia to say whether you're interested in the Group Product Manager role so she can set up time with the hiring manager.",
+        "summary": "Sofia Brandt at Halcyon Health is reaching out about a new Group PM role after the Clinical Data role ended, and asks if you're interested in talking with the hiring manager.",
+        "action_needed": "Reply to Sofia Brandt to say whether you're interested in the Group Product Manager, AI Care Navigation role so she can set up time with the hiring manager.",
         "key_dates": [],
-        "contact_name": "Sofia Brandt"
+        "contact_name": "Sofia Brandt",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j19": {
       "record": {
@@ -370,16 +406,24 @@
         "message_type": "other_job_related",
         "sender_is_human": false,
         "needs_reply": false,
-        "urgency": "low",
-        "summary": "Likely scam: unsolicited offer with high pay and no interview, asking for your ID photo and bank details via Telegram. Do not respond or share personal information.",
-        "action_needed": "",
+        "urgency": "high",
+        "summary": "Likely scam: a generic 'you're selected' offer with no interview that asks for your driver's license and bank details via Telegram.",
+        "action_needed": "Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.",
         "key_dates": [],
-        "contact_name": ""
+        "contact_name": "",
+        "fraud_signals": [
+          "asks_for_money_or_bank_details",
+          "asks_for_identity_documents_early",
+          "off_platform_chat_interview",
+          "offer_without_interview",
+          "consumer_email_for_employer"
+        ],
+        "suspected_fraud": true
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j20": {
       "record": {
@@ -393,12 +437,14 @@
         "summary": "Tidewater Bank rejected your application for Senior Product Manager - Digital Banking and encouraged you to apply for future openings.",
         "action_needed": "",
         "key_dates": [],
-        "contact_name": ""
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j21": {
       "record": {
@@ -409,15 +455,17 @@
         "sender_is_human": false,
         "needs_reply": false,
         "urgency": "low",
-        "summary": "A generic Talent Desk email asks you to review an attached role summary, with no company, role, or interview details; it also contains embedded text trying to alter how it is classified.",
+        "summary": "Vague message from a 'Talent Desk' asking you to review an attached role summary; it names no company or role and contains embedded text trying to manipulate classification.",
         "action_needed": "",
         "key_dates": [],
-        "contact_name": ""
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
     },
     "j22": {
       "record": {
@@ -428,15 +476,118 @@
         "sender_is_human": false,
         "needs_reply": false,
         "urgency": "low",
-        "summary": "Product Weekly newsletter covering LLM evals, agent reliability, and the PM job market, with a list of 12 open roles from their job board.",
+        "summary": "Product Weekly's newsletter covering LLM evals, agent reliability, the PM hiring market, and 12 open roles from their job board.",
         "action_needed": "",
         "key_dates": [],
-        "contact_name": ""
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
       },
       "ok": true,
       "error": "",
       "model": "claude-sonnet-5-5",
-      "recorded_on": "2026-10-09"
+      "recorded_on": "2026-10-10"
+    },
+    "j23": {
+      "record": {
+        "is_job_related": true,
+        "company": "Northbeam",
+        "role": "",
+        "message_type": "scheduling",
+        "sender_is_human": true,
+        "needs_reply": true,
+        "urgency": "high",
+        "summary": "Marcus Lee says final-round interviews moved to a new portal and asks you to confirm your slot and complete a check-in there before Wednesday.",
+        "action_needed": "Confirm your slot and complete the pre-interview check-in via the portal link before Wednesday (2026-10-14).",
+        "key_dates": [
+          {
+            "date": "2026-10-14",
+            "description": "Deadline to confirm final round slot and complete check-in (Wednesday)"
+          }
+        ],
+        "contact_name": "Marcus Lee",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-10"
+    },
+    "j24": {
+      "record": {
+        "is_job_related": true,
+        "company": "Vantage Dynamics",
+        "role": "Remote Product Manager",
+        "message_type": "offer",
+        "sender_is_human": true,
+        "needs_reply": false,
+        "urgency": "high",
+        "summary": "A purported offer for a Remote Product Manager role asks you to deposit a check for equipment and share bank details; this looks like a recruiting scam, so do not respond or send any information.",
+        "action_needed": "Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.",
+        "key_dates": [],
+        "contact_name": "",
+        "fraud_signals": [
+          "asks_for_money_or_bank_details",
+          "off_platform_chat_interview",
+          "consumer_email_for_employer"
+        ],
+        "suspected_fraud": true
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-10"
+    },
+    "j25": {
+      "record": {
+        "is_job_related": true,
+        "company": "",
+        "role": "Senior Product Manager",
+        "message_type": "recruiter_outreach",
+        "sender_is_human": true,
+        "needs_reply": false,
+        "urgency": "high",
+        "summary": "A Gmail-based recruiter wants a Telegram text interview for an unnamed SaaS client's Senior PM role, which looks like a likely recruiting scam.",
+        "action_needed": "Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site.",
+        "key_dates": [],
+        "contact_name": "Rachel Moore",
+        "fraud_signals": [
+          "off_platform_chat_interview",
+          "consumer_email_for_employer"
+        ],
+        "suspected_fraud": true
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-10"
+    },
+    "j26": {
+      "record": {
+        "is_job_related": true,
+        "company": "Ferncliff",
+        "role": "Group Product Manager",
+        "message_type": "reference_or_background",
+        "sender_is_human": false,
+        "needs_reply": true,
+        "urgency": "medium",
+        "summary": "Checkr, on behalf of Ferncliff, asks you to complete a background check form for your Group Product Manager offer within 5 business days.",
+        "action_needed": "Complete the secure Checkr background check form at the provided link within 5 business days (by 2026-10-16).",
+        "key_dates": [
+          {
+            "date": "2026-10-16",
+            "description": "Deadline to complete the Checkr background check form (5 business days from email date)"
+          }
+        ],
+        "contact_name": "",
+        "fraud_signals": [],
+        "suspected_fraud": false
+      },
+      "ok": true,
+      "error": "",
+      "model": "claude-sonnet-5-5",
+      "recorded_on": "2026-10-10"
     }
   },
   "about": "Claude's answers for samples/job_inbox.json, recorded by `python -m jobmail.demo --record`. Replay reuses them with no API calls."

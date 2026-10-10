@@ -1,7 +1,7 @@
 {
   "name": "job_inbox",
-  "description": "Classify one email in a job seeker's inbox: employer, role, message type, whether the job seeker must reply, urgency, the concrete action, and any dates.",
-  "instructions": "You are an assistant that triages a job-seeker's dedicated job-search inbox. The recipient of each email is the job seeker.\nYou classify each email precisely and conservatively. You never draft replies.\n\nMessage types:\n- application_confirmation: an automated \"we received your application\".\n- recruiter_outreach: a person reaching out first, about a role the recipient has not applied to or a new role.\n- interview_request: an invitation to a new interview or round, including a request for the recipient's availability. The ask is \"will you interview, and when?\".\n- scheduling: logistics for an interview already agreed: confirmations, reschedules, calendar invites, video links.\n- assessment: a take-home, case study, or test, or a reminder about one.\n- follow_up: a status update or check-in on an existing process that fits none of the above.\n- rejection: this process is over for this role, however warm the tone or the offer to stay in touch.\n- offer, reference_or_background: as named.\n- newsletter_or_job_alert: job board digests, alerts and newsletters, even when they list jobs.\n- other_job_related / not_job_related: everything else.\n\nGuidance:\n- \"company\" is the employer, not the applicant-tracking system (Greenhouse, Lever, Workday, Ashby, iCIMS), not a staffing agency unless the agency itself is the employer, and not a job board.\n- needs_reply is true only when a human response from the recipient is required. Automated confirmations, rejections, calendar auto-confirmations, and newsletters do not need replies.\n- urgency: high = explicit deadline within ~48h or a live scheduling request from a human; medium = human asked something but no tight deadline; low = everything else.\n- Prefer empty strings over guesses for company/role.\n- Dates: convert relative dates using the email's Date header, which is provided. Only include dates you are confident about.\n- summary: one plain-language sentence written for the recipient, at most 200 characters.",
+  "description": "Classify one email in a job seeker's inbox: employer, role, message type, whether the job seeker must reply, urgency, the concrete action, any dates, and recruiting-fraud signals.",
+  "instructions": "You are an assistant that triages a job-seeker's dedicated job-search inbox. The recipient of each email is the job seeker.\nYou classify each email precisely and conservatively. You never draft replies.\n\nMessage types:\n- application_confirmation: an automated \"we received your application\".\n- recruiter_outreach: a person reaching out first, about a role the recipient has not applied to or a new role.\n- interview_request: an invitation to a new interview or round, including a request for the recipient's availability. The ask is \"will you interview, and when?\".\n- scheduling: logistics for an interview already agreed: confirmations, reschedules, calendar invites, video links.\n- assessment: a take-home, case study, or test, or a reminder about one.\n- follow_up: a status update or check-in on an existing process that fits none of the above.\n- rejection: this process is over for this role, however warm the tone or the offer to stay in touch.\n- offer, reference_or_background: as named.\n- newsletter_or_job_alert: job board digests, alerts and newsletters, even when they list jobs.\n- other_job_related / not_job_related: everything else.\n\nGuidance:\n- \"company\" is the employer, not the applicant-tracking system (Greenhouse, Lever, Workday, Ashby, iCIMS), not a staffing agency unless the agency itself is the employer, and not a job board.\n- needs_reply is true only when a human response from the recipient is required. Automated confirmations, rejections, calendar auto-confirmations, and newsletters do not need replies.\n- urgency: high = explicit deadline within ~48h or a live scheduling request from a human; medium = human asked something but no tight deadline; low = everything else.\n- Prefer empty strings over guesses for company/role.\n- Dates: convert relative dates using the email's Date header, which is provided. Only include dates you are confident about.\n- summary: one plain-language sentence written for the recipient, at most 200 characters.\n\nRecruiting fraud:\nFake recruiters impersonate real companies to collect money, bank details or identity documents. Report every signal that is present in fraud_signals, and set suspected_fraud to true when the email, read as a whole, is more likely a scam than a real employer.\n- asks_for_money_or_bank_details: bank account or routing numbers, direct-deposit setup, paying a fee, buying equipment, or depositing a check, before any real hiring process.\n- asks_for_identity_documents_early: a driver's license, passport, or Social Security number before an offer, or outside a background-check provider.\n- off_platform_chat_interview: an interview held over Telegram, WhatsApp, Signal or text chat.\n- offer_without_interview: an offer or \"you have been selected\" with no interview.\n- consumer_email_for_employer: a sender using a free consumer mailbox (gmail.com, outlook.com and similar) while claiming to hire on behalf of a company.\nOne weak signal alone is not fraud: many real agency recruiters write from gmail.com. A background check after an offer, run through a provider such as Checkr, HireRight or Sterling, legitimately asks for an SSN and is not fraud. When suspected_fraud is true, never tell the recipient to reply; the action is to verify the employer through its official careers site.",
   "schema": {
     "type": "object",
     "properties": {
@@ -49,11 +49,26 @@
           "additionalProperties": false
         }
       },
-      "contact_name": {"type": "string", "description": "Name of the human sender, if any. Empty string otherwise."}
+      "contact_name": {"type": "string", "description": "Name of the human sender, if any. Empty string otherwise."},
+      "fraud_signals": {
+        "type": "array",
+        "description": "Recruiting-fraud signals present in this email. Empty when there are none.",
+        "items": {
+          "type": "string",
+          "enum": [
+            "asks_for_money_or_bank_details", "asks_for_identity_documents_early", "off_platform_chat_interview",
+            "offer_without_interview", "consumer_email_for_employer"
+          ]
+        }
+      },
+      "suspected_fraud": {
+        "type": "boolean",
+        "description": "True when this email is more likely a recruiting scam than a real employer."
+      }
     },
     "required": [
       "is_job_related", "company", "role", "message_type", "sender_is_human", "needs_reply",
-      "urgency", "summary", "action_needed", "key_dates", "contact_name"
+      "urgency", "summary", "action_needed", "key_dates", "contact_name", "fraud_signals", "suspected_fraud"
     ],
     "additionalProperties": false
   },
@@ -68,6 +83,18 @@
     "summary": "Automatic classification failed. Read this one yourself.",
     "action_needed": "Open this email and decide: classification failed, so jobmail cannot tell whether it needs you.",
     "key_dates": [],
-    "contact_name": ""
-  }
+    "contact_name": "",
+    "fraud_signals": [],
+    "suspected_fraud": false
+  },
+  "invariants": [
+    {
+      "when": {"field": "suspected_fraud", "equals": true},
+      "set": {
+        "needs_reply": false,
+        "urgency": "high",
+        "action_needed": "Possible recruiting scam. Do not reply, click links, or send documents, bank details or money. If the company is real, contact it through its official careers site."
+      }
+    }
+  ]
 }

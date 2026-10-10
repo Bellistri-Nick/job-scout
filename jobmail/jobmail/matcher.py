@@ -31,6 +31,8 @@ SHARED_DOMAINS = {
     "linkedin.com", "indeed.com", "glassdoor.com", "ziprecruiter.com",
     "wellfound.com", "hired.com", "calendly.com", "goodtime.io",
     "gmail.com", "outlook.com", "hotmail.com", "yahoo.com", "icloud.com",
+    # background-check providers write on behalf of many employers
+    "checkr.com", "hireright.com", "sterlingcheck.com", "goodhire.com",
 }
 
 # Where an application arrived through. The sender domain of the first message
@@ -95,6 +97,46 @@ def roles_similar(a: str, b: str) -> bool:
     if not ta or not tb:
         return True
     return len(ta & tb) / len(ta | tb) >= 0.5
+
+
+def _name_of(domain: str) -> str:
+    """The part of a domain a person reads as the company: northbeam.example -> northbeam."""
+    parts = domain.lower().split(".")
+    name = parts[-2] if len(parts) >= 2 else parts[0]
+    return name.translate(str.maketrans("0135", "oles"))  # n0rthbeam reads as northbeam
+
+
+def _edits(a: str, b: str) -> int:
+    prev = list(range(len(b) + 1))
+    for i, ca in enumerate(a, 1):
+        cur = [i]
+        for j, cb in enumerate(b, 1):
+            cur.append(min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (ca != cb)))
+        prev = cur
+    return prev[-1]
+
+
+def lookalike_of(domain: str | None, known: list[str]) -> str | None:
+    """The trusted domain this sender imitates, or None.
+
+    `known` is every sender domain jobmail has already linked to an
+    application, which is memory the model never sees. A sender is a lookalike
+    when its domain reads like a trusted one without being it or a subdomain
+    of it: northbeam-careers.example, northbeam.co, n0rthbeam.example.
+    """
+    if not domain or domain in SHARED_DOMAINS:
+        return None
+    d = domain.lower()
+    if any(d == k or d.endswith("." + k) for k in known):
+        return None
+    name = _name_of(d)
+    for k in known:
+        kn = _name_of(k)
+        if len(kn) < 5:
+            continue  # short names collide by accident
+        if name == kn or re.search(rf"(^|[-_]){re.escape(kn)}($|[-_])", name) or _edits(name, kn) <= 2:
+            return k
+    return None
 
 
 # Message types that open a new conversation about a role rather than continue one.

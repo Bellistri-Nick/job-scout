@@ -66,6 +66,8 @@ CREATE TABLE IF NOT EXISTS messages (
     action_needed TEXT,
     replied_at TEXT,
     superseded_by INTEGER,              -- a later message on the same application took over this ask
+    suspected_fraud INTEGER NOT NULL DEFAULT 0,  -- 1 held quietly, 2 held and alerted (poses as a company you're talking to)
+    fraud_signals TEXT,                 -- JSON list
     alerted_at TEXT,
     created_at TEXT NOT NULL,
     UNIQUE(folder, uid)
@@ -126,6 +128,10 @@ class Database:
         mcols = {r["name"] for r in self.conn.execute("PRAGMA table_info(messages)")}
         if "superseded_by" not in mcols:
             self.conn.execute("ALTER TABLE messages ADD COLUMN superseded_by INTEGER")
+            self.conn.commit()
+        if "suspected_fraud" not in mcols:
+            self.conn.execute("ALTER TABLE messages ADD COLUMN suspected_fraud INTEGER NOT NULL DEFAULT 0")
+            self.conn.execute("ALTER TABLE messages ADD COLUMN fraud_signals TEXT")
             self.conn.commit()
         cols = {r["name"] for r in self.conn.execute("PRAGMA table_info(events)")}
         if "to_stage" not in cols:
@@ -382,10 +388,22 @@ class Database:
                   AND m.superseded_by IS NULL
                   AND m.direction = 'inbound'
                   AND COALESCE(m.is_job_related, 0) = 1
-                  AND (m.needs_reply = 1 OR m.message_type IN ({placeholders}))
+                  AND (m.suspected_fraud = 2 OR (m.suspected_fraud = 0 AND
+                       (m.needs_reply = 1 OR m.message_type IN ({placeholders}))))
                 ORDER BY m.sent_at""",
             tuple(types),
         ).fetchall()
+
+    def trusted_domains(self) -> list[str]:
+        """Every sender domain already linked to an application: the lookalike check's memory."""
+        out: set[str] = set()
+        for r in self.conn.execute("SELECT sender_domains FROM applications"):
+            out.update(json.loads(r["sender_domains"] or "[]"))
+        return sorted(out)
+
+    def list_held_for_verification(self) -> list[sqlite3.Row]:
+        return self.conn.execute(
+            "SELECT * FROM messages WHERE suspected_fraud>0 ORDER BY sent_at").fetchall()
 
     def supersede_open_asks(self, app_id: int, newer_msg_id: int, before: str) -> int:
         """A newer inbound message on an application takes over its older open asks.

@@ -121,6 +121,8 @@ def summarise(spec_name: str, items: list[dict[str, Any]], model: str) -> dict[s
     key_bool = "needs_reply" if spec_name == "job_inbox" else "requires_human_verification"
     pairs = [(it["expect"][key_bool], bool(it["record"].get(key_bool)))
              for it in items if isinstance(it["expect"].get(key_bool), bool)]
+    fraud = [(it["expect"]["suspected_fraud"], bool(it["record"].get("suspected_fraud")))
+             for it in items if isinstance(it["expect"].get("suspected_fraud"), bool)]
     pin, pout = PRICES.get(model, (0, 0))
     tin = sum(it["input_tokens"] for it in items)
     tout = sum(it["output_tokens"] for it in items)
@@ -131,6 +133,7 @@ def summarise(spec_name: str, items: list[dict[str, Any]], model: str) -> dict[s
         "field_accuracy": {k: round(sum(v) / len(v), 3) for k, v in sorted(fields.items())},
         "critical_field": key_bool,
         "critical": _prf(pairs),
+        "fraud": _prf(fraud) if fraud else None,
         "fallbacks": sum(not it["ok"] for it in items),
         "input_tokens": tin, "output_tokens": tout,
         "cost_usd": round(tin * pin / 1e6 + tout * pout / 1e6, 4),
@@ -213,6 +216,13 @@ def _range(vals: list[float | None]) -> str:
     return _fmt_pct(lo) if lo == hi else f"{_fmt_pct(lo)}–{_fmt_pct(hi)}"
 
 
+def _fraud_cells(runs: list[dict[str, Any]]) -> str:
+    """Fraud columns; n/a for results recorded before the samples carried fraud labels."""
+    if not all(x.get("fraud") for x in runs):
+        return "n/a | n/a | "
+    return f"{_range([x['fraud']['recall'] for x in runs])} | {_range([x['fraud']['precision'] for x in runs])} | "
+
+
 def build_report() -> str:
     files = sorted(RESULTS.glob("*.json"))
     results = [json.loads(f.read_text(encoding="utf-8")) for f in files]
@@ -227,8 +237,9 @@ def build_report() -> str:
         crit = rs[0]["runs"][0]["critical_field"]
         out += [f"## {skill}", "",
                 f"| Config | n × runs | Fully correct | Type acc. | {crit} recall | {crit} precision | "
-                "Fallbacks | Stable | $ / 1k msgs | Median latency |",
-                "|---|---|---|---|---|---|---|---|---|---|"]
+                + ("Fraud recall | Fraud precision | " if skill == "job_inbox" else "")
+                + "Fallbacks | Stable | $ / 1k msgs | Median latency |",
+                "|---|---|---|---|---|---|" + ("---|---|" if skill == "job_inbox" else "") + "---|---|---|---|"]
         for r in sorted(rs, key=lambda r: (r["legacy"], r.get("tag", ""), r["model"], r["effort"])):
             runs = r["runs"]
             n = runs[0]["n"]
@@ -239,7 +250,8 @@ def build_report() -> str:
             out.append(
                 f"| {name} | {n} × {len(runs)} | {_range(fc)} | {_range(ta)} | "
                 f"{_range([x['critical']['recall'] for x in runs])} | {_range([x['critical']['precision'] for x in runs])} | "
-                f"{sum(x['fallbacks'] for x in runs)} | {r['stable_items']}/{n} | "
+                + (_fraud_cells(runs) if skill == "job_inbox" else "")
+                + f"{sum(x['fallbacks'] for x in runs)} | {r['stable_items']}/{n} | "
                 f"${statistics.mean(x['cost_per_1k_messages_usd'] for x in runs):.2f} | "
                 f"{str(runs[0]['median_latency_s']) + 's' if runs[0]['median_latency_s'] else 'n/a'} |")
         out.append("")
@@ -271,6 +283,8 @@ def build_report() -> str:
                 out.append(f"- **{it['id']}** ({times}/{r['repeats']}) expected `{json.dumps(want)}`, "
                            f"got `{json.dumps(got, default=str)}`.{err}")
             out.append("")
+    from .brief_eval import report_section
+    out += report_section()
     return "\n".join(out)
 
 

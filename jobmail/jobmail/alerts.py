@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import logging
 import smtplib
 from email.message import EmailMessage
@@ -120,8 +121,16 @@ def format_alert(m, dashboard_url: str = "") -> tuple[str, str, str]:
     elif not label:
         icon, label = "📨", "Job mail"
 
-    role = m["role"] or ""
-    title = (m["company"] or "Unknown company") + (f" — {role}" if role else "")
+    fraud = "suspected_fraud" in m.keys() and bool(m["suspected_fraud"])
+    if fraud:
+        # Held messages are never linked, so company/role come from what the
+        # sender claimed. Say so: the claim is exactly what is in doubt.
+        icon, label, needs_reply = "⚠️", "Possible scam, verify before acting", False
+        claimed = json.loads(m["classification"] or "{}").get("company") or ""
+        title = f"claims to be {claimed}" if claimed else (m["from_addr"] or "unknown sender")
+    else:
+        role = m["role"] or ""
+        title = (m["company"] or "Unknown company") + (f" — {role}" if role else "")
     who = f"{m['from_name']} <{m['from_addr']}>" if m["from_name"] else (m["from_addr"] or "")
     urg = f" ({m['urgency']})" if needs_reply and m["urgency"] else ""
 

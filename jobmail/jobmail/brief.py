@@ -44,7 +44,8 @@ def _days_since(iso: str | None, now: datetime) -> int | None:
 def evidence_pack(db: Database, stale_days: int = 14, now: datetime | None = None) -> dict[str, Any]:
     now = now or datetime.now(timezone.utc)
     pack: dict[str, Any] = {"as_of": now.date().isoformat(), "open_asks": [], "upcoming_dates": [],
-                            "moved_last_7_days": [], "gone_quiet": [], "needs_review": [], "stats": []}
+                            "moved_last_7_days": [], "gone_quiet": [], "needs_review": [], "held_for_verification": [],
+                            "stats": []}
 
     for r in db.list_needs_reply():
         pack["open_asks"].append({
@@ -82,6 +83,7 @@ def evidence_pack(db: Database, stale_days: int = 14, now: datetime | None = Non
         """SELECT id, from_name, from_addr, subject, summary, message_type, sent_at FROM messages
            WHERE direction='inbound' AND is_job_related=1
              AND COALESCE(message_type, '') <> 'newsletter_or_job_alert'
+             AND suspected_fraud = 0
              AND ((application_id IS NULL AND needs_reply=0) OR summary LIKE ?)
              AND sent_at >= ? ORDER BY sent_at""",
         (FAILED_PREFIX + "%", (now - timedelta(days=30)).isoformat())):
@@ -90,6 +92,16 @@ def evidence_pack(db: Database, stale_days: int = 14, now: datetime | None = Non
         pack["needs_review"].append({
             "id": f"M{m['id']}", "from": m["from_name"] or m["from_addr"], "subject": m["subject"],
             "summary": m["summary"], "reason": reason,
+        })
+
+    for m in db.list_held_for_verification():
+        if (m["sent_at"] or "") < (now - timedelta(days=30)).isoformat():
+            continue
+        claimed = json.loads(m["classification"] or "{}").get("company") or ""
+        pack["held_for_verification"].append({
+            "id": f"H{m['id']}", "from": m["from_addr"], "subject": m["subject"],
+            "claims_to_be": claimed, "signals": json.loads(m["fraud_signals"] or "[]"),
+            "poses_as_a_company_you_are_talking_to": m["suspected_fraud"] == 2,
         })
 
     s = db.outcome_stats()
@@ -105,7 +117,7 @@ def evidence_pack(db: Database, stale_days: int = 14, now: datetime | None = Non
 
 def evidence_ids(pack: dict[str, Any]) -> set[str]:
     ids = set()
-    for section in ("open_asks", "upcoming_dates", "gone_quiet", "needs_review", "stats"):
+    for section in ("open_asks", "upcoming_dates", "gone_quiet", "needs_review", "held_for_verification", "stats"):
         ids |= {x["id"] for x in pack[section]}
     ids |= {x["application"] for sec in ("open_asks", "upcoming_dates", "moved_last_7_days")
             for x in pack[sec] if x.get("application")}
@@ -144,6 +156,9 @@ SYSTEM_ASSUMPTIONS = [
     "Mail is linked to applications by thread headers first, then company name, then sender domain. "
     "Company and domain links can attach mail to the wrong application when one company has two open roles.",
     "\"Applied\" is the date of the first email seen for that application, not necessarily the day you applied.",
+    "A held message is the model's fraud judgment, or a sender domain that imitates one already on file. Held mail "
+    "is never linked to an application, so a legitimate company writing from a new domain stays held until you "
+    "confirm it.",
 ]
 
 
@@ -201,6 +216,13 @@ def render(pack: dict[str, Any], result: TriageResult | None, kept: list[dict], 
     L += [f"### Needs a human look ({len(pack['needs_review'])})", ""]
     L += [f"- **{n['id']}** from {n['from']}: \"{n['subject']}\". {n['reason'].capitalize()}. "
           f"Model summary: {n['summary']}" for n in pack["needs_review"]] or ["Nothing unlinked or unclassified."]
+    L.append("")
+
+    L += [f"### Held for verification ({len(pack['held_for_verification'])})", ""]
+    L += [f"- **{h['id']}** from {h['from']}" + (f", claims to be {h['claims_to_be']}" if h["claims_to_be"] else "")
+          + f": \"{h['subject']}\". Signals: {', '.join(h['signals'])}."
+          + (" **Poses as a company you are in process with.**" if h["poses_as_a_company_you_are_talking_to"] else "")
+          for h in pack["held_for_verification"]] or ["Nothing held."]
     L.append("")
 
     L += ["### Numbers", "", "| ID | Measure | Value |", "|---|---|---|"]

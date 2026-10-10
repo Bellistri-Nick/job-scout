@@ -61,6 +61,8 @@ class Classification:
     contact_name: str = ""
     raw: dict[str, Any] = field(default_factory=dict)
     failed: bool = False          # True when the skill fell back instead of classifying
+    suspected_fraud: bool = False
+    fraud_signals: list[str] = field(default_factory=list)
 
     @classmethod
     def from_dict(cls, d: dict[str, Any]) -> "Classification":
@@ -81,7 +83,18 @@ class Classification:
             ],
             contact_name=(d.get("contact_name") or "").strip(),
             raw=d,
+            suspected_fraud=bool(d.get("suspected_fraud", False)),
+            fraud_signals=list(d.get("fraud_signals") or []),
         )
+
+    def flag_fraud(self, signal: str, action: str) -> None:
+        """Mark as suspected fraud after the model answered, keeping the record in step."""
+        self.suspected_fraud = True
+        if signal not in self.fraud_signals:
+            self.fraud_signals.append(signal)
+        self.needs_reply, self.urgency, self.action_needed = False, "high", action
+        self.raw = {**self.raw, "suspected_fraud": True, "fraud_signals": self.fraud_signals,
+                    "needs_reply": False, "urgency": "high", "action_needed": action}
 
     def to_json(self) -> str:
         return json.dumps(self.raw or self.__dict__, default=str)

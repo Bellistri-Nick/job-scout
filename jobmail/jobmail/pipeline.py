@@ -6,6 +6,7 @@ Run with `python -m jobmail.pipeline` (or via the systemd timer).
 from __future__ import annotations
 
 import argparse
+import json
 import logging
 from datetime import datetime, timezone
 
@@ -14,7 +15,7 @@ from .classifier import STAGE_FOR_TYPE, Classification, Classifier, ClaudeClassi
 from .config import Config, use_utf8_io
 from .db import Database, now_iso
 from .mail import SENT_FOLDER_CANDIDATES, MailClient, ParsedMessage
-from .matcher import Matcher, normalise_company
+from .matcher import Matcher, MatchResult, lookalike_of, normalise_company
 from .obsidian import ObsidianWriter
 from .triage import SkillSpec
 
@@ -65,6 +66,36 @@ class Pipeline:
         if cls.failed:
             log.warning("UID %s fell back to manual review: %s", msg.uid,
                         getattr(getattr(self.classifier, "last_result", None), "error", "") or "exception")
+
+        imitated = lookalike_of(msg.from_domain, self.db.trusted_domains())
+        if imitated and cls.is_job_related:
+            # The model cannot know which domains a company really writes from.
+            # Memory can: every domain on file came from a message that linked.
+            cls.flag_fraud("lookalike_sender_domain",
+                           f"Verify the sender first: this came from {msg.from_domain}, but earlier mail "
+                           f"from this company came from {imitated}. Do not click links or send anything "
+                           f"until you confirm it through a channel you already trust.")
+
+        if cls.suspected_fraud:
+            # Held, not linked. Linking would advance a real application's stage
+            # on a scammer's word, and teach the matcher to trust the scammer's
+            # domain for every future message.
+            # Page only when the sender poses as a company you are in a process
+            # with: that is where a reply does real damage, and the case the
+            # model cannot see. Generic scams are held quietly.
+            key = normalise_company(cls.company)
+            impersonates = bool(imitated) or bool(key and self.db.find_applications_by_company(key))
+            self.last_match = MatchResult(None, False, "held(fraud)")
+            self.db.update_message(
+                msg_id, application_id=None, classification=cls.to_json(),
+                is_job_related=int(cls.is_job_related), message_type=cls.message_type,
+                needs_reply=0, urgency=cls.urgency, summary=cls.summary,
+                action_needed=cls.action_needed, suspected_fraud=2 if impersonates else 1,
+                fraud_signals=json.dumps(cls.fraud_signals),
+            )
+            log.warning("UID %s held for verification (%s): %s", msg.uid,
+                        ", ".join(cls.fraud_signals) or "model judgment", msg.from_addr)
+            return msg_id
 
         match = self.matcher.match(msg, cls)
         self.last_match = match

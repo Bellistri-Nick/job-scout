@@ -219,7 +219,8 @@ def test_classifier_asks_for_low_effort(monkeypatch):
             import json as _json
             rec = {"is_job_related": True, "company": "Acme", "role": "", "message_type": "rejection",
                    "sender_is_human": False, "needs_reply": False, "urgency": "low", "summary": "s",
-                   "action_needed": "", "key_dates": [], "contact_name": ""}
+                   "action_needed": "", "key_dates": [], "contact_name": "",
+                   "fraud_signals": [], "suspected_fraud": False}
             class R:
                 content = [type("B", (), {"type": "text", "text": _json.dumps(rec)})()]
                 usage = None

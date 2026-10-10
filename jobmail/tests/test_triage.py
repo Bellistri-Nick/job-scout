@@ -34,7 +34,8 @@ class FakeClient:
 def job_record(**over):
     rec = {"is_job_related": True, "company": "Acme", "role": "PM", "message_type": "interview_request",
            "sender_is_human": True, "needs_reply": True, "urgency": "high", "summary": "s",
-           "action_needed": "Send times", "key_dates": [], "contact_name": "Jane"}
+           "action_needed": "Send times", "key_dates": [], "contact_name": "Jane",
+           "fraud_signals": [], "suspected_fraud": False}
     rec.update(over)
     return rec
 

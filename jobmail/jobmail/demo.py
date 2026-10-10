@@ -220,6 +220,11 @@ def run(run_no: int, mode: str, reset: bool, env: str | None, model: str, effort
     lines += [f"  [{r['urgency']}] {(r['company'] or 'unlinked'):22} {r['action_needed'] or r['summary']}"
               for r in pending] or ["  nothing"]
 
+    lines += ["", "HELD FOR VERIFICATION (never linked, never learned)"]
+    held = db.list_held_for_verification()
+    lines += [f"  {r['from_addr']:42} {', '.join(json.loads(r['fraud_signals'] or '[]'))}"
+              for r in held] or ["  nothing"]
+
     lines += ["", "PIPELINE"]
     for a in db.list_applications():
         lines.append(f"  #{a['id']:<3} {a['company']:22} {(a['role'] or '-')[:40]:40} {a['stage']}")
