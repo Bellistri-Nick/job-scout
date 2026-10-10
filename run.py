@@ -412,6 +412,8 @@ def profile_schema(template, keys):
 
 def cmd_profile_from_resume(args):
     """Draft a profile from a resume using Claude, then write it for review."""
+    if not (args.resume or args.interview):
+        sys.exit("Give a resume, an interview file (--interview), or both.")
     try:
         import anthropic
     except ImportError:
@@ -419,8 +421,6 @@ def cmd_profile_from_resume(args):
     if not (os.getenv("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_AUTH_TOKEN")):
         sys.exit("Set ANTHROPIC_API_KEY in .env first.")
 
-    if not (args.resume or args.interview):
-        sys.exit("Give a resume, an interview file (--interview), or both.")
     resume = ""
     if args.resume:
         with open(args.resume, encoding="utf-8", errors="replace") as fh:
