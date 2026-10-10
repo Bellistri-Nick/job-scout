@@ -1,10 +1,10 @@
 # jobmail
 
-The second of two agents. [Job Scout](../docs/SCOUT.md) finds roles worth applying to; jobmail tracks what happens after you do. The whole story, both agents and the bridge between them, is in [CASE_STUDY.md](../CASE_STUDY.md).
+The second of two agents. [Job Scout](../docs/SCOUT.md) finds roles worth applying to; jobmail tracks what happens after you do. The write-up covering both agents and the bridge between them is [CASE_STUDY.md](../CASE_STUDY.md).
 
 An agent that reads a job-search inbox, decides what needs a human, and keeps the pipeline current without anyone typing into a spreadsheet. It has run on a Raspberry Pi against my own search since September 2026 and tracked 56 applications from first email to outcome.
 
-The interesting part is not the job search. It is the shape: **an inbox where most mail is noise, a few messages need a decision, and missing one has a cost.** Recruiting coordinators, AP specialists and deal desks all live in that shape. The triage engine here is built to be pointed at those inboxes, and `ap_inbox` proves it with no new code.
+What carries over to other work is the shape of the problem: an inbox where most mail is noise, a few messages need a decision, and missing one has a cost. Recruiting coordinators, AP specialists and deal desks all work in an inbox like that. The triage engine here is built to be pointed at those inboxes, and `ap_inbox` proves it with no new code.
 
 | | |
 |---|---|
@@ -25,7 +25,7 @@ Three things went wrong in practice:
 
 ## Current workflow, mapped
 
-Before touching a model, I wrote down what actually happens per message and where the time goes.
+Before touching a model, I wrote down what happens to each message and where the time goes.
 
 | Step | Who / tool | Friction |
 |---|---|---|
@@ -50,7 +50,7 @@ Only step 4 needs a model. Steps 2, 6 and 7 are bookkeeping that should be deter
 | Clear what was handled | `pipeline.py` | Code | Your sent mail and newer messages resolve older asks |
 | Weekly brief | `brief.py` + `pipeline_brief` skill | **Claude**, code-checked | Prioritised recommendations that must cite database evidence |
 
-**Boundaries.** jobmail is read-only. It never sends mail, never drafts replies, and never deletes anything. The worst a wrong classification can do is a wrong label or an unnecessary alert. When the model call fails, the fallback flags the message for a human at high urgency rather than filing it quietly.
+**Boundaries.** jobmail is read-only. It never sends mail, never drafts replies, and never deletes anything. The worst a wrong classification can do is a wrong label or an unnecessary alert. When the model call fails, the fallback flags the message for a human at high urgency instead of filing it as handled.
 
 ## Architecture
 
@@ -93,7 +93,7 @@ Triage(SkillSpec.load("ap_inbox")).run(text)             # Python
 "triage this with the AP skill"                          # Claude Code, via .claude/skills/inbox-triage
 ```
 
-The Claude Code skill ([`.claude/skills/inbox-triage/SKILL.md`](../.claude/skills/inbox-triage/SKILL.md)) is the enablement piece: a playbook for pointing the engine at a new team's inbox. Map the workflow first, write the spec, label 10 to 25 samples, run the eval, and clear a rollout gate before it touches live mail.
+The Claude Code skill ([`.claude/skills/inbox-triage/SKILL.md`](../.claude/skills/inbox-triage/SKILL.md)) is the enablement piece: a playbook for pointing the engine at a new team's inbox. Map the workflow first, write the spec, label 10 to 25 samples, run the eval, and pass an agreed bar before it touches live mail.
 
 `job_inbox` has one invariant of its own: when the model judges an email a likely recruiting scam, code forces `needs_reply` off, urgency to high, and the action to "do not reply, verify through the company's official site." In the eval it fired on every scam, because the model rated urgency lower each time.
 
@@ -127,7 +127,7 @@ The full output is in [examples/demo-run2.txt](examples/demo-run2.txt). Without 
 
 ## Usable output
 
-- **Alerts** (Telegram and email): one per message that needs you, headed by the event ("Reply needed", "Scheduling", "Upcoming"), with the company, role, and the concrete action, such as "Reply to Marcus with two or three times by end of day Thursday." A held scam pages you only when it poses as a company you are in a process with. Generic "you've been selected" scams are held quietly and listed in the brief.
+- **Alerts** (Telegram and email): one per message that needs you, headed by the event ("Reply needed", "Scheduling", "Upcoming"), with the company, role, and the concrete action, such as "Reply to Marcus with two or three times by end of day Thursday." A held scam pages you only when it poses as a company you are in a process with. Generic "you've been selected" scams are held without an alert and listed in the brief.
 - **Dashboard**: pipeline by stage, open asks, metrics. Private, behind Tailscale.
 - **Obsidian notes**: one per application, regenerated each run; your own notes below a marker survive.
 - **Weekly brief** ([example](examples/pipeline-brief.md)), built in three sections so a reader can tell fact from inference:
@@ -140,20 +140,20 @@ The full output is in [examples/demo-run2.txt](examples/demo-run2.txt). Without 
 
 26 synthetic job emails and 10 synthetic AP emails, each hand-labelled, run three times per configuration. Fictional companies on reserved `.example` domains; no real correspondence is in this repository. The samples deliberately include an agency recruiter who withholds the employer, three recruiting scams (ID and bank details, an equipment check, a Telegram "interview"), a lookalike sender domain, a real background check that asks for an SSN, a prompt-injection attempt, HTML-only mail, a warm rejection that reads like outreach, and three AP fraud patterns.
 
-The field that matters most is **recall on `needs_reply`**: a missed reply costs an opportunity. Precision is reported beside it because false alarms erode trust in the alerts. From spec v3, **fraud recall and precision** sit beside it: a missed scam costs money or identity, and a false flag hides a real employer.
+The field that matters most is recall on `needs_reply`, because a missed reply costs an opportunity. Precision is reported beside it because false alarms erode trust in the alerts. From spec v3, **fraud recall and precision** sit beside it: a missed scam costs money or identity, and a false flag hides a real employer.
 
 | Configuration | Emails | Fully correct | needs_reply recall | Fraud recall / precision | Fallbacks | $ per 1k emails |
 |---|---|---|---|---|---|---|
 | Original request, Sonnet 5.5 | 22 | 9% | **0%** | n/a | **22 of 22** | n/a |
 | Original request, Sonnet 5 | 22 | 82% | 100% | n/a | 0 | $7.02 |
-| Spec v1, Sonnet 5 (old production) | 22 | 86–91% | 100% | n/a | 0 | $4.73 |
-| Spec v1, Sonnet 5.5 | 22 | 95–100% | 100% | n/a | 0 | $4.87 |
-| Spec v1, Opus 5.5 | 22 | 95–100% | 100% | n/a | 0 | $10.01 |
-| Spec v2, Haiku 5.5 | 22 | 95–100% | 100% | n/a | 0 | $0.27 |
+| Spec v1, Sonnet 5 (old production) | 22 | 86-91% | 100% | n/a | 0 | $4.73 |
+| Spec v1, Sonnet 5.5 | 22 | 95-100% | 100% | n/a | 0 | $4.87 |
+| Spec v1, Opus 5.5 | 22 | 95-100% | 100% | n/a | 0 | $10.01 |
+| Spec v2, Haiku 5.5 | 22 | 95-100% | 100% | n/a | 0 | $0.27 |
 | Spec v2, Sonnet 5.5 | 22 | 100% | 100% | n/a | 0 | $5.55 |
-| Spec v3, Haiku 5.5 | 26 | 88–92% | 100% | 100% / 100% | 0 | $0.36 |
+| Spec v3, Haiku 5.5 | 26 | 88-92% | 100% | 100% / 100% | 0 | $0.36 |
 | **Spec v3, Sonnet 5.5 (production)** | **26** | **100%** | **100%** | **100% / 100%** | **0** | **$7.08** |
-| `ap_inbox`, Haiku 5.5 / Sonnet 5 / Sonnet 5.5 | 10 | 100% | 100% (verification) | n/a | 0 | $0.26–$5.15 |
+| `ap_inbox`, Haiku 5.5 / Sonnet 5 / Sonnet 5.5 | 10 | 100% | 100% (verification) | n/a | 0 | $0.26-$5.15 |
 
 Ranges are min to max across three repeats. v3 is scored on four more emails than v1 and v2, so compare within a spec. Full results and every miss: [eval/REPORT.md](eval/REPORT.md).
 
@@ -162,7 +162,7 @@ Ranges are min to max across three repeats. v3 is scored on four more emails tha
 ### What the eval found
 
 1. **A silent outage waiting for a model upgrade.** The original classifier forced a tool call to get JSON back. Current models reject that with a 400. A broad `except` turned each failure into "nothing needs a reply," so on Sonnet 5.5 every email would have been filed as handled and no alert would ever fire. The eval reproduces it: 22 of 22 fallbacks, 0% recall. Fixed by switching to structured outputs and making the fallback page a human.
-2. **Label definitions lived in code comments.** The model kept calling "please send your availability" `scheduling` instead of `interview_request`. The distinction existed, written as a comment in `classifier.py`, where the model never saw it. Moving the definitions into the prompt (spec v2) took Sonnet 5 from 86–91% to 95% and Sonnet 5.5 to 100% on every repeat, for about 12% more input tokens.
+2. **Label definitions lived in code comments.** The model kept calling "please send your availability" `scheduling` instead of `interview_request`. The distinction existed, written as a comment in `classifier.py`, where the model never saw it. Moving the definitions into the prompt (spec v2) took Sonnet 5 from 86-91% to 95% and Sonnet 5.5 to 100% on every repeat, for about 12% more input tokens.
 3. **A model choice backed by data.** Sonnet 5.5 is now the default: perfect on this set at the same price as the model it replaced. Haiku 5.5 is the credible cost play at 5% of the price. Under v2 its one miss mattered: in 2 of 3 runs it named the scam sender as an employer, which created a fake application. Under v3 it still names him, but a flagged scam can no longer create anything, so the miss is now harmless.
 4. **The model cannot catch a lookalike domain, and should not be asked to.** The email from `northbeam-careers.example` passed as genuine in all six runs across both models, because nothing in its text is wrong. That moved the check out of the prompt and into code that reads memory. It is a pipeline test, not a classifier label, for that reason.
 5. **The eval had a bug too.** The brief eval's first run failed 3 of 3 briefs for an "unsupported number": 21. The model was quoting the stat named "no response after 21 days", correctly. The check now accepts numbers from stat names, and `--rescore` re-checked the saved answers without new API calls. A failing eval gets read before the prompt gets changed.
@@ -251,10 +251,10 @@ Running the pipeline with the hand labels standing in for Claude (a perfect clas
 ## What I learned
 
 - **The most dangerous failure is a quiet one.** A crash gets fixed in an hour. A fallback that says "nothing to do" can run for weeks.
-- **If the model needs to know it, it goes in the prompt.** Code comments are documentation for engineers, not instructions for the model.
+- **The model never reads code comments.** If it needs a definition to label correctly, the definition goes in the prompt.
 - **Separate model errors from logic errors before you tune anything.** Half the defects here were in deterministic code, and no amount of prompt work would have fixed them.
 - **Evals turn a model upgrade into a data decision.** The switch to Sonnet 5.5 took one command and a table.
-- **Some judgments belong to memory, not the model.** Whether a sender is who they claim depends on history the model never sees. Asking a better prompt to catch it would have been theater.
+- **The model can't judge what it can't see.** Whether a sender is who they claim depends on history that lives in the database, so that check belongs in code that reads it.
 
 ## Limitations and what I would fix before rollout to a team
 
@@ -266,13 +266,13 @@ Running the pipeline with the hand labels standing in for Claude (a perfect clas
 - Add a "this sender is real" step. Today a held message is released by SQL; it should trust the domain, link the message, and replay its stage change.
 - Lookalike matching compares names, not registrations. A determined impostor on an unrelated domain gets past it; that case is the model's, and the eval covers it with three scams.
 - Alert on fallback rate. One failed call is noise; ten in an hour is an outage.
-- Run the eval in CI on every spec or model change, gated on 100% recall for the critical field.
+- Run the eval in CI on every spec or model change, and block the change if recall on the critical field drops below 100%.
 
 **Usability.** A correction UI instead of SQL, and per-user configuration so the tracker serves more than one person.
 
 ## Built vs. reused
 
-**Built** (application code, specs, samples, tests, eval harness, docs): the triage engine and three specs, the pipeline, matcher, data model, alerts, Obsidian writer, dashboard, backfill, demo, eval and brief. Built in Claude Code: I chose the problem, set the architecture, wrote every label and made the trade-off calls; Claude Code wrote most of the code to that direction, and every change went through the tests and evals here.
+**Built** (application code, specs, samples, tests, eval harness, docs): the triage engine and three specs, the pipeline, matcher, data model, alerts, Obsidian writer, dashboard, backfill, demo, eval and brief. I built it in Claude Code. I chose the problem and the architecture, wrote the labels, and made the trade-off calls. Claude Code wrote most of the code, and every change went through the tests and evals in this repo.
 
 **Reused**: the Anthropic Python SDK, FastAPI, Uvicorn, Jinja2, python-dotenv, SQLite, systemd, Tailscale.
 

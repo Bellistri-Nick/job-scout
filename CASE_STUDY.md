@@ -1,6 +1,6 @@
 # Case study: a job search run by two agents
 
-One workflow, end to end: **find the right roles, apply, and never lose track of what happens next.** Two agents split it at the natural seam.
+One workflow, end to end: find the right roles, apply, and keep track of what happens next. Two agents split it where the work changes, at the moment you apply.
 
 | | Job Scout (v1) | jobmail (v2) |
 |---|---|---|
@@ -11,7 +11,7 @@ One workflow, end to end: **find the right roles, apply, and never lose track of
 | Memory | Every posting seen and sent | Every application, message, date and stage change |
 | Since | September 2026, on a Raspberry Pi | September 2026, same Pi |
 
-A read-only bridge connects them. Scout skips roles jobmail already tracks, and `run.py funnel` joins what Scout emailed to how far each role got. That join answers the question that justifies both agents: do strong matches turn into interviews more often than the rest?
+A read-only bridge connects them. Scout skips roles jobmail already tracks, and `run.py funnel` joins what Scout emailed to how far each role got. The join answers the question both agents have to earn their keep on: do strong matches turn into interviews more often than the rest?
 
 | | |
 |---|---|
@@ -50,21 +50,22 @@ Two steps need judgment over free text: 3 and 7. Each agent puts a model on exac
 | Version | When | What changed | Why |
 |---|---|---|---|
 | v0 | April 2026 | One script, criteria hard-coded, Claude reading postings | A first test of whether a model could stand in for keyword alerts |
-| v1, Job Scout | Sep 3–24 | Profile from resume + interview; public ATS feeds; rules then model; ranked email; dedupe memory; Pi timer | v0 only worked for one person and one set of criteria |
-| v2, jobmail | Sep 12 – Oct 7 | Inbox agent: classify, link, track stages, alert, dashboard | Finding roles was solved; losing track of them after applying was the new bottleneck |
+| v1, Job Scout | Sep 3 to 24 | Profile from resume + interview; public ATS feeds; rules then model; ranked email; dedupe memory; Pi timer | v0 only worked for one person and one set of criteria |
+| v2, jobmail | Sep 12 to Oct 7 | Inbox agent: classify, link, track stages, alert, dashboard | Finding roles was solved; losing track of them after applying was the new bottleneck |
 | v2.1 | Oct 9 | Reusable triage skills, evals for both agents, the bridge, a weekly brief, and the bugs they found | Prove it works, make it reusable, connect the two halves |
 | v2.2 | Oct 10 | Recruiting-fraud handling, a lookalike-sender check that reads memory, an eval for the brief, one-command demo | Scams were the one known failure left, and the brief was the one model output without an eval |
 
 ## Job Scout (v1)
 
-### The profile is the product
+### The profile drives every score
 
-The engine is the same for everyone. What changes is `profile.json`: target titles, blocks, locations, comp floor, the vocabulary of the work, and plain-language fit signals for the model. It's built in two steps:
+The engine is the same for everyone. What changes is `profile.json`: target titles, blocks, locations, comp floor, the vocabulary of the work, and plain-language fit signals for the model. Claude Code builds it with you in three steps:
 
-1. **A setup interview.** Scout's `SKILL.md` has Claude Code ask what you want, where, for how much, what must never reach your inbox, and what a strong fit looks like. The answers go in a file ([samples/scout/interview.md](samples/scout/interview.md)).
-2. **`profile-from-resume`.** Claude reads the resume plus the interview answers and drafts the profile, as a schema-constrained JSON object. Interview answers override anything inferred from the resume.
+1. **A setup interview.** Following Scout's `SKILL.md`, Claude reads your resume and plays it back in two sentences. Then it asks up to seven questions, one at a time: the next title, where you'll work, your pay floor, what must never reach your inbox, what a strong fit looks like, and what a misleading posting looks like. It skips anything the resume already answered. Your answers are saved in your own words to `config/interview.md` ([sample](samples/scout/interview.md)), so a later "update my profile" edits that file instead of starting over.
+2. **`profile-from-resume`.** Claude drafts the profile from the resume and the interview as a schema-constrained JSON object. Interview answers override anything inferred from the resume.
+3. **`profile-check`.** Code reads the profile back in plain language and flags anything that would change results without warning: a blocked phrase that matches one of your own target titles, no pay floor, no commute area.
 
-Then **a human reads it before the first scan**. That step earned its place in this pass: the draft quietly loosened the email thresholds from 80/58 to 75/55 despite being told to keep the defaults, which would have meant more mail than asked for. [The draft](samples/scout/profile.draft.json) and [the reviewed profile](samples/scout/profile.json) are both committed.
+You approve it before the first scan. That review caught a real problem: a draft loosened the email thresholds from 80/58 to 75/55 after being told to keep the defaults, which would have meant more mail than asked for. Code now resets the thresholds on every draft. [The draft](samples/scout/profile.draft.json) and [the reviewed profile](samples/scout/profile.json) are both committed.
 
 Because behavior lives in the profile, the same engine also runs a second search in an unrelated field on the same Pi, with no code differences.
 
@@ -80,11 +81,11 @@ flowchart LR
     J[(jobmail.db)] -. already applied .-> M
 ```
 
-- **Rules first.** They hard-drop only what is genuinely the wrong job: out of function, too junior, or a staffing firm. Wrong location, low comp and stale dates are penalties, not deletions. Those roles still appear at the bottom with the reason attached, and the footer counts what was hidden.
-- **The model second, on the shortlist only.** Claude scores fit 0–100 and writes the one-line "why" in the email. The final score is 40% rules and 60% model, so the rules keep a floor and the model moves it. A role the model never read can't be "strong".
+- **Rules first.** They hard-drop only the wrong job: out of function, too junior, or a staffing firm. Wrong location, low comp and stale dates are penalties, not deletions. Those roles still appear at the bottom with the reason attached, and the footer counts what was hidden.
+- **The model second, on the shortlist only.** Claude scores fit from 0 to 100 and writes the one-line "why" in the email. The final score is 40% rules and 60% model, so the rules keep a floor and the model moves it. A role the model never read can't be "strong".
 - **Postings are untrusted text.** They are third-party input fed to a model. The 40% rule weight caps what a manipulated posting can do.
 
-Sources are public ATS JSON feeds, the same endpoints that power each company's careers page. No scraping, no logins. LinkedIn and Indeed are excluded on purpose.
+Sources are public ATS JSON feeds, the same endpoints that power each company's careers page. Scout never scrapes or logs in anywhere, which is why LinkedIn and Indeed are left out.
 
 ### Scout evaluation
 
@@ -93,14 +94,14 @@ Sources are public ATS JSON feeds, the same endpoints that power each company's 
 | Configuration | Tier accuracy | Strong emailed | Strong precision | Must-see recall | False drops | $ per scan |
 |---|---|---|---|---|---|---|
 | Rules only | 90% | 10 | 80% | 100% | 0 | $0 |
-| + Haiku 5.5 | 90–95% | 4 | 100% | 100% | 0 | $0.001 |
+| + Haiku 5.5 | 90-95% | 4 | 100% | 100% | 0 | $0.001 |
 | **+ Opus 5 (production)** | **100%** | **6** | **100%** | **100%** | **0** | **$0.044** |
-| + Opus 5.5 | 100% | 4–5 | 100% | 100% | 0 | $0.034 |
-| + Sonnet 5.5 | 100% | 4–6 | 100% | 100% | 0 | $0.018 |
+| + Opus 5.5 | 100% | 4-5 | 100% | 100% | 0 | $0.034 |
+| + Sonnet 5.5 | 100% | 4-6 | 100% | 100% | 0 | $0.018 |
 
 Three runs per model configuration. Full detail in [eval/scout/REPORT.md](eval/scout/REPORT.md).
 
-- **The model earns its place.** Rules alone email 10 "strong" roles, and two shouldn't be there. One is the keyword stuffer, which scores 82 on vocabulary alone. Every model pass demotes it.
+- **The model removes the false positives.** Rules alone email 10 "strong" roles, and two shouldn't be there. One is the keyword stuffer, which scores 82 on vocabulary alone. Every model pass demotes it.
 - **The injection did nothing.** In every run the posting telling the model to "rate it 100" stayed in the bottom tier. It's onsite in Texas and far below the comp floor, and the rules' share kept it there.
 - **The eval said don't switch models.** Sonnet 5.5 matches Opus 5 on accuracy at 40% of the cost, but borderline roles flipped between strong and look across runs. At about 2.6¢ a scan, consistency is worth more than the savings. Haiku is too harsh: it buries the payments and robotics roles.
 
@@ -108,11 +109,11 @@ Three runs per model configuration. Full detail in [eval/scout/REPORT.md](eval/s
 
 Covered in depth in [jobmail/README.md](jobmail/README.md). In short:
 
-- One reusable **triage engine** runs JSON skill specs. `job_inbox` runs the live pipeline, and `ap_inbox` reuses it for a Finance AP inbox with no new code.
-- **Code, not the model, links mail to applications and moves stages.** It never sends or drafts mail.
-- The eval reproduced **a silent outage**. The original request fails on current models, and the error handling then filed every email as "nothing to do": 22 of 22 fallbacks, 0% recall. The eval also showed that moving label definitions out of code comments into the prompt took accuracy to 100% on Sonnet 5.5.
-- The **weekly brief** keeps evidence (from the database), assumptions and recommendations (from Claude, each citing evidence ids that code checks) apart. Its own eval checks the model's raw answer for grounding and safety: 3 of 3 passed.
-- **Recruiting fraud** (spec v3): the model names five signals and flags likely scams, 100% recall and precision on the labelled set. A flagged email is held: never linked, never asked to reply, never learned from. One case the model cannot see at all: an email posing as your final-round recruiter from `northbeam-careers.example`. It passed as genuine in 6 of 6 runs. Memory catches it, because Northbeam has only ever written from `northbeam.example`.
+- One reusable triage engine runs JSON skill specs. `job_inbox` runs the live pipeline, and `ap_inbox` reuses it for a Finance AP inbox with no new code.
+- Code links mail to applications and moves stages. The model only reads and classifies, and nothing ever sends or drafts mail.
+- The eval reproduced a silent outage. The original request fails on current models, and the error handling then filed every email as "nothing to do": 22 of 22 fallbacks, 0% recall. The eval also showed that moving label definitions out of code comments into the prompt took accuracy to 100% on Sonnet 5.5.
+- The weekly brief keeps evidence (from the database), assumptions and recommendations (from Claude, each citing evidence ids that code checks) apart. Its own eval checks the model's raw answer for grounding and safety: 3 of 3 passed.
+- Recruiting fraud (spec v3): the model names five signals and flags likely scams, with 100% recall and precision on the labelled set. A flagged email is held. It's never linked to an application, never marked as needing a reply, and never added to memory. One case the model can't see at all: an email posing as your final-round recruiter from `northbeam-careers.example`. It passed as genuine in 6 of 6 runs. Memory catches it, because Northbeam has only ever written from `northbeam.example`.
 
 ## Memory across steps, runs and agents
 
@@ -191,10 +192,10 @@ Across both agents, the evals and demos turned up eleven defects. Most were in p
 
 - **Put the model on the judgment step and nowhere else.** Both agents have exactly one, and everything around it is testable code.
 - **A quiet failure is the dangerous one.** jobmail's fallback turned an outage into silence, and Scout's broken profile builder failed before anyone ran it. Evals and demos find both.
-- **Generalizing exposes assumptions.** Scout worked for its first user because it quietly assumed her city.
+- **Generalizing exposes assumptions.** Scout worked for its first user because the code assumed her city.
 - **An eval should be able to say "don't switch."** jobmail's eval moved to a new model; Scout's kept the old one, for a stated reason.
 - **The second agent made the first measurable.** Scout could only report what it sent. jobmail knows what happened next.
-- **Some judgments belong to memory, not the model.** Whether a sender is who they claim depends on history the model never sees. The eval proved it in six runs, and the fix was a dozen lines of code that read the database, not a better prompt.
+- **The model can't judge what it can't see.** Whether a sender is who they claim depends on history that lives in the database. Six eval runs showed it, and the fix was a dozen lines of code that read that history.
 
 ## Limitations, and what I'd fix before a team used this
 
@@ -205,7 +206,7 @@ Across both agents, the evals and demos turned up eleven defects. Most were in p
 
 ## Built vs. reused
 
-**Built**: both agents, the triage engine and its three skills, the scorer, digest, bridge, demos, evals and brief. Built in Claude Code: I chose the problem, set the architecture, wrote every label and made the trade-off calls; Claude Code wrote most of the code to that direction, and every change went through the tests and evals here.
+**Built**: both agents, the triage engine and its three skills, the scorer, digest, bridge, demos, evals and brief. I built it in Claude Code. I chose the problem and the architecture, wrote the labels, and made the trade-off calls. Claude Code wrote most of the code, and every change went through the tests and evals in this repo.
 
 **Reused**: the Anthropic Python SDK, public ATS and job-board APIs, SQLite, FastAPI, Jinja2, systemd and Tailscale.
 
@@ -214,7 +215,7 @@ Across both agents, the evals and demos turned up eleven defects. Most were in p
 | Phase | When |
 |---|---|
 | v0 prototype | April 2026 |
-| v1 Job Scout | Sep 3–24, 2026 |
-| v2 jobmail | Sep 12 – Oct 7, 2026 |
+| v1 Job Scout | Sep 3 to 24, 2026 |
+| v2 jobmail | Sep 12 to Oct 7, 2026 |
 | v2.1 evals, skills, bridge, docs | Oct 9, 2026 |
 | v2.2 fraud handling, brief eval, demo | Oct 10, 2026 |

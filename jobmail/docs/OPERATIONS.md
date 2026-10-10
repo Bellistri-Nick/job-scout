@@ -1,11 +1,10 @@
-# jobmail
+# Operating jobmail
 
 A read-only agent for a job-search mailbox. It polls Gmail over IMAP, has Claude classify each message, keeps every application and its correspondence in SQLite, pings you on Telegram and by email when something needs a reply, mirrors the history into an Obsidian vault, and serves a private dashboard. It never sends mail on your behalf and never drafts replies.
 
-The dashboard is read-only by design, but not static: filter everything at once from one box
-(`/` focuses it), click a stage tile to isolate that column, and a background check against
-`/api/summary` every 30s offers a refresh when the poller finds something rather than
-reloading under you and losing your place.
+The dashboard is read-only and still interactive. One box filters everything (`/` focuses it),
+a stage tile isolates its column, and a background check against `/api/summary` every 30s
+offers a refresh when the poller finds something, so the page never reloads under you.
 
 ```
 Gmail (IMAP)     ──► fetch ──► Claude classify ──► match to application ──► SQLite
@@ -18,15 +17,16 @@ Gmail (IMAP)     ──► fetch ──► Claude classify ──► match to ap
 
 1. Fetches new messages from `INBOX` (by UID, so nothing is reprocessed) and from your Sent folder. If the server ever reissues UIDs (a `UIDVALIDITY` change), the folder is rescanned and messages already on file are recognised by their `Message-ID`, so a reset costs no Claude calls.
 2. Sends each inbound message to Claude with a strict JSON schema: company, role, message type, whether *you* need to reply, urgency, a one-line summary, the concrete action, and any dates.
-3. Links it to an application: threading headers first, then company name, then sender domain (ignoring shared ATS/job-board domains). Creates a new application when nothing matches.
-4. Advances the stage automatically (`applied → screening → interviewing → assessment → offer`, or `rejected`). It only moves forward; it won't demote an application.
-5. Records outbound mail from your Sent folder and marks the message it replies to as handled, so a "needs reply" clears itself once you answer from Gmail on any device.
-6. Alerts on: anything needing a reply, plus offers, interview requests, scheduling, assessments, recruiter outreach and background checks even when no reply is required (`ALERT_ON_TYPES`); each once, interview/deadline dates within `DEADLINE_ALERT_HOURS` (72 by default, comfortably wider than the overnight gap), and, once a day, applications with no activity for 14 days.
-7. Rewrites the Obsidian note for every application touched this run, plus an `_Index.md`.
+3. Holds the message instead of linking it when the model flags a likely recruiting scam, or when the sender's domain imitates one already on file for an application. A held message never moves a stage and never adds its domain to memory.
+4. Links everything else to an application: threading headers first, then company name, then sender domain (ignoring shared ATS/job-board domains). Creates a new application when nothing matches.
+5. Advances the stage automatically (`applied → screening → interviewing → assessment → offer`, or `rejected`). It only moves forward; it won't demote an application.
+6. Records outbound mail from your Sent folder and marks the message it replies to as handled, so a "needs reply" clears itself once you answer from Gmail on any device.
+7. Alerts on: anything needing a reply, a held message that poses as a company you're in process with, plus offers, interview requests, scheduling, assessments, recruiter outreach and background checks even when no reply is required (`ALERT_ON_TYPES`); each once, interview/deadline dates within `DEADLINE_ALERT_HOURS` (72 by default, comfortably wider than the overnight gap), and, once a day, applications with no activity for 14 days.
+8. Rewrites the Obsidian note for every application touched this run, plus an `_Index.md`.
 
-The dashboard deliberately does **not** show a raw feed of recent mail. Most of what lands in a
-general inbox is `not_job_related` (security alerts, receipts, personal mail), and listing it
-buried the five rows that actually matter.
+The dashboard leaves out a raw feed of recent mail. Most of what lands in a general inbox is
+`not_job_related` (security alerts, receipts, personal mail), and listing it buried the five
+rows that needed you.
 
 ## Setup
 
@@ -35,7 +35,7 @@ buried the five rows that actually matter.
 - An Anthropic API key.
 - A Telegram bot: message [@BotFather](https://t.me/botfather), send `/newbot`, copy the token into `TELEGRAM_BOT_TOKEN`. Then run `python -m jobmail.telegram_setup --write`, which validates the token, finds your chat id, writes it to `.env`, and sends a test alert. Stdlib only, so it runs anywhere preflight does.
 - Python 3.11+ on the Pi.
-- The jobs vault synced to a folder on the Pi (Syncthing or the Dropbox headless client — iCloud doesn't sync to Linux).
+- The jobs vault synced to a folder on the Pi (Syncthing or the Dropbox headless client; iCloud doesn't sync to Linux).
 
 ### Install on the Pi
 
@@ -70,7 +70,7 @@ Two things to check when you change it. The spec uses the **system timezone**, s
 
 ### Private access to the dashboard
 
-Install Tailscale on the Pi (`curl -fsSL https://tailscale.com/install.sh | sh && sudo tailscale up`) and, optionally, `sudo tailscale serve --bg 8080` for an HTTPS URL like `https://<pi-name>.<tailnet>.ts.net`. Only devices on your tailnet can reach it; nothing is exposed to the internet and no auth layer is needed. If you'd rather use your own subdomain later, put Caddy in front with basic auth — the app is unchanged.
+Install Tailscale on the Pi (`curl -fsSL https://tailscale.com/install.sh | sh && sudo tailscale up`) and, optionally, `sudo tailscale serve --bg 8080` for an HTTPS URL like `https://<pi-name>.<tailnet>.ts.net`. Only devices on your tailnet can reach it; nothing is exposed to the internet and no auth layer is needed. If you'd rather use your own subdomain later, put Caddy in front with basic auth. The app doesn't change.
 
 ### Keeping job mail out of the way of personal mail
 
@@ -143,8 +143,8 @@ One note per application in `<vault>/Applications/`, named `Company - Role.md`, 
 
 ## Data
 
-- `~/.jobmail/jobmail.db` — SQLite, WAL mode. Tables: `applications`, `messages`, `key_dates`, `events`, `state`. The `state` table holds `last_uid:<folder>`, `uidvalidity:<folder>`, `sent_folder` and `last_run_at`.
-- `~/.jobmail/raw/<folder>/<uid>.eml` — the original message, in case you ever want to reprocess.
+- `~/.jobmail/jobmail.db`: SQLite, WAL mode. Tables: `applications`, `messages`, `key_dates`, `events`, `state`. The `state` table holds `last_uid:<folder>`, `uidvalidity:<folder>`, `sent_folder` and `last_run_at`.
+- `~/.jobmail/raw/<folder>/<uid>.eml`: the original message, in case you ever want to reprocess.
 
 Handy queries:
 

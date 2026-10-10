@@ -1,21 +1,21 @@
 # Job Scout
 
 A self-hosted job search agent. It scans public job boards every morning, scores what it finds
-against your resume, and emails you a ranked digest. Best matches up top, everything else in
-your field below it, nothing repeated, and nothing thrown away without being counted.
+against your resume, and emails you a ranked digest. The best matches sit at the top, the rest
+of your field below, and no role arrives twice. Anything filtered out is counted in the footer.
 
 Runs on a Raspberry Pi, an old laptop, or any machine that stays on. The scan itself is pure
 Python standard library. The only optional dependency is the Anthropic SDK, for the pass that
 reads postings and judges fit.
 
 Job Scout is the first of two agents. [jobmail](../jobmail/README.md) picks up after you apply, and a
-read-only bridge joins the two. How they were built, evaluated, and what the evals found:
-**[CASE_STUDY.md](../CASE_STUDY.md)**.
+read-only bridge joins the two. How they were built and evaluated, and what the evals found, is in
+[CASE_STUDY.md](../CASE_STUDY.md).
 
 ## Why this instead of job alerts
 
-Job board alerts match on keywords. This scores against your actual background, then explains
-itself. A posting that says "editor" gets checked for whether it means editorial leadership or
+Job board alerts match on keywords. Scout scores each posting against your background, then
+explains the score. A posting that says "editor" gets checked for whether it means editorial leadership or
 video editing. A role 200 miles away still shows up, ranked low, with the reason attached,
 because you should decide that, not a filter.
 
@@ -42,8 +42,10 @@ from building your profile to explaining why a role scored the way it did:
 git clone https://github.com/Bellistri-Nick/job-scout ~/.claude/skills/job-scout
 ```
 
-Then just ask: "set up my job search," "scan for jobs," or "why didn't I see any editor
-roles this week." The `SKILL.md` in this repo tells Claude how to run it.
+Then ask: "set up my job search," "scan for jobs," or "why didn't I see any editor roles this
+week." The `SKILL.md` in this repo tells Claude how to run it. Setup is an interview: Claude reads
+your resume, asks up to seven questions one at a time, saves your answers to `config/interview.md`,
+drafts the profile, and reads it back with `run.py profile-check` before anything runs.
 
 It also works as a plain CLI with no Claude involvement. Everything below applies either way.
 
@@ -54,10 +56,12 @@ git clone <this repo> job-scout && cd job-scout
 python run.py init                      # or: --profile ux-designer
 ```
 
-Then tell it who you are. Either edit `config/profile.json` by hand, or let Claude draft it:
+Then tell it who you are. Write your answers to the setup questions in `config/interview.md`
+(see `samples/scout/interview.md` for the shape), let Claude draft the profile, and read it back:
 
 ```bash
-python run.py profile-from-resume resume.txt --notes "remote or Boston, floor $130k"
+python run.py profile-from-resume resume.txt --interview config/interview.md   # resume optional
+python run.py profile-check
 ```
 
 Add companies you care about. It verifies each board exists before adding it:
@@ -114,10 +118,10 @@ feature is a silent no-op, and a push failure never breaks a scan: the email alr
 
 Two passes. Rules first, then judgment.
 
-**Rules** (`jobagent/score.py`) are cheap and deterministic. They hard-drop only what is
-genuinely the wrong job: out of function, too junior, or a staffing firm reposting the same
+**Rules** (`jobagent/score.py`) are cheap and deterministic. They hard-drop only the
+wrong job: out of function, too junior, or a staffing firm reposting the same
 listing. Everything else is scored 0-100 on title fit, seniority, location, comp, and how much
-of your actual vocabulary appears in the posting.
+of your vocabulary appears in the posting.
 
 Wrong location, comp below floor, and a stale posting date are penalties, not deletions.
 
@@ -133,12 +137,12 @@ and "gis" does not fire on "strategist". Both were real bugs found during calibr
 
 Three sections:
 
-1. **Strong match** — full cards with the model's read on why it fits
-2. **Worth a look** — same treatment, lower confidence
-3. **Everything else, ranked** — compact rows, each showing the catch
+1. **Strong match:** full cards with the model's read on why it fits
+2. **Worth a look:** the same cards, for roles the score is less sure about
+3. **Everything else, ranked:** compact rows, each showing what holds the role back
 
 The footer tallies what was filtered out entirely: `Hid 54: 52 outside your field, 1 too
-junior, 1 staffing firm.` Nothing vanishes silently.
+junior, 1 staffing firm.`
 
 ## After you apply: jobmail and the metrics dashboard
 
