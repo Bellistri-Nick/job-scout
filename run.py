@@ -380,8 +380,8 @@ def cmd_init(args):
         print(f"Wrote {COMPANIES_PATH} (empty; add with 'run.py discover')")
 
     print("\nNext:")
-    print("  1. Edit config/profile.json, especially resume_summary and titles")
-    print("     or: python run.py profile-from-resume path/to/resume.txt")
+    print("  1. Build your profile: in Claude Code, say \"set up my job search\" for the setup interview")
+    print("     or: python run.py profile-from-resume resume.txt --interview config/interview.md")
     print("  2. Edit .env with your SMTP details")
     print("  3. python run.py discover \"Company A,Company B\"")
     print("  4. python run.py scan --dry-run --open")
@@ -419,8 +419,12 @@ def cmd_profile_from_resume(args):
     if not (os.getenv("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_AUTH_TOKEN")):
         sys.exit("Set ANTHROPIC_API_KEY in .env first.")
 
-    with open(args.resume, encoding="utf-8", errors="replace") as fh:
-        resume = fh.read()[:20000]
+    if not (args.resume or args.interview):
+        sys.exit("Give a resume, an interview file (--interview), or both.")
+    resume = ""
+    if args.resume:
+        with open(args.resume, encoding="utf-8", errors="replace") as fh:
+            resume = fh.read()[:20000]
     notes = args.notes or ""
     if args.interview:
         with open(args.interview, encoding="utf-8", errors="replace") as fh:
@@ -428,10 +432,10 @@ def cmd_profile_from_resume(args):
     template = load(os.path.join(CONFIG, "profile.example.json"))
     schema_keys = [k for k in template if not k.startswith("_")]
 
-    prompt = f"""Read this resume and produce a job-search profile as JSON.
+    prompt = f"""Read this resume and setup interview and produce a job-search profile as JSON.
 
 RESUME
-{resume}
+{resume or "(none given; the interview's Background section describes the person)"}
 
 SETUP INTERVIEW AND NOTES FROM THE USER (these override anything inferred from the resume)
 {notes or "(none given)"}
@@ -462,17 +466,43 @@ Output only the JSON object."""
     )
     text = next(b.text for b in resp.content if b.type == "text")
     profile = json.loads(text)
-    profile.setdefault("thresholds", template["thresholds"])
+    from jobagent import profile as profile_guard
+    fixed = profile_guard.finalize(profile, template)
 
     out = args.out or PROFILE_PATH
     if os.path.exists(out) and not args.force:
         out = out.replace(".json", ".draft.json")
     with open(out, "w", encoding="utf-8") as fh:
         json.dump(profile, fh, indent=2)
-    print(f"Wrote {out}")
-    print(f"  {len(profile.get('titles_tier1', []))} target titles, "
-          f"comp floor ${profile.get('comp_floor', 0):,}")
-    print("Read it before the first scan. The titles and comp floor are worth a human pass.")
+    print(f"Wrote {out}\n")
+    for note in fixed:
+        print(f"  fixed: {note}")
+    print_profile_check(profile, template)
+    print("\nRead it back to the user before the first scan. The titles and comp floor decide everything.")
+
+
+def print_profile_check(profile, template):
+    from jobagent import profile as profile_guard
+    summary, warnings = profile_guard.check(profile, template)
+    for line in summary:
+        print(f"  {line}")
+    if warnings:
+        print("\n  Check these:")
+        for w in warnings:
+            print(f"  ! {w}")
+    else:
+        print("\n  No problems found.")
+    return warnings
+
+
+def cmd_profile_check(args):
+    """Read a profile back in plain language, with anything that silently changes results."""
+    path = args.profile or PROFILE_PATH
+    if not os.path.exists(path):
+        sys.exit(f"No profile at {path}. Run the setup interview first (see SKILL.md).")
+    print(f"{path}\n")
+    warnings = print_profile_check(load(path), load(os.path.join(CONFIG, "profile.example.json")))
+    sys.exit(1 if warnings else 0)
 
 
 def cmd_telegram_setup(args):
@@ -574,14 +604,19 @@ def main():
     i.add_argument("--force", action="store_true", help="overwrite an existing profile.json")
     i.set_defaults(func=cmd_init)
 
-    r = sub.add_parser("profile-from-resume", help="draft a profile from a resume with Claude")
-    r.add_argument("resume", help="path to a .txt or .md resume")
+    r = sub.add_parser("profile-from-resume",
+                       help="draft a profile from a resume and/or setup interview with Claude")
+    r.add_argument("resume", nargs="?", help="path to a .txt or .md resume (optional with --interview)")
     r.add_argument("--notes", help="extra context: comp floor, location, what you want next")
     r.add_argument("--interview", help="a file of setup-interview answers (see samples/scout/interview.md)")
     r.add_argument("--out", help="where to write (default config/profile.json)")
     r.add_argument("--force", action="store_true", help="overwrite an existing profile.json")
     r.add_argument("--model", default=None)
     r.set_defaults(func=cmd_profile_from_resume)
+
+    pc = sub.add_parser("profile-check", help="read a profile back and flag what silently changes results")
+    pc.add_argument("--profile", help="profile JSON (default config/profile.json)")
+    pc.set_defaults(func=cmd_profile_check)
 
     tg = sub.add_parser("telegram-setup", help="find your Telegram chat id")
     tg.add_argument("--token", default=None, help="bot token, if not yet in .env")
@@ -594,6 +629,10 @@ def main():
     st.set_defaults(func=cmd_stats)
 
     args = ap.parse_args()
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")   # Windows consoles default to cp1252
+    except (AttributeError, ValueError):
+        pass
     args.func(args)
 
 

@@ -27,9 +27,14 @@ Everything lives in this skill's own directory. Before acting, check what exists
 - `config/companies.json` — their verified ATS watchlist.
 - `.env` — SMTP and API credentials. Missing means email is not wired.
 - `out/jobs.db` — send history. Missing means it has never run.
+- `config/interview.md` — their setup-interview answers, in their words.
 
 If `config/profile.json` does not exist, start at Setup. Otherwise go to the task the
 user actually asked for.
+
+When they want to change their search ("update my profile," "I'd take Senior now," "raise my
+floor"), don't re-run the whole interview. Read `config/interview.md`, ask only about what
+changed, edit that section, then redraft and run `profile-check`.
 
 ## Setup
 
@@ -41,18 +46,63 @@ Run these in order, explaining each briefly. Do not dump all of it at once.
 python run.py init                      # or --profile ux-designer / product-management
 ```
 
-**2. Build their profile.** This is the step that determines everything downstream, so
-spend real attention here. Two paths:
+**2. Run the setup interview.** The profile decides every score, so this is the step that
+matters. You interview the user, write their answers to `config/interview.md`, and turn that
+into a profile. Do not hand them a JSON file to edit.
 
-- They have a resume file: `python run.py profile-from-resume <path> --notes "<comp floor, location, what they want next>"`
-- They do not: open `config/profile.example.json`, walk them through it conversationally,
-  and write `config/profile.json` yourself. Ask about target titles, seniority, location
-  and remote tolerance, comp floor, and what they never want to see.
+*Start with the resume.* Ask for a resume file (.txt, .md, or a PDF you can read). If they
+have one, read it before asking anything else, then play it back in two sentences: the level
+it reads at, the domain, and the strongest scope signal. Ask what that misses. Everything the
+resume answers, you skip or turn into a confirmation ("Your resume reads Staff-level, AI
+platform. Is that the next move?").
 
-Either way, read the result back and confirm the target titles and comp floor with them.
-A wrong comp floor silently buries good roles.
+*Then ask, one question per message, in this order.* Skip any question already answered.
+Stop at seven.
 
-**3. Build the watchlist.** Ask which companies they would take a call from, then:
+| # | Ask | Push for | Becomes |
+|---|---|---|---|
+| 0 | *(only with no resume)* "Walk me through your last two roles: title, team size, what you owned." | Scope and numbers, not duties | `resume_summary`, `keywords_strong` |
+| 1 | "What's the next role? The title you'd say yes to, and the one that's a step down but still okay." | Real title variants, the level floor | `titles_tier1`, `titles_tier2`, `seniority_*` |
+| 2 | "Where do you need to work? Home base, remote, and how many days in an office you'd accept." | Towns they'd commute to, a hard "no" | `home_base`, `locations_local`, `us_only_remote` |
+| 3 | "What's your base salary floor, and what are you aiming for? Is a posting with no salary okay?" | A number, not a range | `comp_floor`, `comp_target` |
+| 4 | "What should never reach your inbox? Roles, levels, industries, or companies." | Neighbouring functions that share vocabulary | `title_block`, `junior_block`, `companies_skip` |
+| 5 | "Describe a role you'd drop everything for." | The kind of work, scope, and domain | `fit_signals`, `keywords_good` |
+| 6 | "What does a posting look like that seems right but isn't?" | The trap, in their words | `anti_signals`, `keywords_negative` |
+
+Follow up once when an answer is vague: "senior roles" becomes which titles, and "good pay"
+becomes a number. Don't follow up twice. Write down a sensible default, say that you did, and
+move on.
+
+*Write `config/interview.md`* in the same shape as `samples/scout/interview.md`: one heading per
+question, the user's own words. Add `## Background` when there's no resume, and
+`## Companies you'd take a call from` if they named any. Read the file back in one short
+paragraph and ask "anything wrong?" before going on. This file is the record. Re-running
+setup later starts from it.
+
+*Draft the profile.*
+
+```bash
+python run.py profile-from-resume <resume> --interview config/interview.md    # resume optional
+```
+
+With no API key, write `config/profile.json` yourself from `config/profile.example.json`,
+following the rules in the `profile-from-resume` prompt in `run.py`. Leave `thresholds` at
+the template values either way. The command resets them if a draft changes them.
+
+*Read it back.*
+
+```bash
+python run.py profile-check
+```
+
+Tell the user, in plain language, what the profile will do: target titles, what's never
+shown, where, pay, and how much email to expect. Fix every `!` warning with them before
+moving on. A warning means results change silently, like a block phrase that hides their own
+target title, or no comp floor. Then ask the question that catches the rest: "Is there a
+role you'd want that this would miss?"
+
+**3. Build the watchlist.** Start from the companies named in the interview. Ask which other
+companies they'd take a call from, then:
 
 ```bash
 python run.py discover "Figma,Notion,Vanta"
