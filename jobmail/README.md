@@ -15,7 +15,7 @@ The interesting part is not the job search. It is the shape: **an inbox where mo
 
 ## The user and the problem
 
-The user is a job seeker running 50+ applications in parallel. Mail arrives from five kinds of sender: applicant-tracking systems, recruiters, schedulers, job boards, and everything else. [NICK: one sentence with your real volume, e.g. "A typical week brought N messages; a handful needed a reply"]. The ones that matter carry deadlines written in prose ("by end of day Thursday").
+The user is a job seeker running 50+ applications in parallel. Mail arrives from five kinds of sender: applicant-tracking systems, recruiters, schedulers, job boards, and everything else. The ones that matter carry deadlines written in prose ("by end of day Thursday").
 
 Three things went wrong in practice:
 
@@ -201,7 +201,7 @@ Running the pipeline with the hand labels standing in for Claude (a perfect clas
 
 **Expected, not yet measured:**
 
-- Time saved: [NICK: your honest estimate of daily minutes saved on inbox scanning and spreadsheet upkeep]. There is no clean "before" measurement, so it is a hypothesis.
+- Time saved on inbox scanning and spreadsheet upkeep. There is no clean "before" measurement, so it is a hypothesis; the time study below is how to test it.
 - Fewer missed replies: the tracker shows what was asked, not what would have been missed without it.
 
 **How I would measure it for a team:**
@@ -272,7 +272,7 @@ Running the pipeline with the hand labels standing in for Claude (a perfect clas
 
 ## Built vs. reused
 
-**Built** (application code, specs, samples, tests, eval harness, docs): the triage engine and three specs, the pipeline, matcher, data model, alerts, Obsidian writer, dashboard, backfill, demo, eval and brief. [NICK: one sentence on how you built it, e.g. "Built with Claude Code as my coding partner; problem selection, architecture, labels and every design decision are mine, and I can walk through any line."]
+**Built** (application code, specs, samples, tests, eval harness, docs): the triage engine and three specs, the pipeline, matcher, data model, alerts, Obsidian writer, dashboard, backfill, demo, eval and brief. Built in Claude Code: I chose the problem, set the architecture, wrote every label and made the trade-off calls; Claude Code wrote most of the code to that direction, and every change went through the tests and evals here.
 
 **Reused**: the Anthropic Python SDK, FastAPI, Uvicorn, Jinja2, python-dotenv, SQLite, systemd, Tailscale.
 
@@ -304,8 +304,8 @@ Production setup on a Pi, Gmail filters and the backfill are in [docs/OPERATIONS
 
 ## Time spent
 
-| Phase | When | Time |
-|---|---|---|
-| v0: pipeline, Pi deployment, dashboard, metrics, backfill | Sep 12 to Oct 7, 2026 | [NICK: hours] |
-| Skill extraction, demo, eval, brief, bug fixes, this README | Oct 9, 2026 | [NICK: hours] |
-| Spec v3 fraud handling, lookalike check, brief eval, one-command demo | Oct 10, 2026 | [NICK: hours] |
+| Phase | When |
+|---|---|
+| v0: pipeline, Pi deployment, dashboard, metrics, backfill | Sep 12 to Oct 7, 2026 |
+| Skill extraction, demo, eval, brief, bug fixes, this README | Oct 9, 2026 |
+| Spec v3 fraud handling, lookalike check, brief eval, one-command demo | Oct 10, 2026 |

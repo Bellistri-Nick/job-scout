@@ -66,7 +66,7 @@ The engine is the same for everyone. What changes is `profile.json`: target titl
 
 Then **a human reads it before the first scan**. That step earned its place in this pass: the draft quietly loosened the email thresholds from 80/58 to 75/55 despite being told to keep the defaults, which would have meant more mail than asked for. [The draft](samples/scout/profile.draft.json) and [the reviewed profile](samples/scout/profile.json) are both committed.
 
-Because behavior lives in the profile, the same engine also runs a second search in an unrelated field on the same Pi, with no code differences. [NICK: confirm you're comfortable mentioning this.]
+Because behavior lives in the profile, the same engine also runs a second search in an unrelated field on the same Pi, with no code differences.
 
 ### How it decides
 
@@ -158,13 +158,12 @@ Across both agents, the evals and demos turned up eleven defects. Most were in p
 **Observed:**
 
 - jobmail has run on a Pi since September 2026 and tracked 56 applications with no manual entry.
-- [NICK: Scout's real numbers from the Pi: scans run, roles emailed, and how many you applied to. `python run.py stats` and `python run.py funnel` print them.]
 - Per-unit cost on the production models: about 4¢ per Scout scan, $0.0071 per email jobmail classifies (with fraud handling), and about 5¢ per weekly brief.
 - 54 Scout tests and 85 jobmail tests, all offline.
 
 **Expected, not yet measured:**
 
-- Time saved. [NICK: your honest estimate]. There's no clean before-and-after, so treat it as a hypothesis.
+- Time saved. Not measured: there's no clean before-and-after, so it's a hypothesis. The test is a two-week time study, minutes per day in the inbox and on job boards, before and after.
 - Better outcomes from better targeting. The funnel can test this on real data; the demo funnel can't.
 
 **What I'd measure for a team:**
@@ -206,16 +205,16 @@ Across both agents, the evals and demos turned up eleven defects. Most were in p
 
 ## Built vs. reused
 
-**Built**: both agents, the triage engine and its three skills, the scorer, digest, bridge, demos, evals and brief. [NICK: one sentence on how you built it with Claude Code.]
+**Built**: both agents, the triage engine and its three skills, the scorer, digest, bridge, demos, evals and brief. Built in Claude Code: I chose the problem, set the architecture, wrote every label and made the trade-off calls; Claude Code wrote most of the code to that direction, and every change went through the tests and evals here.
 
 **Reused**: the Anthropic Python SDK, public ATS and job-board APIs, SQLite, FastAPI, Jinja2, systemd and Tailscale.
 
 ## Time spent
 
-| Phase | When | Time |
-|---|---|---|
-| v0 prototype | April 2026 | [NICK] |
-| v1 Job Scout | Sep 3–24, 2026 | [NICK] |
-| v2 jobmail | Sep 12 – Oct 7, 2026 | [NICK] |
-| v2.1 evals, skills, bridge, docs | Oct 9, 2026 | [NICK] |
-| v2.2 fraud handling, brief eval, demo | Oct 10, 2026 | [NICK] |
+| Phase | When |
+|---|---|
+| v0 prototype | April 2026 |
+| v1 Job Scout | Sep 3–24, 2026 |
+| v2 jobmail | Sep 12 – Oct 7, 2026 |
+| v2.1 evals, skills, bridge, docs | Oct 9, 2026 |
+| v2.2 fraud handling, brief eval, demo | Oct 10, 2026 |

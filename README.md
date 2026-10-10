@@ -55,7 +55,7 @@ A real background check that asks for an SSN, sent through Checkr after an offer
 
 ## Built vs. reused
 
-**Built:** both agents, the triage engine and its three skill specs, scoring, the digest, memory and data model, the bridge, the brief, the demos, both eval harnesses and every label. I built it in Claude Code. Problem choice, architecture, labels and the decisions in the trade-off tables are mine. [NICK: confirm or rewrite in your words.]
+**Built:** both agents, the triage engine and its three skill specs, scoring, the digest, memory and data model, the bridge, the brief, the demos, both eval harnesses and every label. Built in Claude Code: I chose the problem, set the architecture, wrote every label and made the trade-off calls; Claude Code wrote most of the code to that direction, and every change went through the tests and evals here.
 
 **Reused:** the Anthropic Python SDK, public Greenhouse, Lever and Ashby job feeds, SQLite, FastAPI, Jinja2, systemd and Tailscale.
 
