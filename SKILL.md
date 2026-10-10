@@ -63,7 +63,7 @@ Companies on Workday or custom career pages will not resolve; say so plainly and
 Twenty to fifty companies is a good watchlist.
 
 **4. Wire up email.** They need SMTP details in `.env`. Walk them through the Gmail App
-Password flow in README.md, and insist the sending account is a throwaway: an App
+Password flow in docs/SCOUT.md, and insist the sending account is a throwaway: an App
 Password cannot be scoped and grants full mailbox access. Then:
 
 ```bash

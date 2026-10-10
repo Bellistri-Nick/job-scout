@@ -15,7 +15,7 @@ A read-only bridge connects them. Scout skips roles jobmail already tracks, and 
 
 | | |
 |---|---|
-| **Demo, no API key** | v1: `python run.py scan --dry-run --profile samples/scout/profile.json --postings samples/scout/postings.json --db demo_out/scout/jobs.db --out demo_out/scout/digest.html --no-llm`. v2: `cd jobmail && python -m jobmail.demo --run 1 --reset --replay` |
+| **Demo, no API key** | `pip install -e ./jobmail && python demo.py`: both agents and the bridge, seven steps, each saying what to look for |
 | **Example output** | [Scout digest](examples/scout-digest.html), [funnel](examples/funnel.txt), [jobmail weekly brief](jobmail/examples/pipeline-brief.md), [AP fraud flag](jobmail/examples/ap_inbox-a04-routine-bank-change.json) |
 | **Evaluation** | [Scout](eval/scout/REPORT.md), [jobmail](jobmail/eval/REPORT.md) |
 | **v2 in depth** | [jobmail/README.md](jobmail/README.md) |
@@ -52,7 +52,8 @@ Two steps need judgment over free text: 3 and 7. Each agent puts a model on exac
 | v0 | April 2026 | One script, criteria hard-coded, Claude reading postings | A first test of whether a model could stand in for keyword alerts |
 | v1, Job Scout | Sep 3–24 | Profile from resume + interview; public ATS feeds; rules then model; ranked email; dedupe memory; Pi timer | v0 only worked for one person and one set of criteria |
 | v2, jobmail | Sep 12 – Oct 7 | Inbox agent: classify, link, track stages, alert, dashboard | Finding roles was solved; losing track of them after applying was the new bottleneck |
-| v2.1, this pass | Oct 9 | Reusable triage skills, evals for both agents, the bridge, a weekly brief, and the bugs they found | Prove it works, make it reusable, connect the two halves |
+| v2.1 | Oct 9 | Reusable triage skills, evals for both agents, the bridge, a weekly brief, and the bugs they found | Prove it works, make it reusable, connect the two halves |
+| v2.2 | Oct 10 | Recruiting-fraud handling, a lookalike-sender check that reads memory, an eval for the brief, one-command demo | Scams were the one known failure left, and the brief was the one model output without an eval |
 
 ## Job Scout (v1)
 
@@ -110,7 +111,8 @@ Covered in depth in [jobmail/README.md](jobmail/README.md). In short:
 - One reusable **triage engine** runs JSON skill specs. `job_inbox` runs the live pipeline, and `ap_inbox` reuses it for a Finance AP inbox with no new code.
 - **Code, not the model, links mail to applications and moves stages.** It never sends or drafts mail.
 - The eval reproduced **a silent outage**. The original request fails on current models, and the error handling then filed every email as "nothing to do": 22 of 22 fallbacks, 0% recall. The eval also showed that moving label definitions out of code comments into the prompt took accuracy to 100% on Sonnet 5.5.
-- The **weekly brief** keeps evidence (from the database), assumptions and recommendations (from Claude, each citing evidence ids that code checks) apart.
+- The **weekly brief** keeps evidence (from the database), assumptions and recommendations (from Claude, each citing evidence ids that code checks) apart. Its own eval checks the model's raw answer for grounding and safety: 3 of 3 passed.
+- **Recruiting fraud** (spec v3): the model names five signals and flags likely scams, 100% recall and precision on the labelled set. A flagged email is held: never linked, never asked to reply, never learned from. One case the model cannot see at all: an email posing as your final-round recruiter from `northbeam-careers.example`. It passed as genuine in 6 of 6 runs. Memory catches it, because Northbeam has only ever written from `northbeam.example`.
 
 ## Memory across steps, runs and agents
 
@@ -118,7 +120,7 @@ Covered in depth in [jobmail/README.md](jobmail/README.md). In short:
 |---|---|---|---|
 | `profile.json` | Scout | Who you are and what you want | Deciding every score |
 | `out/jobs.db` | Scout | Every posting seen and every one sent, by tier | Never emailing the same role twice |
-| `jobmail.db` | jobmail | Applications, messages, dates, an append-only event log | Linking a reply to week-one mail, clearing answered asks, advancing stages |
+| `jobmail.db` | jobmail | Applications, messages, dates, an append-only event log, the domains each company writes from | Linking a reply to week-one mail, clearing answered asks, advancing stages, holding a sender that imitates a trusted domain |
 | Bridge | both | Read-only join of the two | Scout skips roles you've applied to; the funnel measures outcomes by tier |
 
 The funnel on the demo data (synthetic, so the numbers only show the shape):
@@ -135,7 +137,7 @@ On real data, this table tells you whether the thresholds are right. If "look" c
 
 ## What the evals and demos found
 
-Across both agents, this pass turned up nine defects. Most were in plain code, not the model.
+Across both agents, the evals and demos turned up eleven defects. Most were in plain code, not the model, and one was in the eval itself.
 
 | # | Agent | Defect | Found by |
 |---|---|---|---|
@@ -148,6 +150,8 @@ Across both agents, this pass turned up nine defects. Most were in plain code, n
 | 7 | Scout | `profile-from-resume` failed on every call: nested schema object left open | First demo run |
 | 8 | Scout | Booleans typed as integers in the same schema (`True` is an `int` in Python) | Reading the fix for #7 |
 | 9 | Scout | Commute bonus, reason text and email footer hard-coded to the first user's Boston search | Reading the scorer for the demo |
+| 10 | jobmail | Any message linked by company name taught the matcher its domain: one impersonating email would make the impostor trusted for good | Reading the pipeline while adding fraud handling |
+| 11 | eval | The brief eval failed three correct briefs for quoting "21 days", a number from a stat's name | Reading the failure before touching the prompt |
 
 ## Observed results vs. expected benefits
 
@@ -155,8 +159,8 @@ Across both agents, this pass turned up nine defects. Most were in plain code, n
 
 - jobmail has run on a Pi since September 2026 and tracked 56 applications with no manual entry.
 - [NICK: Scout's real numbers from the Pi: scans run, roles emailed, and how many you applied to. `python run.py stats` and `python run.py funnel` print them.]
-- Per-unit cost on the production models: about 4¢ per Scout scan, and $0.0055 per email jobmail classifies.
-- 55 Scout tests and 76 jobmail tests, all offline.
+- Per-unit cost on the production models: about 4¢ per Scout scan, $0.0071 per email jobmail classifies (with fraud handling), and about 5¢ per weekly brief.
+- 54 Scout tests and 85 jobmail tests, all offline.
 
 **Expected, not yet measured:**
 
@@ -191,11 +195,12 @@ Across both agents, this pass turned up nine defects. Most were in plain code, n
 - **Generalizing exposes assumptions.** Scout worked for its first user because it quietly assumed her city.
 - **An eval should be able to say "don't switch."** jobmail's eval moved to a new model; Scout's kept the old one, for a stated reason.
 - **The second agent made the first measurable.** Scout could only report what it sent. jobmail knows what happened next.
+- **Some judgments belong to memory, not the model.** Whether a sender is who they claim depends on history the model never sees. The eval proved it in six runs, and the fix was a dozen lines of code that read the database, not a better prompt.
 
 ## Limitations, and what I'd fix before a team used this
 
 - **Data handling.** Postings are public, but inbox mail is not, and every email body goes to the model provider. A team rollout needs a DPA, zero retention where offered, redaction before the call, and scoped OAuth.
-- **Small, synthetic eval sets** (21 postings, 22 emails). Next step: label 100+ real items, privately.
+- **Small, synthetic eval sets** (21 postings, 26 emails, one brief input). Next step: label 100+ real items, privately.
 - **The bridge matches on company and role text.** A shared job id from Scout's link to the application would be exact.
 - **Single user, corrections by SQL.**
 
@@ -213,3 +218,4 @@ Across both agents, this pass turned up nine defects. Most were in plain code, n
 | v1 Job Scout | Sep 3–24, 2026 | [NICK] |
 | v2 jobmail | Sep 12 – Oct 7, 2026 | [NICK] |
 | v2.1 evals, skills, bridge, docs | Oct 9, 2026 | [NICK] |
+| v2.2 fraud handling, brief eval, demo | Oct 10, 2026 | [NICK] |

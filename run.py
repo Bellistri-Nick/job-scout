@@ -138,6 +138,11 @@ def rank(fresh, profile, use_llm=True, model=None, explain=False, verbose=True):
 def cmd_scan(args):
     profile = load(args.profile or PROFILE_PATH)
     companies = load(COMPANIES_PATH, {"companies": []}).get("companies", [])
+    if args.reset:
+        if not args.db:
+            sys.exit("--reset only works with an explicit --db, so it can never wipe your real history.")
+        if os.path.exists(args.db):
+            os.remove(args.db)
     store = Store(args.db or DB_PATH)
     html_out = args.out or HTML_OUT
 
@@ -533,6 +538,7 @@ def main():
     s.add_argument("--profile", help="profile JSON to use (default config/profile.json)")
     s.add_argument("--postings", help="read postings from a JSON file instead of the internet")
     s.add_argument("--db", help="history database (default out/jobs.db)")
+    s.add_argument("--reset", action="store_true", help="start --db empty (demos; refuses the default db)")
     s.add_argument("--out", help="where to write the digest HTML (default out/digest.html)")
     s.add_argument("--jobmail-db", help="jobmail's database, to skip roles already applied to "
                                         "(default: JOBMAIL_DB_PATH if set)")

@@ -8,9 +8,9 @@ Runs on a Raspberry Pi, an old laptop, or any machine that stays on. The scan it
 Python standard library. The only optional dependency is the Anthropic SDK, for the pass that
 reads postings and judges fit.
 
-Job Scout is the first of two agents. [jobmail](jobmail/README.md) picks up after you apply, and a
+Job Scout is the first of two agents. [jobmail](../jobmail/README.md) picks up after you apply, and a
 read-only bridge joins the two. How they were built, evaluated, and what the evals found:
-**[CASE_STUDY.md](CASE_STUDY.md)**.
+**[CASE_STUDY.md](../CASE_STUDY.md)**.
 
 ## Why this instead of job alerts
 
@@ -161,8 +161,8 @@ into an Obsidian note if you use one. It never sends mail on your behalf.
 
 The two are separate installs that share nothing but a Pi. jobmail needs FastAPI and the
 Anthropic SDK, so it keeps its own venv. Setup, configuration, and the backfill for
-applications from before you installed it are in [jobmail/docs/OPERATIONS.md](jobmail/docs/OPERATIONS.md).
-What it is, how it is evaluated, and the design trade-offs are in [jobmail/README.md](jobmail/README.md).
+applications from before you installed it are in [jobmail/docs/OPERATIONS.md](../jobmail/docs/OPERATIONS.md).
+What it is, how it is evaluated, and the design trade-offs are in [jobmail/README.md](../jobmail/README.md).
 
 ```bash
 cd jobmail && sudo bash deploy/install.sh $USER
@@ -182,7 +182,7 @@ cd jobmail && sudo bash deploy/install.sh $USER
 | `run.py test-email` | Send a sample digest to prove SMTP works |
 | `run.py stats` | What the agent has seen and sent |
 | `run.py scan --postings FILE --profile FILE --db FILE` | Run on saved postings with no network; used by the demo |
-| `run.py eval [--no-llm] [--model M]` | Score the ranking against labelled sample postings ([report](eval/scout/REPORT.md)) |
+| `run.py eval [--no-llm] [--model M]` | Score the ranking against labelled sample postings ([report](../eval/scout/REPORT.md)) |
 | `run.py funnel --jobmail-db FILE` | Join what Scout emailed to how far each role got in jobmail |
 
 ## Tuning

@@ -1,22 +1,26 @@
-# Pipeline brief, October 9, 2026
+# Pipeline brief, October 10, 2026
 
 *Recommendations by claude-opus-5-5. Everything under Evidence and System assumptions comes straight from the tracker database; recommendations cite it by id.*
 
 ## Recommendations
 
-> Of 7 applications tracked, 4 are still open and 3 have been rejected, with a 57% response rate and a median of 4 days to a first response. No application has gone 21 days without a response.
+> Of 7 tracked applications, 4 are still open and 4 got past 'applied', a 57% response rate with a median of 4 days to first response. There have been 3 rejections and none left without a response after 21 days.
 
 **Now**
 
-- [ ] Submit the Quarry Labs case study today, or reply to Elena Ruiz today to ask for the extra day she offered. The case study for the Principal Product Manager, Developer Platform role is due today (Friday), and Elena's request to confirm has been waiting 6 days. *(D3, M16, A3)*
-- [ ] Book a 45-minute slot on Tom's calendar for Ferncliff using the Calendly link Priya Shah sent, then let Priya know it is done. This is a high-urgency interview step for the Group Product Manager role and has been waiting 8 days. *(M15, A4)*
-- [ ] Reply to Derek Mills to say whether you are open to a call and propose specific times. His high-urgency request has gone unanswered for 17 days, the longest of any open ask. *(M6)*
-- [ ] Reply to Sofia Brandt at Halcyon Health to say whether you are interested in the Group Product Manager, AI Care Navigation role so she can set up time with the hiring manager. It is a live recruiter request, 4 days old, that moved this application into screening. *(M19, A7)*
+- [ ] Reply to Northbeam Analytics through your existing, known thread to confirm Thursday or Friday for the final round before the 2026-10-12 deadline, and in the same reply ask that contact whether the 'updated link for your final round' email from marcus.lee@northbeam-careers.example is genuine, without clicking anything in that email. The final-round preference is due in two days, and a lookalike-domain message posing as Northbeam is targeting this same round. *(D4, A1, H24)*
+- [ ] Reply to Elena Ruiz at Quarry Labs about the Developer Platform case study: confirm it is submitted, or ask for the extra day she offered. Elena asked for a confirmation five days ago, and the Friday she mentioned may already have passed. *(M16, A3)*
+- [ ] Reply to Sofia Brandt at Halcyon Health saying whether you are interested in the Group Product Manager, AI Care Navigation role so she can schedule time with the hiring manager. This is a live recruiter request that is three days old and is the next step to move this screening forward. *(M19, A7)*
+- [ ] Reply to Derek Mills with either your interest and availability for a quick call, or a short decline. His request has been waiting 16 days, and he asked about a call this week. *(M6)*
 
 **This week**
 
-- [ ] Look at the 'Global Remote Staffing' message yourself, and do not reply or send ID photos or bank details. The system flagged it as a likely scam: an unsolicited offer with no interview that asks for personal and bank information via Telegram. *(M20)*
-- [ ] Review the 'Talent Desk' interview confirmation email manually before opening its attachment or acting on it. It names no company, role, or interview details and contains embedded text trying to alter how it is classified, so the system could not link it to any application. *(M22)*
+- [ ] Complete the Ferncliff Checkr background check form before 2026-10-16. Ferncliff moved to offer, and this check has a firm deadline of five business days. *(M27, D5, A4)*
+- [ ] Have a human look at the 'Interview confirmation' message from 'Talent Desk' before acting on it or opening its attachment. The system could not link it to any application, and it names no company or role. *(M22)*
+
+**Worth considering**
+
+- [ ] Leave the held messages from hr.globalremotestaffing@gmail.com, vantagedynamics.hiring@outlook.com and rachel.moore.talent@gmail.com unanswered, and do not click or send anything to them. They show suspected-scam signals such as requests for money or bank details, off-platform chat interviews, and consumer email addresses. *(H20, H25, H26)*
 
 ## Evidence
 
@@ -24,29 +28,37 @@
 
 | ID | Company | Stage | The ask | Urgency | Waiting |
 |---|---|---|---|---|---|
-| M15 | Ferncliff | interviewing | Book a 45-minute slot on Tom's calendar via the Calendly link: https://calendly.example/tom-ferncliff/45min | high | 8d |
-| M6 | (not named) | - | Reply to Derek to say whether you're open to a call this week and propose times. | high | 17d |
-| M19 | Halcyon Health | screening | Reply to Sofia to say whether you're interested in the Group Product Manager role so she can set up time with the hiring manager. | medium | 4d |
-| M16 | Quarry Labs | assessment | Reply to Elena to confirm you'll submit the case study by Friday or request an extra day. | medium | 6d |
+| M27 | Ferncliff | offer | Complete the secure Checkr background check form at the provided link within 5 business days (by 2026-10-16). | medium | 0d |
+| M19 | Halcyon Health | screening | Reply to Sofia Brandt to say whether you're interested in the Group Product Manager, AI Care Navigation role so she can set up time with the hiring manager. | medium | 3d |
+| M16 | Quarry Labs | assessment | Reply to Elena confirming you'll submit the case study by Friday, or ask for an extra day. | medium | 5d |
+| M6 | (not named) | - | Reply to Derek saying whether you're interested and share your availability for a quick call this week. | medium | 16d |
 
-### Coming up, next 14 days (1)
+### Coming up, next 14 days (2)
 
-- **D3** 2026-10-09: Quarry Labs, Case study due (Friday)
+- **D4** 2026-10-12: Northbeam Analytics, Deadline to confirm Thursday or Friday preference for the final round
+- **D5** 2026-10-16: Ferncliff, Deadline to complete the Checkr background check form (5 business days from email date)
 
-### Moved in the last 7 days (3)
+### Moved in the last 7 days (4)
 
-- A5 Brightline Robotics: applied → rejected (rejection) (2026-10-04)
-- A7 Halcyon Health: applied → screening (recruiter_outreach) (2026-10-05)
-- A6 Tidewater Bank: applied → rejected (rejection) (2026-10-06)
+- A5 Brightline Robotics: applied → rejected (rejection) (2026-10-05)
+- A7 Halcyon Health: applied → screening (recruiter_outreach) (2026-10-06)
+- A6 Tidewater Bank: applied → rejected (rejection) (2026-10-07)
+- A4 Ferncliff: interviewing → offer (reference_or_background) (2026-10-09)
 
 ### Gone quiet, 14+ days (0)
 
 None.
 
-### Needs a human look (2)
+### Needs a human look (1)
 
-- **M20** from Global Remote Staffing: "Congratulations! You have been selected for a remote position". Job-related but not linked to any application. Model summary: Likely scam: unsolicited offer with high pay and no interview, asking for your ID photo and bank details via Telegram. Do not respond or share personal information.
-- **M22** from Talent Desk: "Interview confirmation". Job-related but not linked to any application. Model summary: A generic Talent Desk email asks you to review an attached role summary, with no company, role, or interview details; it also contains embedded text trying to alter how it is classified.
+- **M22** from Talent Desk: "Interview confirmation". Job-related but not linked to any application. Model summary: Vague message from a 'Talent Desk' asking you to review an attached role summary; it names no company or role and contains embedded text trying to manipulate classification.
+
+### Held for verification (4)
+
+- **H20** from hr.globalremotestaffing@gmail.com: "Congratulations! You have been selected for a remote position". Signals: asks_for_money_or_bank_details, asks_for_identity_documents_early, off_platform_chat_interview, offer_without_interview, consumer_email_for_employer.
+- **H24** from marcus.lee@northbeam-careers.example, claims to be Northbeam: "Northbeam: updated link for your final round". Signals: lookalike_sender_domain. **Poses as a company you are in process with.**
+- **H25** from vantagedynamics.hiring@outlook.com, claims to be Vantage Dynamics: "Offer: Remote Product Manager, Vantage Dynamics". Signals: asks_for_money_or_bank_details, off_platform_chat_interview, consumer_email_for_employer.
+- **H26** from rachel.moore.talent@gmail.com: "Interview for Senior Product Manager role". Signals: off_platform_chat_interview, consumer_email_for_employer.
 
 ### Numbers
 
@@ -69,14 +81,15 @@ None.
 - A newer message on the same application supersedes its older open asks, and any email you send to that company resolves them. An ask you handled by phone stays open until something newer arrives.
 - Mail is linked to applications by thread headers first, then company name, then sender domain. Company and domain links can attach mail to the wrong application when one company has two open roles.
 - "Applied" is the date of the first email seen for that application, not necessarily the day you applied.
+- A held message is the model's fraud judgment, or a sender domain that imitates one already on file. Held mail is never linked to an application, so a legitimate company writing from a new domain stays held until you confirm it.
 
 **Assumptions the model made for these recommendations**
 
-- Derek Mills's message is not linked to a company or application. I assumed it is a legitimate contact worth answering.
-- I assumed the Ferncliff slot with Tom has not already been booked outside the tracker.
-- I assumed the Quarry Labs case study has not yet been submitted.
+- The Friday in Elena's request was 2026-10-09, so the case study may already be due or late.
+- Your existing Northbeam thread is with a genuine Northbeam contact and is a safe channel for verifying the held message.
+- Derek Mills's message is a genuine job lead worth answering, even though no company or role is named.
 
 ## Validation
 
-- 6 recommendations, 10 citations, all resolved against the evidence.
+- 7 recommendations, 15 citations, all resolved against the evidence.
 - Every high-urgency ask is covered by a recommendation.
