@@ -2,8 +2,6 @@
 
 [![tests](https://github.com/Bellistri-Nick/job-scout/actions/workflows/tests.yml/badge.svg)](https://github.com/Bellistri-Nick/job-scout/actions/workflows/tests.yml)
 
-> **Reviewing this?** Run `python demo.py` (offline, two minutes), then read [CASE_STUDY.md](CASE_STUDY.md). The table under [What the brief asks for](#what-the-brief-asks-for-and-where-it-is) maps every requirement to a file.
-
 **Two agents that help you find the jobs that fit, track your applications, and keep a search on track.**
 
 - Job Scout reads public job feeds and ranks postings against your background.
@@ -11,6 +9,8 @@
 - A read-only bridge lets each one use the other's memory. Scout stops surfacing roles you already applied to.
 
 I've run both on a Raspberry Pi against my own search since September 2026. This repo is the public copy. Every sample is synthetic: the resume, profile, and 28 emails belong to John Doe, a fictional candidate, and every company is made up.
+
+> **Reviewing this?** Run `python demo.py` (offline, two minutes), then read [CASE_STUDY.md](CASE_STUDY.md). The table under [What the brief asks for](#what-the-brief-asks-for-and-where-it-is) maps every requirement to a file.
 
 ## The problem
 
@@ -26,11 +26,9 @@ The key thing: two of these steps need judgment over free text, and they fail si
 
 So each agent puts a model on exactly one judgment step: ranking a posting, or reading an email. Everything around it (fetching, deduping, linking, stage tracking, alerting) is plain code that tests can pin down. The current workflow, mapped step by step, is in [CASE_STUDY.md](CASE_STUDY.md#current-workflow-mapped).
 
-Jump to: [Process map](#process-map) · [Run it](#run-it-in-two-minutes) · [What it looks like](#what-it-looks-like) · [Set it up](#set-it-up-on-your-own-search) · [The lookalike sender](#the-lookalike-sender) · [Human in the loop](#where-a-human-stays-in-the-loop) · [Results and limits](#results-and-limits) · [For reviewers](#what-the-brief-asks-for-and-where-it-is) · [Repo map](#repo-map)
-
 ## Process map
 
-Today a search is ten manual steps. Two need judgment (3 and 7). The bookkeeping around them, logging applications, updating stages, and reviewing follow-ups, is what gets skipped on busy days.
+Today a search is ten manual steps. Two need judgment (3 and 7). The bookkeeping around them gets skipped on busy days: logging applications, updating stages, reviewing follow-ups.
 
 ![Process map of the manual job search, ten steps, with the two judgment steps highlighted](docs/img/process-before.png)
 
@@ -49,7 +47,7 @@ python demo.py                   # the whole workflow, offline: no API key, no n
 python -m pytest tests && (cd jobmail && python -m pytest)   # 77 Scout + 89 jobmail tests, offline
 ```
 
-`demo.py` walks seven steps and tells you what to look for in each. Scout scans 22 sample postings. jobmail processes two weeks of sample email (28 messages) by replaying Claude's recorded answers through the real pipeline. Then Scout runs again with jobmail's memory and skips roles you already applied to. With an API key, every step also runs live. The commands are in [CASE_STUDY.md](CASE_STUDY.md) and [jobmail/README.md](jobmail/README.md).
+`demo.py` walks seven steps and tells you what to look for in each. Scout scans 22 sample postings (21 unique; one role is listed in two cities). jobmail processes two weeks of sample email (28 messages: 26 inbound, plus two replies John sent) by replaying Claude's recorded answers through the real pipeline. Then Scout runs again with jobmail's memory and skips roles you already applied to. With an API key, every step also runs live. The commands are in [CASE_STUDY.md](CASE_STUDY.md) and [jobmail/README.md](jobmail/README.md).
 
 ## What it looks like
 
@@ -73,48 +71,6 @@ Every recommendation is a checkbox that cites the evidence behind it (the small 
 
 ![Weekly pipeline brief with recommendations and evidence citations](docs/img/weekly-brief.png)
 
-## Set it up on your own search
-
-Job Scout ships as a Claude Code skill ([SKILL.md](SKILL.md)) that interviews you and writes your profile, so you never edit JSON. The profile decides every score, which is why setup is a conversation and not a config file. jobmail needs no interview: it learns your search from your mail. Both agents can push alerts to Telegram. Full steps, the seven questions, and Telegram and Gmail setup are in [docs/SETUP.md](docs/SETUP.md).
-
-## What's live
-
-The Pi runs jobmail v2.2, installed October 14, 2026. It classifies mail, links it to applications, tracks stages, sends alerts, serves the dashboard, holds recruiting scams for review, and emails a weekly brief on Friday mornings. It has tracked 93 applications with no manual entry.
-
-Two caveats. The first scheduled brief goes out Friday, October 16. A manual test send worked, but nothing has run unattended yet. And I haven't verified the Scout-to-jobmail bridge on the Pi, so its results still come from the evals and `demo.py`.
-
-## Results and limits
-
-What I've observed, and what I haven't:
-
-- jobmail has tracked 93 applications on the Pi with no manual entry.
-- Cost per unit on the eval's production models: about 4¢ per Scout scan, $0.0071 per email jobmail classifies, and about 5¢ per weekly brief.
-- 77 Scout tests and 89 jobmail tests, all offline.
-- Not measured: time saved. There's no clean before and after, so it's a hypothesis. The test is a two-week time study, minutes per day in the inbox and on job boards, before and after. [CASE_STUDY.md](CASE_STUDY.md#observed-results-vs-expected-benefits) has the metrics I'd track for a team.
-
-Limits worth knowing before you trust it:
-
-- The eval sets are small and synthetic (21 postings, 26 emails, one brief input). The next step is 100+ real labelled items, kept private.
-- Every email body goes to the model provider. A team rollout needs a data processing agreement, zero retention where offered, redaction before the call, and scoped OAuth.
-- The bridge matches on company and role text. A shared job id from Scout's link to the application would be exact.
-- It serves one user, and fixing a wrong link means editing SQL.
-
-What the evals and demos taught me is in [CASE_STUDY.md](CASE_STUDY.md#learnings). The one that changed the design: the model can't judge what it can't see. It passed the lookalike email as genuine because the tell lives in the database, so a dozen lines of code that read that history do the work.
-
-## What the brief asks for, and where it is
-
-| Requirement | Where | In one line |
-|---|---|---|
-| Agentic workflow, with boundaries | [CASE_STUDY.md](CASE_STUDY.md), [jobmail architecture](jobmail/README.md#architecture) | The model reads and judges. Code links, moves stages, and decides what may page you. Nothing is ever sent to anyone but you |
-| Reusable skills | [jobmail skills](jobmail/README.md#reusable-skills), [`.claude/skills/inbox-triage`](.claude/skills/inbox-triage/SKILL.md), [SKILL.md](SKILL.md) | A skill is a JSON spec: instructions, schema, invariants, fallback. One engine runs three of them, including a Finance AP inbox with no new code |
-| Context and memory | [Memory](CASE_STUDY.md#memory-across-steps-runs-and-agents) | Profile, seen-postings history, and an application data model with an append-only event log. Demo steps 2, 4, and 5 show memory changing a result |
-| Usable output | [digest](examples/scout-digest.html), [weekly brief](jobmail/examples/pipeline-brief.md) | The brief separates evidence (written by code), assumptions (code and model, labelled), and recommendations (model, each citing evidence ids that code verifies) |
-| Technical fluency | [demo.py](demo.py), [run it](jobmail/README.md#run-it) | Python CLIs, SQLite, systemd on a Pi, built in Claude Code |
-| Evaluation | [Scout eval](eval/scout/REPORT.md), [jobmail eval](jobmail/eval/REPORT.md) | Hand-labelled sets, three repeats per configuration, cost per item, every miss listed. 77 + 89 offline tests |
-| Edge cases and failures | [jobmail edge cases](jobmail/README.md#edge-cases-and-failures) | Prompt injection, keyword stuffing, scams, a lookalike sender domain, and a silent outage the eval reproduced |
-| User value and measurement | [Results and limits](#results-and-limits), [metrics for a team](CASE_STUDY.md#observed-results-vs-expected-benefits) | Observed results kept apart from expected benefits. A two-week time study to measure time saved, and the metrics I'd track for a team |
-| Iterations, obstacles, learnings | [Versions](CASE_STUDY.md#versions), [jobmail obstacles](jobmail/README.md#obstacles), [learnings](CASE_STUDY.md#learnings) | Five versions from April to Oct 10 and the real obstacles |
-
 ## The lookalike sender
 
 An email arrives from `marcus.lee@northbeam-careers.example`: "We've moved final rounds to a new portal, please check in before Wednesday." It reads like routine logistics from the recruiter you're already talking to.
@@ -135,9 +91,48 @@ A real background check that asks for an SSN, sent through Checkr after an offer
 | The brief's recommendations are checkboxes | The model proposes, code checks every citation, you act |
 | Outbound mail | The only mail either agent sends is an alert or the weekly brief, to your own address. They never reply to, forward, or contact a recruiter. The inbox is read-only |
 
+## Set it up on your own search
+
+Job Scout ships as a Claude Code skill ([SKILL.md](SKILL.md)) that interviews you and writes your profile, so you never edit JSON. The profile decides every score, so setup is a conversation. jobmail needs no interview: it learns your search from your mail. Both agents can push alerts to Telegram. Full steps, the seven questions, and Telegram and Gmail setup are in [docs/SETUP.md](docs/SETUP.md).
+
+## What's live, and what I've measured
+
+The Pi runs jobmail v2.2, installed October 14, 2026. It classifies mail, links it to applications, tracks stages, sends alerts, serves the dashboard, holds recruiting scams for review, and emails a weekly brief on Friday mornings.
+
+Two caveats. The first scheduled brief goes out Friday, October 16. A manual test send worked, but nothing has run unattended yet. And I haven't verified the Scout-to-jobmail bridge on the Pi, so its results still come from the evals and `demo.py`.
+
+What I've observed:
+
+- jobmail has tracked 93 applications on the Pi with no manual entry.
+- Cost per unit on the eval's production models: about 4¢ per Scout scan, $0.0071 per email jobmail classifies, and about 5¢ per weekly brief.
+
+Limits worth knowing before you trust it:
+
+- Time saved is not measured. There's no clean before and after, so it's a hypothesis. The test is a two-week time study, minutes per day in the inbox and on job boards, before and after. [CASE_STUDY.md](CASE_STUDY.md#observed-results-vs-expected-benefits) has the metrics I'd track for a team.
+- The eval sets are small and synthetic (21 postings, 26 emails, one brief input). The next step is 100+ real labelled items, kept private.
+- Every email body goes to the model provider. A team rollout needs a data processing agreement, zero retention where offered, redaction before the call, and scoped OAuth.
+- The bridge matches on company and role text. A shared job id from Scout's link to the application would be exact.
+- It serves one user, and fixing a wrong link means editing SQL.
+
+What the evals and demos taught me is in [CASE_STUDY.md](CASE_STUDY.md#learnings). The one that changed the design: the model can't judge what it can't see. It passed the lookalike email as genuine because the tell lives in the database, so a dozen lines of code that read that history do the work.
+
+## What the brief asks for, and where it is
+
+| Requirement | Where | In one line |
+|---|---|---|
+| Agentic workflow, with boundaries | [CASE_STUDY.md](CASE_STUDY.md), [jobmail architecture](jobmail/README.md#architecture) | The model reads and judges. Code links, moves stages, and decides what may page you. Nothing is ever sent to anyone but you |
+| Reusable skills | [jobmail skills](jobmail/README.md#reusable-skills), [`.claude/skills/inbox-triage`](.claude/skills/inbox-triage/SKILL.md), [SKILL.md](SKILL.md) | A skill is a JSON spec: instructions, schema, invariants, fallback. One engine runs three of them, including a Finance AP inbox with no new code |
+| Context and memory | [Memory](CASE_STUDY.md#memory-across-steps-runs-and-agents) | Profile, seen-postings history, and an application data model with an append-only event log. Demo steps 2, 4, and 5 show memory changing a result |
+| Usable output | [digest](examples/scout-digest.html), [weekly brief](jobmail/examples/pipeline-brief.md) | The brief separates evidence (written by code), assumptions (code and model, labelled), and recommendations (model, each citing evidence ids that code verifies) |
+| Technical fluency | [demo.py](demo.py), [run it](jobmail/README.md#run-it) | Python CLIs, SQLite, systemd on a Pi, built in Claude Code |
+| Evaluation | [Scout eval](eval/scout/REPORT.md), [jobmail eval](jobmail/eval/REPORT.md) | Hand-labelled sets, three repeats per configuration, cost per item, every miss listed. 77 + 89 offline tests |
+| Edge cases and failures | [The lookalike sender](#the-lookalike-sender), [jobmail edge cases](jobmail/README.md#edge-cases-and-failures) | Prompt injection, keyword stuffing, scams, a lookalike sender domain, and a silent outage the eval reproduced |
+| User value and measurement | [What's live](#whats-live-and-what-ive-measured), [metrics for a team](CASE_STUDY.md#observed-results-vs-expected-benefits) | Observed results kept apart from expected benefits. A two-week time study to measure time saved, and the metrics I'd track for a team |
+| Iterations, obstacles, learnings | [Versions](CASE_STUDY.md#versions), [jobmail obstacles](jobmail/README.md#obstacles), [learnings](CASE_STUDY.md#learnings) | Five versions from April to Oct 10 and the real obstacles |
+
 ## Built vs. reused
 
-Built: both agents, the triage engine and its three skill specs, scoring, the digest, memory and data model, the bridge, the brief, the demos, and both eval harnesses. I built it in Claude Code. I chose the problem and the architecture, wrote the labels, and made the trade-off calls. Claude Code wrote most of the code, and every change went through the tests and evals in this repo.
+Built: both agents, the triage engine and its three skill specs, scoring, the digest, memory and data model, the bridge, the brief, the demos, and both eval harnesses. I chose the problem and the architecture, wrote the labels, and made the trade-off calls. Claude Code wrote most of the code, and every change went through the tests and evals in this repo.
 
 Reused: the Anthropic Python SDK, public Greenhouse, Lever, Ashby, Workable, and SmartRecruiters job feeds, SQLite, FastAPI, Jinja2, systemd, and Tailscale.
 
@@ -145,7 +140,7 @@ Reused: the Anthropic Python SDK, public Greenhouse, Lever, Ashby, Workable, and
 
 ```
 README.md                you are here
-CASE_STUDY.md            the full write-up: problem, map, versions, evals, trade-offs, learnings, time
+CASE_STUDY.md            the full write-up: problem, map, versions, evals, trade-offs, learnings
 demo.py                  the whole workflow, offline
 run.py, jobagent/        Job Scout: sources, rules, model re-rank, digest, memory, eval
 docs/SETUP.md            setting up your own search: onboarding, Telegram, Gmail
