@@ -2,7 +2,7 @@
 
 [![tests](https://github.com/Bellistri-Nick/job-scout/actions/workflows/tests.yml/badge.svg)](https://github.com/Bellistri-Nick/job-scout/actions/workflows/tests.yml)
 
-**Two agents that help you find the jobs that fit, track your applications, and keep a search on track.**
+**Two agents that find the jobs that meet your criteria and make sure nothing falls through the cracks after you apply.**
 
 - Job Scout reads public job feeds and ranks postings against your background.
 - jobmail reads your job-search inbox, links mail to applications, tracks stages, and holds anything that looks like a scam.
@@ -12,17 +12,13 @@
 
 ## The problem
 
-A job search is a project, and most people run it with a spreadsheet and a pile of email alerts. It breaks in three places.
+Looking for a job is a second job. You set up alerts on four boards, and every morning they hand you forty roles that match a keyword and nothing else. "Senior PM, AI" shows up whether the job owns an AI platform or grooms a checkout backlog. Your salary floor isn't in the filter. Neither is "not another fintech." So you read all forty, apply to three, and lose an evening.
 
-| The job to do | Where it breaks | Who handles it |
-|---|---|---|
-| Find roles that match what you need | Board alerts match keywords. "Senior PM, AI" shows up whether the job owns an AI platform or grooms a checkout backlog. Your comp floor and dealbreakers don't make it into the filter | Job Scout |
-| Track your applications and your strategy | Fifty applications in parallel means the tracker falls behind the moment you get busy. Stages go stale, and you lose sight of where the search actually stands | jobmail |
-| Keep things on track | "Can you send times by Thursday?" sits between job alerts and receipts. Deadlines slip. Fake recruiters impersonate real companies, and a lookalike email looks like routine logistics | jobmail |
+Then the applications pile up. Fifty of them in parallel, each with its own thread. The spreadsheet you started in week one is stale by week three. A recruiter writes "can you send times by Thursday?" and it lands between two alert digests and a shipping notice. You see it Friday. And a company that went quiet looks exactly like one that replied yesterday, because nothing is tracking either.
 
-The key thing: two of these steps need judgment over free text, and they fail silently. A missed deadline raises no error. A wrong comp floor just buries good roles.
+Two things, then. Find the roles that fit what you actually need, and once you've applied, don't let anything slip. Job Scout does the first. jobmail does the second.
 
-So each agent puts a model on exactly one judgment step: ranking a posting, or reading an email. Everything around it (fetching, deduping, linking, stage tracking, alerting) is plain code that tests can pin down. The current workflow, mapped step by step, is in [CASE_STUDY.md](CASE_STUDY.md#current-workflow-mapped).
+Here's the thing about both: the hard step is judgment over free text, and judgment fails quietly. A missed deadline raises no error. A wrong comp floor just buries good roles. So each agent puts a model on exactly one judgment call, ranking a posting or reading an email, and everything around it (fetching, deduping, linking, stage tracking, alerting) is plain code that tests can pin down. The current workflow, mapped step by step, is in [CASE_STUDY.md](CASE_STUDY.md#current-workflow-mapped).
 
 ## Process map
 
