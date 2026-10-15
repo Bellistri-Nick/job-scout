@@ -67,6 +67,8 @@ Every recommendation is a checkbox that cites the evidence behind it (the small 
 
 ### Telegram alerts
 
+The inbox is the problem, so the alert can't live there. An email about an email gets buried with everything else. Telegram is a channel nothing else writes to: the only messages in it are the ones jobmail decided need you, so when the phone buzzes, it's worth looking.
+
 One message per email that needs you, headed by the event, with the company, the sender, and what to do. The second one says nothing more is needed, which is the point: a confirmation of a call you already booked should not cost you a click.
 
 <img src="docs/img/telegram-alerts.png" alt="Two Telegram alerts from jobmail: a scheduling confirmation for a Calendly-booked interview, and a recruiter confirming a call already on the calendar" width="420">
