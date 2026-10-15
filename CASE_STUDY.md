@@ -160,7 +160,7 @@ Across both agents, the evals and demos turned up eleven defects. Most were in p
 
 **Observed:**
 
-- jobmail has run on a Pi since September 2026 and tracked 93 applications with no manual entry. v2.2 (skill engine, fraud handling, weekly brief) went on the Pi on October 14, 2026. The first scheduled brief is due October 16, so the brief's results still come from the evals, the demo and one manual test send. The Scout-to-jobmail bridge is unverified on the Pi.
+- jobmail has run on a Pi since September 2026 and tracked 93 applications with no manual entry. v2.2 (skill engine, fraud handling, weekly brief) went on the Pi on October 14, 2026. The Pi has sent its first weekly brief, and it arrived. The Scout-to-jobmail bridge is unverified on the Pi.
 - Per-unit cost on the eval's production models: about 4¢ per Scout scan, $0.0071 per email jobmail classifies (with fraud handling), and about 5¢ per weekly brief.
 - 77 Scout tests and 89 jobmail tests, all offline.
 

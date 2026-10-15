@@ -99,7 +99,7 @@ Job Scout ships as a Claude Code skill ([SKILL.md](SKILL.md)) that interviews yo
 
 The Pi runs jobmail v2.2, installed October 14, 2026. It classifies mail, links it to applications, tracks stages, sends alerts, serves the dashboard, holds recruiting scams for review, and emails a weekly brief on Friday mornings.
 
-Two caveats. The first scheduled brief goes out Friday, October 16. A manual test send worked, but nothing has run unattended yet. And I haven't verified the Scout-to-jobmail bridge on the Pi, so its results still come from the evals and `demo.py`.
+The Pi has sent its first weekly brief, and it arrived. One caveat: I haven't verified the Scout-to-jobmail bridge on the Pi, so its results still come from the evals and `demo.py`.
 
 What I've observed:
 

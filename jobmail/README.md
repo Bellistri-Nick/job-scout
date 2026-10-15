@@ -2,7 +2,7 @@
 
 The second of two agents. [Job Scout](../docs/SCOUT.md) finds roles worth applying to; jobmail tracks what happens after you do. The write-up covering both agents and the bridge between them is [CASE_STUDY.md](../CASE_STUDY.md).
 
-An agent that reads a job-search inbox, decides what needs a human, and keeps the pipeline current without anyone typing into a spreadsheet. v2 has run on a Raspberry Pi against my own search since September 2026 and tracked 93 applications from first email to outcome. v2.2 (skill engine, fraud handling, weekly brief) went on the Pi on October 14, 2026. The first scheduled brief is due October 16, so the brief is proven by the evals, the demo and one manual test send, not yet by an unattended run.
+An agent that reads a job-search inbox, decides what needs a human, and keeps the pipeline current without anyone typing into a spreadsheet. v2 has run on a Raspberry Pi against my own search since September 2026 and tracked 93 applications from first email to outcome. v2.2 (skill engine, fraud handling, weekly brief) went on the Pi on October 14, 2026. The Pi has sent its first weekly brief, and it arrived.
 
 What carries over to other work is the shape of the problem: an inbox where most mail is noise, a few messages need a decision, and missing one has a cost. Recruiting coordinators, AP specialists and deal desks all work in an inbox like that. The triage engine here is built to be pointed at those inboxes, and `ap_inbox` proves it with no new code.
 
