@@ -1,0 +1,22 @@
+[Unit]
+Description=jobmail: poll hourly 8am-8pm, every day
+
+[Timer]
+# 8am through 8pm inclusive, every day. Thirteen runs a day.
+# Uses the system timezone, so make sure the Pi has one set:
+#   timedatectl                                  # check
+#   sudo timedatectl set-timezone America/New_York
+# Verify the schedule reads the way you expect:
+#   systemd-analyze calendar "*-*-* 08..20:00" --iterations=5
+OnCalendar=*-*-* 08..20:00
+
+# Spread the start so ten Pis (or ten reboots) don't hit Gmail on the same second.
+RandomizedDelaySec=120
+
+# If the Pi was asleep or rebooting when a slot came round, run once on the next
+# start rather than skipping that mail entirely. The cost is that booting the Pi
+# on a weekend can trigger one catch-up poll for Friday's last missed slot.
+Persistent=true
+
+[Install]
+WantedBy=timers.target

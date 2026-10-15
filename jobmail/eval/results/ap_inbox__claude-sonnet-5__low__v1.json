@@ -1,0 +1,1443 @@
+{
+  "skill": "ap_inbox",
+  "model": "claude-sonnet-5",
+  "effort": "low",
+  "legacy": false,
+  "repeats": 3,
+  "tag": "v1",
+  "spec_sha": "f0ea0036",
+  "ran_at": "2026-10-09T14:36:09-04:00",
+  "runs": [
+    {
+      "n": 10,
+      "fully_correct": 10,
+      "field_accuracy": {
+        "amount": 1.0,
+        "invoice_number": 1.0,
+        "message_type": 1.0,
+        "needs_reply": 1.0,
+        "requires_human_verification": 1.0,
+        "risk_flags_includes": 1.0,
+        "urgency": 1.0,
+        "vendor": 1.0
+      },
+      "critical_field": "requires_human_verification",
+      "critical": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "positives": 3,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "fallbacks": 0,
+      "input_tokens": 14919,
+      "output_tokens": 1917,
+      "cost_usd": 0.049,
+      "cost_per_1k_messages_usd": 4.9,
+      "median_latency_s": 2.67
+    },
+    {
+      "n": 10,
+      "fully_correct": 10,
+      "field_accuracy": {
+        "amount": 1.0,
+        "invoice_number": 1.0,
+        "message_type": 1.0,
+        "needs_reply": 1.0,
+        "requires_human_verification": 1.0,
+        "risk_flags_includes": 1.0,
+        "urgency": 1.0,
+        "vendor": 1.0
+      },
+      "critical_field": "requires_human_verification",
+      "critical": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "positives": 3,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "fallbacks": 0,
+      "input_tokens": 14919,
+      "output_tokens": 1927,
+      "cost_usd": 0.0491,
+      "cost_per_1k_messages_usd": 4.91,
+      "median_latency_s": 2.33
+    },
+    {
+      "n": 10,
+      "fully_correct": 10,
+      "field_accuracy": {
+        "amount": 1.0,
+        "invoice_number": 1.0,
+        "message_type": 1.0,
+        "needs_reply": 1.0,
+        "requires_human_verification": 1.0,
+        "risk_flags_includes": 1.0,
+        "urgency": 1.0,
+        "vendor": 1.0
+      },
+      "critical_field": "requires_human_verification",
+      "critical": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "positives": 3,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "fallbacks": 0,
+      "input_tokens": 14919,
+      "output_tokens": 1914,
+      "cost_usd": 0.049,
+      "cost_per_1k_messages_usd": 4.9,
+      "median_latency_s": 2.56
+    }
+  ],
+  "stable_items": 10,
+  "items": [
+    {
+      "id": "a01",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "invoice"
+        ],
+        "vendor": "Northwind Cloud Services",
+        "needs_reply": false,
+        "invoice_number": [
+          "INV-20417"
+        ],
+        "amount": [
+          "12,400.00",
+          "12400.00"
+        ],
+        "requires_human_verification": false
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Northwind Cloud Services",
+        "message_type": "invoice",
+        "invoice_number": "INV-20417",
+        "po_number": "PO-7781",
+        "amount": "12,400.00",
+        "currency": "USD",
+        "due_date": "2026-11-02",
+        "needs_reply": false,
+        "urgency": "low",
+        "risk_flags": [],
+        "requires_human_verification": false,
+        "summary": "Northwind Cloud Services sent invoice INV-20417 for $12,400.00 USD, Net 30, PO-7781 referenced.",
+        "action_needed": "Process invoice for payment per Net 30 terms."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "needs_reply": true,
+        "invoice_number": true,
+        "amount": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1509,
+      "output_tokens": 204,
+      "latency_s": 4.17,
+      "invariants_fired": []
+    },
+    {
+      "id": "a02",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "past_due_notice"
+        ],
+        "vendor": "Contoso Facilities",
+        "needs_reply": true,
+        "urgency": [
+          "high",
+          "medium"
+        ],
+        "requires_human_verification": false
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Contoso Facilities",
+        "message_type": "past_due_notice",
+        "invoice_number": "1182",
+        "po_number": "",
+        "amount": "3,870.00",
+        "currency": "USD",
+        "due_date": "2026-10-11",
+        "needs_reply": true,
+        "urgency": "high",
+        "risk_flags": [
+          "urgency_pressure"
+        ],
+        "requires_human_verification": false,
+        "summary": "Contoso Facilities says invoice 1182 ($3,870.00) is 45 days past due and requests payment within 5 business days or service may be suspended.",
+        "action_needed": "Verify payment status of invoice 1182 and remit payment or contact vendor promptly."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "needs_reply": true,
+        "urgency": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1509,
+      "output_tokens": 220,
+      "latency_s": 2.86,
+      "invariants_fired": []
+    },
+    {
+      "id": "a03",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "vendor_detail_change"
+        ],
+        "vendor": "Northwind Cloud Services",
+        "risk_flags_includes": [
+          "bank_detail_change"
+        ],
+        "requires_human_verification": true,
+        "urgency": [
+          "high"
+        ]
+      },
+      "note": "Business email compromise with a lookalike domain (northwind-billing.example, not northwind.example).",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Northwind Cloud Services",
+        "message_type": "vendor_detail_change",
+        "invoice_number": "INV-20417",
+        "po_number": "",
+        "amount": "",
+        "currency": "",
+        "due_date": "",
+        "needs_reply": true,
+        "urgency": "high",
+        "risk_flags": [
+          "bank_detail_change",
+          "urgency_pressure"
+        ],
+        "requires_human_verification": true,
+        "summary": "Vendor requests bank detail change before paying INV-20417; must be verified independently before acting.",
+        "action_needed": "Verify bank change request via known contact before updating payment details or paying INV-20417."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "risk_flags_includes": true,
+        "requires_human_verification": true,
+        "urgency": true
+      },
+      "input_tokens": 1551,
+      "output_tokens": 199,
+      "latency_s": 3.18,
+      "invariants_fired": []
+    },
+    {
+      "id": "a04",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "vendor_detail_change"
+        ],
+        "vendor": "Northwind Cloud Services",
+        "risk_flags_includes": [
+          "bank_detail_change"
+        ],
+        "requires_human_verification": true
+      },
+      "note": "Bank change from the real domain, framed as routine. Still requires a callback: the mailbox itself may be compromised.",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Northwind Cloud Services",
+        "message_type": "vendor_detail_change",
+        "invoice_number": "",
+        "po_number": "",
+        "amount": "",
+        "currency": "",
+        "due_date": "",
+        "needs_reply": true,
+        "urgency": "high",
+        "risk_flags": [
+          "bank_detail_change"
+        ],
+        "requires_human_verification": true,
+        "summary": "Vendor claims ACH remittance account is changing and requests use of new bank details for future payments.",
+        "action_needed": "Verify bank account change via a known, independent contact before updating vendor payment details."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "risk_flags_includes": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1504,
+      "output_tokens": 186,
+      "latency_s": 3.66,
+      "invariants_fired": [
+        "risk_flags~bank_detail_change -> set {'urgency': 'high'}"
+      ]
+    },
+    {
+      "id": "a05",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "remittance_or_payment_confirmation"
+        ],
+        "vendor": "Fabrikam Logistics",
+        "needs_reply": false,
+        "requires_human_verification": false
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Fabrikam Logistics",
+        "message_type": "remittance_or_payment_confirmation",
+        "invoice_number": "INV-5520",
+        "po_number": "",
+        "amount": "8,215.50",
+        "currency": "USD",
+        "due_date": "",
+        "needs_reply": false,
+        "urgency": "low",
+        "risk_flags": [],
+        "requires_human_verification": false,
+        "summary": "Fabrikam Logistics confirms receipt of payment for invoice INV-5520; no action needed.",
+        "action_needed": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "needs_reply": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1465,
+      "output_tokens": 173,
+      "latency_s": 2.45,
+      "invariants_fired": []
+    },
+    {
+      "id": "a06",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "payment_status_inquiry",
+          "past_due_notice"
+        ],
+        "vendor": "Litware Design Studio",
+        "needs_reply": true,
+        "requires_human_verification": false
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Litware Design Studio",
+        "message_type": "payment_status_inquiry",
+        "invoice_number": "3391",
+        "po_number": "",
+        "amount": "2,600",
+        "currency": "USD",
+        "due_date": "2026-09-30",
+        "needs_reply": true,
+        "urgency": "medium",
+        "risk_flags": [],
+        "requires_human_verification": false,
+        "summary": "Vendor is asking for payment status on overdue invoice 3391 for $2,600, originally due September 30.",
+        "action_needed": "Check payment status of invoice 3391 and reply to Grace Patel."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "needs_reply": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1484,
+      "output_tokens": 194,
+      "latency_s": 2.66,
+      "invariants_fired": []
+    },
+    {
+      "id": "a07",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "dispute_or_credit"
+        ],
+        "vendor": "Adatum Software",
+        "requires_human_verification": false
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Adatum Software",
+        "message_type": "dispute_or_credit",
+        "invoice_number": "CM-88",
+        "po_number": "",
+        "amount": "1,150.00",
+        "currency": "USD",
+        "due_date": "",
+        "needs_reply": false,
+        "urgency": "low",
+        "risk_flags": [],
+        "requires_human_verification": false,
+        "summary": "Adatum issued credit memo CM-88 for $1,150.00 due to September overbilling, to apply to the next invoice.",
+        "action_needed": "File credit memo CM-88 and verify it is applied to the next invoice."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1469,
+      "output_tokens": 194,
+      "latency_s": 2.4,
+      "invariants_fired": []
+    },
+    {
+      "id": "a08",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "not_ap_related"
+        ],
+        "needs_reply": false,
+        "requires_human_verification": false
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": false,
+        "vendor": "",
+        "message_type": "not_ap_related",
+        "invoice_number": "",
+        "po_number": "",
+        "amount": "",
+        "currency": "",
+        "due_date": "",
+        "needs_reply": false,
+        "urgency": "low",
+        "risk_flags": [],
+        "requires_human_verification": false,
+        "summary": "Internal office lunch announcement, not related to accounts payable.",
+        "action_needed": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1441,
+      "output_tokens": 130,
+      "latency_s": 2.07,
+      "invariants_fired": []
+    },
+    {
+      "id": "a09",
+      "repeat": 0,
+      "expect": {
+        "message_type": [
+          "vendor_onboarding"
+        ],
+        "vendor": "Proseware Analytics",
+        "risk_flags_includes": [
+          "new_vendor"
+        ]
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Proseware Analytics",
+        "message_type": "vendor_onboarding",
+        "invoice_number": "",
+        "po_number": "",
+        "amount": "",
+        "currency": "",
+        "due_date": "",
+        "needs_reply": true,
+        "urgency": "high",
+        "risk_flags": [
+          "bank_detail_change",
+          "new_vendor"
+        ],
+        "requires_human_verification": true,
+        "summary": "New vendor Proseware Analytics sent W-9 and ACH payment details for onboarding; verify before entering into system.",
+        "action_needed": "Verify vendor identity and bank details via independent contact before setting up in payment system."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "risk_flags_includes": true
+      },
+      "input_tokens": 1482,
+      "output_tokens": 200,
+      "latency_s": 2.38,
+      "invariants_fired": [
+        "risk_flags~bank_detail_change -> set {'urgency': 'high'}"
+      ]
+    },
+    {
+      "id": "a10",
+      "repeat": 0,
+      "expect": {
+        "risk_flags_includes": [
+          "urgency_pressure",
+          "sender_domain_mismatch"
+        ],
+        "requires_human_verification": true,
+        "urgency": [
+          "high"
+        ]
+      },
+      "note": "CEO impersonation: personal Gmail, secrecy, 'don't call'. The callback rule exists for exactly this.",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "",
+        "message_type": "other_ap_related",
+        "invoice_number": "",
+        "po_number": "",
+        "amount": "48,000",
+        "currency": "USD",
+        "due_date": "2026-10-09",
+        "needs_reply": true,
+        "urgency": "high",
+        "risk_flags": [
+          "urgency_pressure",
+          "sender_domain_mismatch",
+          "new_vendor"
+        ],
+        "requires_human_verification": true,
+        "summary": "Likely CEO-impersonation fraud: urgent confidential wire request from a Gmail address claiming to be the CEO.",
+        "action_needed": "Do not process; verify independently with the real CEO through a known channel and report as suspected fraud."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "risk_flags_includes": true,
+        "requires_human_verification": true,
+        "urgency": true
+      },
+      "input_tokens": 1505,
+      "output_tokens": 217,
+      "latency_s": 2.67,
+      "invariants_fired": []
+    },
+    {
+      "id": "a01",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "invoice"
+        ],
+        "vendor": "Northwind Cloud Services",
+        "needs_reply": false,
+        "invoice_number": [
+          "INV-20417"
+        ],
+        "amount": [
+          "12,400.00",
+          "12400.00"
+        ],
+        "requires_human_verification": false
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Northwind Cloud Services",
+        "message_type": "invoice",
+        "invoice_number": "INV-20417",
+        "po_number": "PO-7781",
+        "amount": "12,400.00",
+        "currency": "USD",
+        "due_date": "2026-11-02",
+        "needs_reply": false,
+        "urgency": "low",
+        "risk_flags": [],
+        "requires_human_verification": false,
+        "summary": "Northwind Cloud Services sent invoice INV-20417 for $12,400.00 USD, Net 30, against PO-7781.",
+        "action_needed": "Process invoice for payment per Net 30 terms."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "needs_reply": true,
+        "invoice_number": true,
+        "amount": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1509,
+      "output_tokens": 201,
+      "latency_s": 2.16,
+      "invariants_fired": []
+    },
+    {
+      "id": "a02",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "past_due_notice"
+        ],
+        "vendor": "Contoso Facilities",
+        "needs_reply": true,
+        "urgency": [
+          "high",
+          "medium"
+        ],
+        "requires_human_verification": false
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Contoso Facilities",
+        "message_type": "past_due_notice",
+        "invoice_number": "1182",
+        "po_number": "",
+        "amount": "3,870.00",
+        "currency": "USD",
+        "due_date": "2026-10-11",
+        "needs_reply": true,
+        "urgency": "high",
+        "risk_flags": [
+          "urgency_pressure"
+        ],
+        "requires_human_verification": false,
+        "summary": "Contoso Facilities says invoice 1182 ($3,870.00) is 45 days past due and warns of service suspension if unpaid within 5 business days.",
+        "action_needed": "Verify invoice 1182 status and arrange prompt payment or contact vendor to resolve."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "needs_reply": true,
+        "urgency": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1509,
+      "output_tokens": 223,
+      "latency_s": 2.58,
+      "invariants_fired": []
+    },
+    {
+      "id": "a03",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "vendor_detail_change"
+        ],
+        "vendor": "Northwind Cloud Services",
+        "risk_flags_includes": [
+          "bank_detail_change"
+        ],
+        "requires_human_verification": true,
+        "urgency": [
+          "high"
+        ]
+      },
+      "note": "Business email compromise with a lookalike domain (northwind-billing.example, not northwind.example).",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Northwind Cloud Services",
+        "message_type": "vendor_detail_change",
+        "invoice_number": "INV-20417",
+        "po_number": "",
+        "amount": "",
+        "currency": "",
+        "due_date": "",
+        "needs_reply": true,
+        "urgency": "high",
+        "risk_flags": [
+          "bank_detail_change",
+          "urgency_pressure"
+        ],
+        "requires_human_verification": true,
+        "summary": "Sender claims Northwind changed banks and requests updated remittance details before paying INV-20417; verify independently before acting.",
+        "action_needed": "Do not update banking details without independently verifying via a known contact/phone number before paying INV-20417."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "risk_flags_includes": true,
+        "requires_human_verification": true,
+        "urgency": true
+      },
+      "input_tokens": 1551,
+      "output_tokens": 213,
+      "latency_s": 2.67,
+      "invariants_fired": []
+    },
+    {
+      "id": "a04",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "vendor_detail_change"
+        ],
+        "vendor": "Northwind Cloud Services",
+        "risk_flags_includes": [
+          "bank_detail_change"
+        ],
+        "requires_human_verification": true
+      },
+      "note": "Bank change from the real domain, framed as routine. Still requires a callback: the mailbox itself may be compromised.",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Northwind Cloud Services",
+        "message_type": "vendor_detail_change",
+        "invoice_number": "",
+        "po_number": "",
+        "amount": "",
+        "currency": "",
+        "due_date": "",
+        "needs_reply": true,
+        "urgency": "high",
+        "risk_flags": [
+          "bank_detail_change"
+        ],
+        "requires_human_verification": true,
+        "summary": "Vendor claims ACH routing/account numbers are changing and asks AP to use new bank details for future payments.",
+        "action_needed": "Verify bank detail change via a known, independent contact at Northwind before updating payment records."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "risk_flags_includes": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1504,
+      "output_tokens": 194,
+      "latency_s": 2.45,
+      "invariants_fired": [
+        "risk_flags~bank_detail_change -> set {'urgency': 'high'}"
+      ]
+    },
+    {
+      "id": "a05",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "remittance_or_payment_confirmation"
+        ],
+        "vendor": "Fabrikam Logistics",
+        "needs_reply": false,
+        "requires_human_verification": false
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Fabrikam Logistics",
+        "message_type": "remittance_or_payment_confirmation",
+        "invoice_number": "INV-5520",
+        "po_number": "",
+        "amount": "8,215.50",
+        "currency": "USD",
+        "due_date": "",
+        "needs_reply": false,
+        "urgency": "low",
+        "risk_flags": [],
+        "requires_human_verification": false,
+        "summary": "Fabrikam Logistics confirms receipt of payment for invoice INV-5520; no action needed.",
+        "action_needed": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "needs_reply": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1465,
+      "output_tokens": 173,
+      "latency_s": 2.0,
+      "invariants_fired": []
+    },
+    {
+      "id": "a06",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "payment_status_inquiry",
+          "past_due_notice"
+        ],
+        "vendor": "Litware Design Studio",
+        "needs_reply": true,
+        "requires_human_verification": false
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Litware Design Studio",
+        "message_type": "payment_status_inquiry",
+        "invoice_number": "3391",
+        "po_number": "",
+        "amount": "2,600",
+        "currency": "USD",
+        "due_date": "2026-09-30",
+        "needs_reply": true,
+        "urgency": "medium",
+        "risk_flags": [],
+        "requires_human_verification": false,
+        "summary": "Vendor asking for payment status on overdue invoice 3391 for $2,600, due Sept 30.",
+        "action_needed": "Check payment status of invoice 3391 and reply to vendor."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "needs_reply": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1484,
+      "output_tokens": 190,
+      "latency_s": 2.21,
+      "invariants_fired": []
+    },
+    {
+      "id": "a07",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "dispute_or_credit"
+        ],
+        "vendor": "Adatum Software",
+        "requires_human_verification": false
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Adatum Software",
+        "message_type": "dispute_or_credit",
+        "invoice_number": "CM-88",
+        "po_number": "",
+        "amount": "1,150.00",
+        "currency": "USD",
+        "due_date": "",
+        "needs_reply": false,
+        "urgency": "low",
+        "risk_flags": [],
+        "requires_human_verification": false,
+        "summary": "Adatum issued credit memo CM-88 for $1,150.00 due to overbilled seat count, to apply to next invoice.",
+        "action_needed": "File credit memo for reconciliation against next invoice."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1469,
+      "output_tokens": 188,
+      "latency_s": 2.22,
+      "invariants_fired": []
+    },
+    {
+      "id": "a08",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "not_ap_related"
+        ],
+        "needs_reply": false,
+        "requires_human_verification": false
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": false,
+        "vendor": "",
+        "message_type": "not_ap_related",
+        "invoice_number": "",
+        "po_number": "",
+        "amount": "",
+        "currency": "",
+        "due_date": "",
+        "needs_reply": false,
+        "urgency": "low",
+        "risk_flags": [],
+        "requires_human_verification": false,
+        "summary": "Internal office lunch announcement, not related to accounts payable.",
+        "action_needed": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1441,
+      "output_tokens": 130,
+      "latency_s": 2.04,
+      "invariants_fired": []
+    },
+    {
+      "id": "a09",
+      "repeat": 1,
+      "expect": {
+        "message_type": [
+          "vendor_onboarding"
+        ],
+        "vendor": "Proseware Analytics",
+        "risk_flags_includes": [
+          "new_vendor"
+        ]
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Proseware Analytics",
+        "message_type": "vendor_onboarding",
+        "invoice_number": "",
+        "po_number": "",
+        "amount": "",
+        "currency": "",
+        "due_date": "",
+        "needs_reply": true,
+        "urgency": "high",
+        "risk_flags": [
+          "new_vendor",
+          "bank_detail_change"
+        ],
+        "requires_human_verification": true,
+        "summary": "New vendor Proseware Analytics sent W-9 and ACH banking info for setup; verify before entering into system.",
+        "action_needed": "Verify vendor identity and bank details via independent contact before onboarding."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "risk_flags_includes": true
+      },
+      "input_tokens": 1482,
+      "output_tokens": 194,
+      "latency_s": 2.68,
+      "invariants_fired": [
+        "risk_flags~bank_detail_change -> set {'urgency': 'high'}"
+      ]
+    },
+    {
+      "id": "a10",
+      "repeat": 1,
+      "expect": {
+        "risk_flags_includes": [
+          "urgency_pressure",
+          "sender_domain_mismatch"
+        ],
+        "requires_human_verification": true,
+        "urgency": [
+          "high"
+        ]
+      },
+      "note": "CEO impersonation: personal Gmail, secrecy, 'don't call'. The callback rule exists for exactly this.",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "",
+        "message_type": "other_ap_related",
+        "invoice_number": "",
+        "po_number": "",
+        "amount": "48,000",
+        "currency": "USD",
+        "due_date": "2026-10-09",
+        "needs_reply": true,
+        "urgency": "high",
+        "risk_flags": [
+          "urgency_pressure",
+          "sender_domain_mismatch"
+        ],
+        "requires_human_verification": true,
+        "summary": "Likely CEO-fraud attempt: urgent confidential wire request from a Gmail address impersonating the CEO; do not act.",
+        "action_needed": "Do not process; verify independently with CEO via known channel and report as suspected fraud."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "risk_flags_includes": true,
+        "requires_human_verification": true,
+        "urgency": true
+      },
+      "input_tokens": 1505,
+      "output_tokens": 221,
+      "latency_s": 2.83,
+      "invariants_fired": []
+    },
+    {
+      "id": "a01",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "invoice"
+        ],
+        "vendor": "Northwind Cloud Services",
+        "needs_reply": false,
+        "invoice_number": [
+          "INV-20417"
+        ],
+        "amount": [
+          "12,400.00",
+          "12400.00"
+        ],
+        "requires_human_verification": false
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Northwind Cloud Services",
+        "message_type": "invoice",
+        "invoice_number": "INV-20417",
+        "po_number": "PO-7781",
+        "amount": "12,400.00",
+        "currency": "USD",
+        "due_date": "2026-11-02",
+        "needs_reply": false,
+        "urgency": "low",
+        "risk_flags": [],
+        "requires_human_verification": false,
+        "summary": "Northwind Cloud Services sent invoice INV-20417 for $12,400.00 USD, Net 30, tied to PO-7781.",
+        "action_needed": "Process invoice for payment per Net 30 terms."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "needs_reply": true,
+        "invoice_number": true,
+        "amount": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1509,
+      "output_tokens": 203,
+      "latency_s": 2.22,
+      "invariants_fired": []
+    },
+    {
+      "id": "a02",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "past_due_notice"
+        ],
+        "vendor": "Contoso Facilities",
+        "needs_reply": true,
+        "urgency": [
+          "high",
+          "medium"
+        ],
+        "requires_human_verification": false
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Contoso Facilities",
+        "message_type": "past_due_notice",
+        "invoice_number": "1182",
+        "po_number": "",
+        "amount": "3,870.00",
+        "currency": "USD",
+        "due_date": "",
+        "needs_reply": true,
+        "urgency": "high",
+        "risk_flags": [],
+        "requires_human_verification": false,
+        "summary": "Contoso Facilities says invoice 1182 ($3,870.00) is 45 days past due and requests payment within 5 business days or service suspension.",
+        "action_needed": "Verify invoice 1182 status and arrange payment or contact vendor to resolve past due balance."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "needs_reply": true,
+        "urgency": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1509,
+      "output_tokens": 207,
+      "latency_s": 2.57,
+      "invariants_fired": []
+    },
+    {
+      "id": "a03",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "vendor_detail_change"
+        ],
+        "vendor": "Northwind Cloud Services",
+        "risk_flags_includes": [
+          "bank_detail_change"
+        ],
+        "requires_human_verification": true,
+        "urgency": [
+          "high"
+        ]
+      },
+      "note": "Business email compromise with a lookalike domain (northwind-billing.example, not northwind.example).",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Northwind Cloud Services",
+        "message_type": "vendor_detail_change",
+        "invoice_number": "INV-20417",
+        "po_number": "",
+        "amount": "",
+        "currency": "",
+        "due_date": "",
+        "needs_reply": true,
+        "urgency": "high",
+        "risk_flags": [
+          "bank_detail_change",
+          "urgency_pressure"
+        ],
+        "requires_human_verification": true,
+        "summary": "Sender requests bank account change before paying INV-20417; must verify via trusted contact before updating.",
+        "action_needed": "Verify bank change request through a known, independent contact method before updating vendor records or paying."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "risk_flags_includes": true,
+        "requires_human_verification": true,
+        "urgency": true
+      },
+      "input_tokens": 1551,
+      "output_tokens": 201,
+      "latency_s": 2.42,
+      "invariants_fired": []
+    },
+    {
+      "id": "a04",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "vendor_detail_change"
+        ],
+        "vendor": "Northwind Cloud Services",
+        "risk_flags_includes": [
+          "bank_detail_change"
+        ],
+        "requires_human_verification": true
+      },
+      "note": "Bank change from the real domain, framed as routine. Still requires a callback: the mailbox itself may be compromised.",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Northwind Cloud Services",
+        "message_type": "vendor_detail_change",
+        "invoice_number": "",
+        "po_number": "",
+        "amount": "",
+        "currency": "",
+        "due_date": "",
+        "needs_reply": true,
+        "urgency": "high",
+        "risk_flags": [
+          "bank_detail_change"
+        ],
+        "requires_human_verification": true,
+        "summary": "Vendor claims ACH remittance account is changing and requests future payments use new bank details; verify independently before updating.",
+        "action_needed": "Verify bank change request via a known-good phone number or contact before updating vendor payment details."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "risk_flags_includes": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1504,
+      "output_tokens": 195,
+      "latency_s": 2.56,
+      "invariants_fired": [
+        "risk_flags~bank_detail_change -> set {'urgency': 'high'}"
+      ]
+    },
+    {
+      "id": "a05",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "remittance_or_payment_confirmation"
+        ],
+        "vendor": "Fabrikam Logistics",
+        "needs_reply": false,
+        "requires_human_verification": false
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Fabrikam Logistics",
+        "message_type": "remittance_or_payment_confirmation",
+        "invoice_number": "INV-5520",
+        "po_number": "",
+        "amount": "8,215.50",
+        "currency": "USD",
+        "due_date": "",
+        "needs_reply": false,
+        "urgency": "low",
+        "risk_flags": [],
+        "requires_human_verification": false,
+        "summary": "Fabrikam confirms receipt of payment for invoice INV-5520; no action needed.",
+        "action_needed": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "needs_reply": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1465,
+      "output_tokens": 169,
+      "latency_s": 1.89,
+      "invariants_fired": []
+    },
+    {
+      "id": "a06",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "payment_status_inquiry",
+          "past_due_notice"
+        ],
+        "vendor": "Litware Design Studio",
+        "needs_reply": true,
+        "requires_human_verification": false
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Litware Design Studio",
+        "message_type": "payment_status_inquiry",
+        "invoice_number": "3391",
+        "po_number": "",
+        "amount": "2,600",
+        "currency": "USD",
+        "due_date": "2026-09-30",
+        "needs_reply": true,
+        "urgency": "medium",
+        "risk_flags": [],
+        "requires_human_verification": false,
+        "summary": "Vendor asking for payment status on overdue invoice 3391 for $2,600, due September 30.",
+        "action_needed": "Check payment status of invoice 3391 and respond to vendor."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "needs_reply": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1484,
+      "output_tokens": 188,
+      "latency_s": 2.32,
+      "invariants_fired": []
+    },
+    {
+      "id": "a07",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "dispute_or_credit"
+        ],
+        "vendor": "Adatum Software",
+        "requires_human_verification": false
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Adatum Software",
+        "message_type": "dispute_or_credit",
+        "invoice_number": "CM-88",
+        "po_number": "",
+        "amount": "1,150.00",
+        "currency": "USD",
+        "due_date": "",
+        "needs_reply": false,
+        "urgency": "low",
+        "risk_flags": [],
+        "requires_human_verification": false,
+        "summary": "Adatum issued credit memo CM-88 for $1,150.00 due to September overbilling, to apply automatically to next invoice.",
+        "action_needed": "File credit memo and verify it's applied to next invoice."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1469,
+      "output_tokens": 190,
+      "latency_s": 2.56,
+      "invariants_fired": []
+    },
+    {
+      "id": "a08",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "not_ap_related"
+        ],
+        "needs_reply": false,
+        "requires_human_verification": false
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": false,
+        "vendor": "",
+        "message_type": "not_ap_related",
+        "invoice_number": "",
+        "po_number": "",
+        "amount": "",
+        "currency": "",
+        "due_date": "",
+        "needs_reply": false,
+        "urgency": "low",
+        "risk_flags": [],
+        "requires_human_verification": false,
+        "summary": "Internal office lunch announcement, not related to accounts payable.",
+        "action_needed": ""
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "needs_reply": true,
+        "requires_human_verification": true
+      },
+      "input_tokens": 1441,
+      "output_tokens": 130,
+      "latency_s": 3.46,
+      "invariants_fired": []
+    },
+    {
+      "id": "a09",
+      "repeat": 2,
+      "expect": {
+        "message_type": [
+          "vendor_onboarding"
+        ],
+        "vendor": "Proseware Analytics",
+        "risk_flags_includes": [
+          "new_vendor"
+        ]
+      },
+      "note": "",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "Proseware Analytics",
+        "message_type": "vendor_onboarding",
+        "invoice_number": "",
+        "po_number": "",
+        "amount": "",
+        "currency": "",
+        "due_date": "",
+        "needs_reply": true,
+        "urgency": "high",
+        "risk_flags": [
+          "bank_detail_change",
+          "new_vendor"
+        ],
+        "requires_human_verification": true,
+        "summary": "New vendor Proseware Analytics requests setup with W-9 and ACH payment details; verify before adding to vendor master.",
+        "action_needed": "Verify vendor identity and bank details through a trusted channel before onboarding and entering payment info."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "message_type": true,
+        "vendor": true,
+        "risk_flags_includes": true
+      },
+      "input_tokens": 1482,
+      "output_tokens": 206,
+      "latency_s": 3.87,
+      "invariants_fired": [
+        "risk_flags~bank_detail_change -> set {'urgency': 'high'}"
+      ]
+    },
+    {
+      "id": "a10",
+      "repeat": 2,
+      "expect": {
+        "risk_flags_includes": [
+          "urgency_pressure",
+          "sender_domain_mismatch"
+        ],
+        "requires_human_verification": true,
+        "urgency": [
+          "high"
+        ]
+      },
+      "note": "CEO impersonation: personal Gmail, secrecy, 'don't call'. The callback rule exists for exactly this.",
+      "record": {
+        "is_ap_related": true,
+        "vendor": "",
+        "message_type": "other_ap_related",
+        "invoice_number": "",
+        "po_number": "",
+        "amount": "48,000",
+        "currency": "USD",
+        "due_date": "2026-10-09",
+        "needs_reply": true,
+        "urgency": "high",
+        "risk_flags": [
+          "urgency_pressure",
+          "sender_domain_mismatch",
+          "new_vendor"
+        ],
+        "requires_human_verification": true,
+        "summary": "Likely CEO-fraud email from a gmail address requesting urgent, secret wire transfer of $48,000; do not act without verification.",
+        "action_needed": "Do not process; verify independently with the real CEO via known contact channels and report as suspected phishing/fraud."
+      },
+      "ok": true,
+      "error": "",
+      "score": {
+        "risk_flags_includes": true,
+        "requires_human_verification": true,
+        "urgency": true
+      },
+      "input_tokens": 1505,
+      "output_tokens": 225,
+      "latency_s": 2.94,
+      "invariants_fired": []
+    }
+  ]
+}

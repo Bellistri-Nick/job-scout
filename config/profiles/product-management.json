@@ -1,0 +1,73 @@
+{
+  "name": "Your Name",
+  "headline": "Senior, Staff, and Lead Product Manager roles",
+  "email_to": "you@example.com",
+  "home_base": "City, ST",
+
+  "resume_summary": "Senior Product Manager with 10+ years across B2B SaaS, AI/ML, and platform. Currently owns an AI-powered creation surface: model selection, prompt design, output quality, and the evaluation framework behind shipping decisions. Runs continuous discovery, builds opportunity solution trees, and drives roadmap with cross-functional engineering, design, and go-to-market partners. Prior work spans fintech and marketing technology. MBA. Tools: Amplitude, Snowflake, Looker, Figma, Jira, ProductBoard, SQL, Python.",
+
+  "titles_tier1": [
+    "staff product manager", "lead product manager", "group product manager",
+    "principal product manager", "director of product", "director of product management",
+    "head of product", "principal pm", "staff pm", "group pm", "product lead",
+    "senior product manager", "principal product lead"
+  ],
+  "titles_tier2": [
+    "product manager", "senior pm", "technical product manager", "platform product manager",
+    "ai product manager", "product owner", "senior product owner"
+  ],
+  "title_block": [
+    "engineer", "software", "developer", "designer", "data scientist", "sales",
+    "account executive", "recruiter", "marketing manager", "project manager",
+    "program manager", "scrum master", "product marketing", "intern", "support"
+  ],
+  "junior_block": ["intern", "junior", "entry level", "apprentice", "coordinator", "assistant", "trainee", "associate product manager"],
+
+  "seniority_lead": ["director", "head of", "vp", "vice president", "chief", "principal", "lead", "staff", "group", "manager"],
+  "seniority_senior": ["senior", "sr.", "sr ", "ii", "iii"],
+
+  "locations_allow": [
+    "remote", "anywhere", "united states", "u.s.", "usa", "boston", "massachusetts",
+    ", ma", "cambridge", "waltham", "newton", "burlington ma", "new england"
+  ],
+  "locations_block": [
+    "india", "philippines", "brazil", "argentina", "colombia", "mexico", "poland",
+    "ukraine", "romania", "germany", "france", "spain", "netherlands", "australia",
+    "singapore", "japan", "china", "emea only", "apac", "latam", "bangalore", "manila"
+  ],
+  "us_only_remote": true,
+
+  "comp_floor": 180000,
+  "comp_target": 220000,
+
+  "keywords_strong": [
+    "0 to 1", "zero to one", "platform strategy", "product strategy", "discovery",
+    "user research", "roadmap", "ai product", "machine learning", "llm", "evaluation",
+    "experimentation", "a/b testing", "cross-functional", "product-led"
+  ],
+  "keywords_good": [
+    "saas", "b2b", "api", "developer platform", "data platform", "analytics",
+    "amplitude", "snowflake", "looker", "figma", "jira", "sql", "python",
+    "go-to-market", "pricing", "onboarding", "activation", "retention", "agile", "scrum"
+  ],
+  "keywords_negative": ["quota", "commission", "cold calling", "unpaid", "equity only"],
+
+  "fit_signals": [
+    "Owns a product area end to end with real scope: strategy, discovery, roadmap, and outcomes",
+    "AI/ML product work, platform, or a genuinely technical surface",
+    "Staff, lead, group, or director level with influence beyond a single team",
+    "Company where product has a seat at the table, not a feature factory"
+  ],
+  "anti_signals": [
+    "Product owner roles that are ticket-writing with no strategy",
+    "Associate or junior PM level",
+    "Product marketing, program management, or project management mislabeled as product",
+    "Onsite required outside the target metro"
+  ],
+
+  "companies_skip": [],
+  "company_skip_patterns": ["staffing", "recruit", "talent partners", "search group", "consultants", "headhunt"],
+
+  "max_age_days": 45,
+  "thresholds": { "strong": 80, "look": 58, "llm_floor": 45 }
+}

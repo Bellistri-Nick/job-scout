@@ -1,0 +1,12 @@
+.env
+out/
+__pycache__/
+*.pyc
+.venv/
+demo_out/
+
+# Your own search: personal, never committed
+config/profile.json
+config/profile.draft.json
+config/interview.md
+config/companies.json

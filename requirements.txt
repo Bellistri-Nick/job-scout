@@ -1,0 +1,3 @@
+# Everything runs on the standard library. This one dependency is optional:
+# without it the agent still scans and emails, it just skips the Claude re-rank.
+anthropic>=1.0

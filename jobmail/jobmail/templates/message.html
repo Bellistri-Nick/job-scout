@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{ m.subject or 'message' }} — jobmail{% endblock %}
+{% block crumbs %}{% if a %}<span class="muted">/</span> <a href="/app/{{ a.id }}">{{ a.company }}</a>{% endif %} <span class="muted">/</span> <span>message</span>{% endblock %}
+{% block content %}
+<div class="card">
+  <h1 style="margin:0 0 10px;font-size:18px">{{ m.subject or '(no subject)' }}</h1>
+  {% set g = m.message_id|gmail %}
+  {% if g %}
+  <div class="actions" style="margin:0 0 14px">
+    <a class="btn primary" href="{{ g }}" target="_blank" rel="noopener">Reply in Gmail &#8599;</a>
+    {% if a %}<a class="btn" href="/app/{{ a.id }}">All {{ a.company }} mail</a>{% endif %}
+  </div>
+  {% endif %}
+  <dl class="kv">
+    <dt>From</dt><dd>{{ m.from_name }} &lt;{{ m.from_addr }}&gt;</dd>
+    <dt>To</dt><dd>{{ m.to_addr }}</dd>
+    <dt>Date</dt><dd>{{ m.sent_at|fmt }}</dd>
+    <dt>Direction</dt><dd>{{ m.direction }}</dd>
+    {% if a %}<dt>Application</dt><dd><a href="/app/{{ a.id }}">{{ a.company }}{% if a.role %} — {{ a.role }}{% endif %}</a></dd>{% endif %}
+    {% if m.message_type %}<dt>Type</dt><dd>{{ m.message_type|replace('_',' ') }}</dd>{% endif %}
+    {% if m.needs_reply %}<dt>Reply</dt><dd>{% if m.replied_at %}replied {{ m.replied_at|fmt }}{% else %}<span class="pill u-{{ m.urgency or 'low' }}">needed · {{ m.urgency }}</span>{% endif %}</dd>{% endif %}
+    {% if m.summary %}<dt>Summary</dt><dd>{{ m.summary }}</dd>{% endif %}
+    {% if m.action_needed %}<dt>Action</dt><dd>{{ m.action_needed }}</dd>{% endif %}
+    {% if cls.key_dates %}<dt>Dates</dt><dd>{% for k in cls.key_dates %}{{ k.date }} — {{ k.description }}<br>{% endfor %}</dd>{% endif %}
+    {% if m.alerted_at %}<dt>Alerted</dt><dd class="muted">{{ m.alerted_at|fmt }}</dd>{% endif %}
+  </dl>
+</div>
+<h2>Body</h2>
+<pre class="body">{{ m.body_text or '(empty)' }}</pre>
+{% endblock %}

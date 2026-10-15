@@ -1,0 +1,371 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<span class="status" id="status" title="Polls hourly, 08:00-20:00 every day">
+  <span class="dot" id="dot"></span>
+  <span id="lastrun"{% if last_run %} title="last successful poll: {{ last_run|fmt }}"{% endif %}><span id="lastrun-at">last poll {{ last_run|stamp }}</span><span class="ago" id="lastrun-ago">{% if last_run %} &middot; {{ last_run|rel }}{% endif %}</span></span>
+</span>
+{% endblock %}
+
+{% block head %}
+<style>
+  #lastrun-at { color:var(--ink-2); }
+  /* The header never wraps, so on a narrow screen the clock time survives and
+     the "15h ago" is what gets dropped: it is the half you can infer. */
+  @media (max-width:560px) { .status .ago { display:none; } }
+
+  .toolbar { display:flex; gap:10px; align-items:center; margin-bottom:16px; flex-wrap:wrap; }
+  .search { position:relative; flex:1; min-width:220px; max-width:380px; }
+  .search input { width:100%; padding:9px 34px 9px 32px; border:1px solid var(--line);
+                  border-radius:9px; background:var(--card); color:var(--ink);
+                  font:inherit; font-size:13px; }
+  .search input::placeholder { color:var(--muted); }
+  .search .ico { position:absolute; left:11px; top:50%; transform:translateY(-50%);
+                 color:var(--muted); font-size:12px; pointer-events:none; }
+  .search kbd { position:absolute; right:9px; top:50%; transform:translateY(-50%);
+                color:var(--muted); font-size:10px; border:1px solid var(--line);
+                border-radius:4px; padding:1px 5px; background:var(--card-2); }
+
+  .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(132px,1fr));
+           gap:10px; margin-bottom:6px; }
+  .tile { background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+          padding:12px 14px; box-shadow:var(--shadow); text-align:left; font:inherit;
+          color:inherit; cursor:pointer; transition:border-color .12s, transform .12s; }
+  .tile:hover { border-color:var(--accent); }
+  .tile:active { transform:translateY(1px); }
+  .tile[aria-pressed="true"] { border-color:var(--accent); background:var(--accent-soft); }
+  .tile .n { font-size:25px; font-weight:660; line-height:1.15; letter-spacing:-.02em; }
+  .tile .l { color:var(--muted); font-size:11.5px; margin-top:1px; }
+  .tile.alert .n { color:var(--hi); }
+  .tile.dim .n { color:var(--muted); }
+
+  .board { display:grid; grid-template-columns:repeat(5,minmax(190px,1fr)); gap:10px;
+           align-items:start; }
+  .col { background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+         padding:10px; min-height:90px; box-shadow:var(--shadow); }
+  .col h3 { margin:0 0 9px; font-size:11px; text-transform:uppercase; letter-spacing:.06em;
+            display:flex; justify-content:space-between; color:var(--muted); font-weight:650; }
+  .col h3 .n { background:var(--line-2); border-radius:999px; padding:0 6px; color:var(--ink-2); }
+  .col.filtered-out { opacity:.32; }
+  .item { display:block; border:1px solid var(--line); border-radius:9px; padding:9px 10px;
+          margin-bottom:8px; background:var(--card-2); color:inherit;
+          border-left:3px solid var(--line); transition:border-color .12s, transform .12s; }
+  .item:hover { text-decoration:none; border-color:var(--accent); transform:translateX(1px); }
+  .item:last-child { margin-bottom:0; }
+  .item.due { border-left-color:var(--med); }
+  .item .c { font-weight:625; letter-spacing:-.01em; }
+  .item .r { color:var(--muted); font-size:12px; }
+  .item .t { color:var(--muted); font-size:11px; margin-top:5px; }
+  .item .t .act { color:var(--med); font-weight:600; }
+  .col .none { color:var(--muted); font-size:12px; padding:6px 2px; }
+
+  .banner { display:none; align-items:center; gap:10px; padding:10px 14px; margin-bottom:14px;
+            background:var(--accent-soft); border:1px solid var(--accent);
+            border-radius:var(--radius); font-size:13px; }
+  .banner.show { display:flex; }
+  .banner button { font:inherit; font-size:12px; font-weight:600; cursor:pointer;
+                   border:1px solid var(--accent); background:var(--accent); color:#fff;
+                   border-radius:7px; padding:4px 11px; }
+  .noresults { display:none; }
+  .hidden { display:none !important; }
+  @media (max-width:900px){ .board{grid-template-columns:repeat(5,190px); overflow-x:auto} }
+
+  /* Below ~760px a six-column table cannot win: it either overflows the page
+     or crushes every column to one word per line. Stack each row into a
+     labelled block instead, which is what actually reads on a phone. */
+  @media (max-width:760px) {
+    .stack thead { display:none; }
+    .stack, .stack tbody, .stack tr, .stack td { display:block; width:auto; }
+    .stack tr { padding:10px 4px 12px; border-bottom:1px solid var(--line); }
+    .stack tr:last-child { border-bottom:0; }
+    .stack td { border:0; padding:2px 14px 6px; }
+    .stack td::before { content:attr(data-l); display:block; color:var(--muted);
+                        font-size:10px; text-transform:uppercase; letter-spacing:.07em;
+                        font-weight:650; margin-bottom:1px; }
+    .stack td:empty { display:none; }
+    .toolbar .search { max-width:none; }
+    .tiles { grid-template-columns:repeat(2,1fr); }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="banner" id="banner">
+  <span>New activity since you opened this page.</span>
+  <button onclick="location.reload()">Refresh</button>
+</div>
+
+<div class="toolbar">
+  <label class="search">
+    <span class="ico">&#128269;</span>
+    <input id="q" type="search" placeholder="Filter by company, role or person" autocomplete="off" aria-label="Filter">
+    <kbd>/</kbd>
+  </label>
+  <span class="muted small" id="filterinfo"></span>
+</div>
+
+<div class="tiles">
+  <button class="tile {% if needs_reply %}alert{% else %}dim{% endif %}" data-stage="" aria-pressed="false">
+    <div class="n" id="t-reply">{{ needs_reply|length }}</div><div class="l">need a reply</div></button>
+  <button class="tile" data-stage="" aria-pressed="false">
+    <div class="n" id="t-open">{{ total_open }}</div><div class="l">open</div></button>
+  <button class="tile" data-stage="interviewing" aria-pressed="false">
+    <div class="n">{{ counts.interviewing }}</div><div class="l">interviewing</div></button>
+  <button class="tile" data-stage="assessment" aria-pressed="false">
+    <div class="n">{{ counts.assessment }}</div><div class="l">assessment</div></button>
+  <button class="tile" data-stage="offer" aria-pressed="false">
+    <div class="n">{{ counts.offer }}</div><div class="l">offers</div></button>
+  <button class="tile {% if not stale %}dim{% endif %}" data-stage="" aria-pressed="false">
+    <div class="n" id="t-stale">{{ stale|length }}</div><div class="l">stale &gt;{{ stale_days }}d</div></button>
+</div>
+
+<h2>Needs a reply {% if needs_reply %}<span class="count">{{ needs_reply|length }}</span>{% endif %}</h2>
+<div class="card">
+{% if needs_reply %}
+<table class="stack">
+  <thead><tr><th>Urgency</th><th>Company / role</th><th>From</th><th>Summary</th><th>Action</th><th>Received</th></tr></thead>
+  <tbody>
+  {% for m in needs_reply %}
+  <tr data-row data-href="/message/{{ m.id }}"
+      data-search="{{ (m.company or '') ~ ' ' ~ (m.role or '') ~ ' ' ~ (m.from_name or '') ~ ' ' ~ (m.from_addr or '') ~ ' ' ~ (m.subject or '') }}">
+    <td data-l="Urgency"><span class="pill u-{{ m.urgency or 'low' }}">{{ m.urgency or 'low' }}</span></td>
+    <td data-l="Role">{% if m.application_id %}<a href="/app/{{ m.application_id }}"><b>{{ m.company }}</b></a>{% else %}<b class="muted">unlinked</b>{% endif %}
+        {% if m.role %}<br><span class="small muted">{{ m.role }}</span>{% endif %}</td>
+    <td data-l="From">{{ m.from_name or m.from_addr }}<br><span class="small muted">{{ m.subject }}</span></td>
+    <td data-l="Summary"><a href="/message/{{ m.id }}">{{ m.summary }}</a></td>
+    <td data-l="Action">{{ m.action_needed }}
+      <div class="actions">
+        <a class="btn" href="/message/{{ m.id }}">Read email</a>
+        {% set g = m.message_id|gmail %}
+        {% if g %}<a class="btn primary" href="{{ g }}" target="_blank" rel="noopener">Reply in Gmail &#8599;</a>{% endif %}
+      </div>
+    </td>
+    <td class="muted small" data-l="Received">{{ m.sent_at|rel }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<div class="empty noresults">No match in this section.</div>
+{% else %}
+<div class="empty"><strong>Nothing waiting on you.</strong>
+Replies you send from Gmail clear this automatically.</div>
+{% endif %}
+</div>
+
+<h2>Pipeline</h2>
+{% if total_open or counts.rejected %}
+<div class="board">
+  {% for s in ['applied','screening','interviewing','assessment','offer'] %}
+  <div class="col" data-col="{{ s }}">
+    <h3><span>{{ s }}</span><span class="n">{{ board[s]|length }}</span></h3>
+    {% for a in board[s] %}
+    <a class="item {% if a.next_action %}due{% endif %}" href="/app/{{ a.id }}"
+       data-row data-search="{{ (a.company or '') ~ ' ' ~ (a.role or '') }}">
+      <div class="c">{{ a.company }}</div>
+      <div class="r">{{ a.role or '&mdash;' }}</div>
+      <div class="t">{{ a.last_activity_at|rel }}{% if a.next_action %} &middot; <span class="act">{{ a.next_action }}</span>{% endif %}</div>
+    </a>
+    {% else %}
+    <div class="none">&mdash;</div>
+    {% endfor %}
+    <div class="none nomatch hidden">no match</div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="card"><div class="empty">
+  <strong>No applications tracked yet.</strong>
+  jobmail polls Gmail hourly, Mon&ndash;Fri 08:00&ndash;17:00, and adds a card here the first
+  time a company writes to you. Nothing to do until then.
+</div></div>
+{% endif %}
+
+<div class="three">
+  <div>
+    <h2>Upcoming {% if upcoming %}<span class="count">{{ upcoming|length }}</span>{% endif %}</h2>
+    <div class="card">
+    {% if upcoming %}
+    <table><tbody>
+      {% for k in upcoming %}
+      <tr data-row data-search="{{ (k.company or '') ~ ' ' ~ (k.description or '') }}">
+        <td class="small" style="white-space:nowrap">{{ k.date|fmt }}</td>
+        <td>{% if k.application_id %}<a href="/app/{{ k.application_id }}">{{ k.company }}</a> &mdash; {% endif %}{{ k.description }}</td>
+      </tr>
+      {% endfor %}
+    </tbody></table>
+    <div class="empty noresults">No match in this section.</div>
+    {% else %}<div class="empty">No interviews or deadlines in the next 14 days.</div>{% endif %}
+    </div>
+
+  </div>
+
+  <div>
+    <h2>Stale {% if stale %}<span class="count">{{ stale|length }}</span>{% endif %}</h2>
+    <div class="card">
+    {% if stale %}
+    <table><tbody>
+      {% for a in stale %}
+      <tr data-row data-search="{{ (a.company or '') ~ ' ' ~ (a.role or '') }}">
+        <td><a href="/app/{{ a.id }}">{{ a.company }}</a> <span class="muted small">{{ a.role or '' }}</span></td>
+        <td><span class="pill solid s-{{ a.stage }}">{{ a.stage }}</span></td>
+        <td class="muted small" style="white-space:nowrap">{{ a.last_activity_at|rel }}</td>
+      </tr>
+      {% endfor %}
+    </tbody></table>
+    <div class="empty noresults">No match in this section.</div>
+    {% else %}<div class="empty">Nothing has gone quiet for {{ stale_days }} days.</div>{% endif %}
+    </div>
+  </div>
+
+  <div>
+    <h2>Closed</h2>
+    <div class="card">
+    {% set closed = board['rejected'] + board['withdrawn'] + board['closed'] %}
+    {% if closed %}
+    <table><tbody>
+      {% for a in closed %}
+      <tr data-row data-search="{{ (a.company or '') ~ ' ' ~ (a.role or '') }}">
+        <td><a href="/app/{{ a.id }}">{{ a.company }}</a> <span class="muted small">{{ a.role or '' }}</span></td>
+        <td><span class="pill solid s-{{ a.stage }}">{{ a.stage }}</span></td>
+        <td class="muted small" style="white-space:nowrap">{{ a.closed_at|date }}</td>
+      </tr>
+      {% endfor %}
+    </tbody></table>
+    <div class="empty noresults">No match in this section.</div>
+    {% else %}<div class="empty">None yet.</div>{% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+  var q = document.getElementById('q');
+  var info = document.getElementById('filterinfo');
+  var tiles = Array.prototype.slice.call(document.querySelectorAll('.tile[data-stage]'));
+  var stageFilter = '';
+
+  function apply() {
+    var term = (q.value || '').trim().toLowerCase();
+    var shown = 0, total = 0;
+
+    document.querySelectorAll('[data-row]').forEach(function (el) {
+      total++;
+      var hay = (el.getAttribute('data-search') || '').toLowerCase();
+      var ok = !term || hay.indexOf(term) !== -1;
+      el.classList.toggle('hidden', !ok);
+      if (ok) shown++;
+    });
+
+    document.querySelectorAll('.col').forEach(function (col) {
+      var off = stageFilter && col.getAttribute('data-col') !== stageFilter;
+      col.classList.toggle('filtered-out', !!off);
+
+      // Keep the column badge honest: a header reading "2" above an empty
+      // column just looks broken. Show what is actually visible while a
+      // filter is on, and restore the true count when it clears.
+      var badge = col.querySelector('h3 .n');
+      var vis = col.querySelectorAll('.item:not(.hidden)').length;
+      if (!badge.dataset.total) badge.dataset.total = badge.textContent.trim();
+      badge.textContent = term ? vis : badge.dataset.total;
+      var note = col.querySelector('.nomatch');
+      if (note) note.classList.toggle('hidden', !(term && !vis && badge.dataset.total !== '0'));
+    });
+
+    document.querySelectorAll('.card').forEach(function (card) {
+      var rows = card.querySelectorAll('[data-row]');
+      var vis = card.querySelectorAll('[data-row]:not(.hidden)');
+      var nores = card.querySelector('.noresults');
+      if (nores) nores.style.display = (rows.length && !vis.length) ? 'block' : 'none';
+    });
+
+    info.textContent = term ? (shown + ' of ' + total + ' match') : '';
+  }
+
+  q.addEventListener('input', apply);
+
+  // Whole row opens the email. Clicks on a real link or button inside the row
+  // keep their own behaviour, so "Reply in Gmail" still wins over the row.
+  document.querySelectorAll('tr[data-href]').forEach(function (row) {
+    row.addEventListener('click', function (e) {
+      if (e.target.closest('a, button')) return;
+      if (window.getSelection && String(window.getSelection())) return;  // let text selection be
+      window.location = row.getAttribute('data-href');
+    });
+  });
+
+  tiles.forEach(function (t) {
+    t.addEventListener('click', function () {
+      var s = t.getAttribute('data-stage');
+      if (!s) { q.focus(); return; }
+      stageFilter = (stageFilter === s) ? '' : s;
+      tiles.forEach(function (o) {
+        var on = !!stageFilter && o.getAttribute('data-stage') === stageFilter;
+        o.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      apply();
+    });
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.target.tagName === 'INPUT') {
+      if (e.key === 'Escape') { q.value = ''; q.blur(); apply(); }
+      return;
+    }
+    if (e.key === '/') { e.preventDefault(); q.focus(); }
+    if (e.key === 'r' && !e.metaKey && !e.ctrlKey) location.reload();
+  });
+
+  // Live check. The poller runs behind this page, so rather than reloading on a
+  // timer and throwing away your scroll position and filter, compare a digest
+  // and offer a refresh only when something actually changed.
+  var baseline = null;
+  var dot = document.getElementById('dot');
+  var lastrun = document.getElementById('lastrun');
+  var lastrunAt = document.getElementById('lastrun-at');
+  var lastrunAgo = document.getElementById('lastrun-ago');
+  var banner = document.getElementById('banner');
+
+  // The page can sit open across several polls, so the server-rendered stamp
+  // goes stale while you look at it. Every summary fetch already carries
+  // last_run_at, so rewrite both halves from that instead of trusting the
+  // render you arrived with.
+  function setLastRun(iso) {
+    if (!iso) { lastrunAt.textContent = 'last poll never'; lastrunAgo.textContent = ''; return; }
+    var t = new Date(iso);
+    if (isNaN(t.getTime())) { lastrunAt.textContent = 'last poll ' + iso; lastrunAgo.textContent = ''; return; }
+    lastrunAt.textContent = 'last poll ' + t.toLocaleString([], {
+      month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
+    var s = Math.max(0, (Date.now() - t.getTime()) / 1000);
+    var age = s < 3600 ? Math.max(1, Math.round(s / 60)) + 'm'
+            : s < 86400 ? Math.round(s / 3600) + 'h'
+            : Math.round(s / 86400) + 'd';
+    lastrunAgo.textContent = ' \u00b7 ' + age + ' ago';
+    lastrun.title = 'last successful poll: ' + t.toLocaleString();
+  }
+
+  function poll() {
+    fetch('/api/summary', { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(function (d) {
+        dot.className = 'dot';
+        setLastRun(d.last_run_at);
+        document.getElementById('t-reply').textContent = d.needs_reply;
+        document.getElementById('t-open').textContent = d.total_open;
+        document.getElementById('t-stale').textContent = d.stale;
+        if (baseline === null) { baseline = d.digest; return; }
+        if (d.digest !== baseline) { banner.classList.add('show'); }
+      })
+      .catch(function () {
+        dot.className = 'dot err';
+        lastrunAt.textContent = 'dashboard offline';
+        lastrunAgo.textContent = '';
+      });
+  }
+  poll();
+  setInterval(poll, 30000);
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,11 @@
+[Unit]
+Description=Run the job agent every morning
+
+[Timer]
+# 6:30am local time, daily. Persistent=true catches up if the Pi was off.
+OnCalendar=*-*-* 06:30:00
+Persistent=true
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target

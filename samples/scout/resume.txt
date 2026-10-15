@@ -1,0 +1,36 @@
+JOHN DOE
+Senior Product Manager · Lexington, MA
+(Condensed for the demo. Dates and metrics omitted. John Doe is a fictional candidate.)
+
+SUMMARY
+Product manager with 12+ years across healthcare software, logistics and applied AI.
+Currently owns AI-assisted clinical documentation and its quality bar for a care-coordination platform.
+
+EXPERIENCE
+
+Lumen Health Systems, Senior Product Manager, Clinical Intelligence
+- Owns AI-assisted note drafting and the review queue clinicians use to approve it.
+- Owns the evaluation framework for AI output across the product: golden sets, rubric
+  scoring, model selection, release gates.
+- Leading Care Coordination 2.0, a redesign of scheduling and handoffs with three entry
+  points: referral, inbox, and patient timeline.
+- Proposed a Referral Intake Hub that turns faxed and emailed referrals into structured
+  records; ran the discovery interviews behind it.
+- Tracks competing care-coordination platforms through customer calls and win/loss notes.
+
+Fieldstone Freight, Product Manager, Routing and Platform
+- Machine learning features for dispatch and route planning, plus the internal API
+  platform other teams built on.
+
+Cedar Mutual, Product Manager
+- Claims intake and adjuster tools for a regional insurer.
+
+Pinewood Benefits, Product Analyst, then Product Manager
+- Enrollment and employer admin tools for a benefits platform.
+
+EDUCATION
+MS, Information Systems, Westbrook University
+BS, Economics, Lakeland College
+
+TOOLS
+Mixpanel, BigQuery, Tableau, Figma, Linear, Aha!, Miro, Python, SQL

@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+{% block title %}metrics — jobmail{% endblock %}
+
+{% block meta %}
+<span class="status"{% if last_run %} title="last successful poll: {{ last_run|fmt }}"{% endif %}>
+  <span class="dot"></span>
+  <span>last poll {{ last_run|stamp }}{% if last_run %} &middot; {{ last_run|rel }}{% endif %}</span>
+</span>
+{% endblock %}
+
+{% block head %}
+<style>
+  .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+           gap:10px; margin-bottom:6px; }
+  .tile { background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+          padding:12px 14px; box-shadow:var(--shadow); }
+  .tile .n { font-size:26px; font-weight:660; line-height:1.15; letter-spacing:-.02em; }
+  .tile .l { color:var(--muted); font-size:11.5px; margin-top:1px; }
+  .tile .sub { color:var(--muted); font-size:11px; margin-top:4px; }
+  .tile.good .n { color:var(--lo); } .tile.bad .n { color:var(--hi); }
+  .tile[data-filter] { cursor:pointer; transition:border-color .12s; }
+  .tile[data-filter]:hover { border-color:var(--accent); }
+  .tile.active { border-color:var(--accent); box-shadow:0 0 0 1px var(--accent); }
+  .filter-note { font-weight:400; font-size:12px; color:var(--muted); margin-left:8px; }
+  .filter-note a { cursor:pointer; text-decoration:underline; }
+
+  .funnel { display:grid; gap:7px; }
+  .frow { display:grid; grid-template-columns:104px 1fr 46px; gap:12px; align-items:center; }
+  .frow .lbl { color:var(--ink-2); font-size:12.5px; text-transform:capitalize; }
+  .frow .track { background:var(--line-2); border-radius:6px; height:22px; overflow:hidden; }
+  .frow .fill { height:100%; border-radius:6px; min-width:2px; }
+  .frow .val { text-align:right; font-weight:620; font-variant-numeric:tabular-nums; }
+  .frow .pct { color:var(--muted); font-weight:400; font-size:11px; }
+
+  .bars { display:flex; align-items:flex-end; gap:8px; height:130px; padding-top:6px; }
+  .bar { flex:1; display:flex; flex-direction:column; justify-content:flex-end;
+         align-items:center; gap:5px; min-width:26px; }
+  .bar .b { width:100%; background:var(--accent); border-radius:5px 5px 0 0; min-height:3px; }
+  .bar .n { font-size:11px; font-weight:620; font-variant-numeric:tabular-nums; }
+  .bar .m { font-size:10px; color:var(--muted); white-space:nowrap; }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="tiles">
+  <div class="tile" data-filter="all" title="Show all applications"><div class="n">{{ stats.total }}</div><div class="l">applications</div>
+    <div class="sub">{{ stats.open }} still open</div></div>
+  <div class="tile {% if stats.response_rate is not none and stats.response_rate >= 20 %}good{% endif %}">
+    <div class="n">{{ stats.response_rate ~ '%' if stats.response_rate is not none else '—' }}</div><div class="l">response rate</div>
+    <div class="sub">{{ stats.heard_back }} of {{ stats.confirmed }} confirmed applications heard back</div></div>
+  <div class="tile"><div class="n">{{ stats.median_days_to_response if stats.median_days_to_response is not none else '—' }}</div>
+    <div class="l">median days to reply</div>
+    <div class="sub">{% if stats.median_days_to_response is none %}needs 3+ replies, have {{ stats.median_days_n }}{% else %}confirmation email to first reply, {{ stats.median_days_n }} applications{% endif %}</div></div>
+  <div class="tile" data-filter="rejected" title="Show rejected applications"><div class="n">{{ stats.rejected }}</div><div class="l">rejected</div>
+    <div class="sub">explicit no</div></div>
+  <div class="tile {% if stats.ghosted %}bad{% endif %}" data-filter="ghosted" title="Show ghosted applications"><div class="n">{{ stats.ghosted }}</div>
+    <div class="l">ghosted</div>
+    <div class="sub">silent &gt;{{ stats.ghost_days }}d</div></div>
+</div>
+
+<h2>Funnel</h2>
+<div class="card pad">
+{% if stats.total %}
+<div class="funnel">
+  {% for s in ['applied','screening','interviewing','assessment','offer'] %}
+  {% set n = funnel[s] %}
+  <div class="frow">
+    <span class="lbl">{{ s }}</span>
+    <div class="track">
+      <div class="fill s-{{ s }}" style="width:{{ (100 * n / stats.total)|round(1) if stats.total else 0 }}%"></div>
+    </div>
+    <span class="val">{{ n }}<br><span class="pct">{{ (100 * n / stats.total)|round|int if stats.total else 0 }}%</span></span>
+  </div>
+  {% endfor %}
+</div>
+<p class="muted small" style="margin:14px 0 0">
+  Counts how many applications got <em>at least as far as</em> each stage, not where they
+  sit now. An application rejected after two interviews still counts as an interview.
+</p>
+{% else %}
+<div class="empty"><strong>Nothing to measure yet.</strong>
+Applications appear here once a confirmation email arrives. To pull in ones you
+already sent, run <code>python -m jobmail.backfill --list</code> on the Pi.</div>
+{% endif %}
+</div>
+
+<div class="two">
+  <div>
+    <h2>Applications per month</h2>
+    <div class="card pad">
+    {% if by_month %}
+      <div class="bars">
+        {% for month, n in by_month[-12:] %}
+        <div class="bar" title="{{ month }}: {{ n }}">
+          <span class="n">{{ n }}</span>
+          <div class="b" style="height:{{ (104 * n / peak_month)|round|int }}px"></div>
+          <span class="m">{{ month[5:] }}/{{ month[2:4] }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    {% else %}<div class="empty">No applications recorded yet.</div>{% endif %}
+    </div>
+  </div>
+
+  <div>
+    <h2>Where they came from</h2>
+    <div class="card">
+    {% if sources %}
+    <table><tbody>
+      {% for src, n in sources %}
+      <tr><td>{{ src }}</td>
+          <td style="width:55%"><div class="track" style="height:8px;background:var(--line-2);border-radius:5px">
+            <div style="height:100%;border-radius:5px;background:var(--accent);width:{{ (100 * n / sources[0][1])|round(1) }}%"></div>
+          </div></td>
+          <td class="val" style="text-align:right;font-variant-numeric:tabular-nums">{{ n }}</td></tr>
+      {% endfor %}
+    </tbody></table>
+    {% else %}<div class="empty">No sources recorded yet.</div>{% endif %}
+    </div>
+  </div>
+</div>
+
+{% if apps %}
+<h2 id="apps-h">Every application <span class="count" id="apps-count">{{ apps|length }}</span><span class="filter-note" id="filter-note"></span></h2>
+<div class="card">
+<table>
+  <thead><tr><th>Company</th><th>Role</th><th>Stage</th><th>Source</th><th>Applied</th><th>Last activity</th></tr></thead>
+  <tbody>
+  {% for a in apps %}
+  <tr data-href="/app/{{ a.id }}" data-stage="{{ a.stage }}"
+      data-responded="{{ 1 if a.id in responded_ids else 0 }}"
+      data-ghosted="{{ 1 if a.stage == 'applied' and a.last_activity_at and a.last_activity_at < ghost_cutoff else 0 }}">
+    <td><a href="/app/{{ a.id }}"><b>{{ a.company }}</b></a></td>
+    <td class="muted">{{ a.role or '—' }}</td>
+    <td><span class="pill solid s-{{ a.stage }}">{{ a.stage }}</span></td>
+    <td class="muted small">{{ a.source or '—' }}</td>
+    <td class="muted small" style="white-space:nowrap">{{ a.applied_at|date }}</td>
+    <td class="muted small" style="white-space:nowrap">{{ a.last_activity_at|rel }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.querySelectorAll('tr[data-href]').forEach(function (row) {
+  row.addEventListener('click', function (e) {
+    if (e.target.closest('a, button')) return;
+    if (window.getSelection && String(window.getSelection())) return;
+    window.location = row.getAttribute('data-href');
+  });
+});
+
+// Clicking a tile filters the application table. Click it again to clear.
+(function () {
+  var tiles = document.querySelectorAll('.tile[data-filter]');
+  var rows = document.querySelectorAll('tr[data-stage]');
+  var count = document.getElementById('apps-count');
+  var note = document.getElementById('filter-note');
+  var current = 'all';
+  var labels = { responded: 'got past applied', rejected: 'rejected', ghosted: 'ghosted' };
+
+  function matches(row, f) {
+    if (f === 'all') return true;
+    if (f === 'responded') return row.dataset.responded === '1';
+    if (f === 'ghosted') return row.dataset.ghosted === '1';
+    return row.dataset.stage === f;
+  }
+
+  function apply(f) {
+    current = f;
+    var shown = 0;
+    rows.forEach(function (r) {
+      var ok = matches(r, f);
+      r.style.display = ok ? '' : 'none';
+      if (ok) shown++;
+    });
+    tiles.forEach(function (t) {
+      t.classList.toggle('active', f !== 'all' && t.dataset.filter === f);
+    });
+    if (count) count.textContent = shown;
+    if (note) {
+      note.textContent = '';
+      if (f !== 'all') {
+        note.appendChild(document.createTextNode(labels[f] + ' · '));
+        var clear = document.createElement('a');
+        clear.textContent = 'clear';
+        clear.addEventListener('click', function () { apply('all'); });
+        note.appendChild(clear);
+        document.getElementById('apps-h').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }
+
+  tiles.forEach(function (t) {
+    t.addEventListener('click', function () {
+      apply(current === t.dataset.filter ? 'all' : t.dataset.filter);
+    });
+  });
+})();
+</script>
+{% endblock %}

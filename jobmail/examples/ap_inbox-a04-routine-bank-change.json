@@ -1,0 +1,18 @@
+{
+  "is_ap_related": true,
+  "vendor": "Northwind Cloud Services",
+  "message_type": "vendor_detail_change",
+  "invoice_number": "",
+  "po_number": "",
+  "amount": "",
+  "currency": "",
+  "due_date": "",
+  "needs_reply": true,
+  "urgency": "high",
+  "risk_flags": [
+    "bank_detail_change"
+  ],
+  "requires_human_verification": true,
+  "summary": "Northwind Cloud Services says its ACH remittance account changes next month and asks AP to use new routing and account numbers from an attached letter for all future payments.",
+  "action_needed": "Do not update bank details from this email. Verify the change by calling Northwind at a known phone number from vendor records, and get approval per vendor master change policy before any update."
+}

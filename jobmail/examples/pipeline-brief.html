@@ -1,0 +1,88 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta name="supported-color-schemes" content="light dark"><title>Pipeline brief, October 14, 2026</title><style>:root { color-scheme: light dark; supported-color-schemes: light dark; }
+body { margin:0; padding:0; background:#f3f1ec; }
+.wrap { max-width:680px; margin:0 auto; padding:24px 16px 40px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; color:#1f2328; font-size:15px; line-height:1.55; }
+.card { background:#ffffff; border:1px solid #e3dfd6; border-radius:10px; padding:28px 28px 20px; }
+h1 { font-size:26px; line-height:1.2; margin:0 0 6px; letter-spacing:-0.01em; color:#14213d; }
+.prov { font-size:12.5px; color:#6b6f76; margin:0 0 4px; }
+h2 { font-size:12px; text-transform:uppercase; letter-spacing:0.09em; color:#6b6f76; margin:32px 0 12px; padding-bottom:6px; border-bottom:2px solid #e3dfd6; }
+h3 { font-size:15px; margin:22px 0 8px; color:#14213d; }
+p { margin:0 0 12px; }
+.obs { margin:14px 0 8px; padding:12px 16px; background:#f6f4ee; border-left:4px solid #14213d; border-radius:0 6px 6px 0; font-size:15px; }
+.grp { display:inline-block; font-size:12px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; padding:3px 10px; border-radius:999px; margin:18px 0 8px; }
+.g-now { background:#fde8e6; color:#a1281c; }
+.g-week { background:#fdf0d5; color:#8a5a00; }
+.g-consider { background:#e6eef7; color:#2a4d7a; }
+.g-other { background:#ececec; color:#444; }
+ul.recs { list-style:none; margin:0; padding:0; }
+ul.recs li { margin:0 0 10px; padding:10px 12px 10px 38px; position:relative; background:#fbfaf7; border:1px solid #eeeae0; border-radius:8px; }
+ul.recs li:before { content:''; position:absolute; left:12px; top:14px; width:14px; height:14px; border:2px solid #9aa0a8; border-radius:3px; }
+.cites { display:block; margin-top:5px; }
+.chip { display:inline-block; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:11px; padding:1px 6px; margin:0 3px 2px 0; border-radius:4px; background:#eceff3; color:#4a5568; }
+ul.plain { margin:0 0 12px; padding-left:20px; }
+ul.plain li { margin:0 0 6px; }
+table { border-collapse:collapse; width:100%; margin:6px 0 14px; font-size:13px; }
+th { text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:#6b6f76; padding:6px 8px; border-bottom:2px solid #e3dfd6; }
+td { padding:8px; border-bottom:1px solid #eeeae0; vertical-align:top; }
+tr.alt td { background:#fbfaf7; }
+td.id, td.num { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:12px; color:#4a5568; white-space:nowrap; }
+td.num { text-align:right; }
+.u { display:inline-block; font-size:11px; font-weight:600; padding:1px 8px; border-radius:999px; }
+.u-high { background:#fde8e6; color:#a1281c; }
+.u-medium { background:#fdf0d5; color:#8a5a00; }
+.u-low { background:#ececec; color:#555; }
+.w-old { color:#a1281c; font-weight:600; }
+.muted { color:#6b6f76; font-size:13px; }
+code { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:90%; background:#eceff3; padding:1px 4px; border-radius:3px; }
+.foot { margin:18px 4px 0; font-size:12px; color:#8a8f96; text-align:center; }
+@media (prefers-color-scheme: dark) {
+  body { background:#14161a !important; }
+  .wrap { color:#e6e8eb !important; }
+  .card { background:#1c1f24 !important; border-color:#2b3037 !important; }
+  h1, h3 { color:#f1f3f5 !important; }
+  h2 { color:#9aa0a8 !important; border-color:#2b3037 !important; }
+  .prov, .muted { color:#9aa0a8 !important; }
+  .obs { background:#23272d !important; border-left-color:#7aa2f7 !important; }
+  ul.recs li { background:#23272d !important; border-color:#2b3037 !important; }
+  ul.recs li:before { border-color:#6b7280 !important; }
+  .chip, code { background:#2b3037 !important; color:#b8c0cc !important; }
+  th { color:#9aa0a8 !important; border-color:#2b3037 !important; }
+  td { border-color:#2b3037 !important; }
+  tr.alt td { background:#23272d !important; }
+  td.id, td.num { color:#b8c0cc !important; }
+  .g-now, .u-high { background:#4a1f1b !important; color:#ffb4aa !important; }
+  .g-week, .u-medium { background:#47340a !important; color:#ffd479 !important; }
+  .g-consider { background:#1f3350 !important; color:#a9c8f2 !important; }
+  .g-other, .u-low { background:#2b3037 !important; color:#c0c6cf !important; }
+  .w-old { color:#ffb4aa !important; }
+}</style></head><body><div class="wrap"><div class="card"><h1>Pipeline brief, October 14, 2026</h1>
+<p class="prov"><em>Recommendations by claude-opus-5-5. Everything under Evidence and System assumptions comes straight from the tracker database; recommendations cite it by id.</em></p>
+<h2>Recommendations</h2>
+<div class="obs">You are tracking 7 applications with 4 still open and 3 rejections, and employers have written back on 100% of the 5 applications with a confirmation email (median 8.2 days to first response). Nothing has gone 21 days without a response.</div>
+<div><span class="grp g-now">Now</span></div>
+<ul class="recs"><li>Complete the Ferncliff Checkr background check form for the Group Product Manager offer by 2026-10-16. The email gives 2026-10-16 as the deadline while the tracker computes 2026-10-20, so finishing by the earlier date is the safe choice for an active offer.<span class="cites"><span class="chip">M27</span><span class="chip">D5</span><span class="chip">A4</span></span></li><li>Confirm your Thursday or Friday preference for the Northbeam Analytics final round by 2026-10-16 through your existing Northbeam thread, and ask that contact whether they sent the 'updated link for your final round' email from northbeam-careers.example. Do not click or reply to that email. The final-round confirmation is due in two days, and a held message from a lookalike Northbeam domain may be impersonating them.<span class="cites"><span class="chip">D4</span><span class="chip">A1</span><span class="chip">H24</span></span></li><li>Reply to Elena Ruiz at Quarry Labs confirming you will submit the case study by Friday, or ask for an extra day. She is waiting on your answer (6 days so far) and the Friday deadline is two days away.<span class="cites"><span class="chip">M16</span><span class="chip">A3</span></span></li><li>Reply to Sofia Brandt at Halcyon Health saying whether you're interested in the Group Product Manager, AI Care Navigation role so she can set up time with the hiring manager. A recruiter is waiting on you (4 days so far) to move this application forward.<span class="cites"><span class="chip">M19</span><span class="chip">A7</span></span></li><li>Reply to Derek Mills saying whether you're interested and share your availability for a quick call. His request has been waiting 17 days and is not linked to any application, so it may lapse if left longer.<span class="cites"><span class="chip">M6</span></span></li></ul>
+<div><span class="grp g-week">This week</span></div>
+<ul class="recs"><li>Look at the 'Interview confirmation' message from 'Talent Desk' yourself and decide what it is before acting on it. Do not open its attachment until you have. The system could not link it to any application. It names no company or role and contains text that tries to manipulate classification.<span class="cites"><span class="chip">M22</span></span></li></ul>
+<div><span class="grp g-consider">Worth considering</span></div>
+<ul class="recs"><li>Leave the three other held messages (the gmail 'remote position' offer, the outlook 'Vantage Dynamics' offer, and the gmail 'Senior Product Manager' interview) unanswered and send nothing to them. They show scam signals such as requests for money or bank details, off-platform chat interviews, and consumer email addresses used for employers.<span class="cites"><span class="chip">H20</span><span class="chip">H25</span><span class="chip">H26</span></span></li></ul>
+<h2>Evidence</h2>
+<h3>Open asks (4)</h3>
+<table><thead><tr><th>ID</th><th>Company</th><th>Stage</th><th>The ask</th><th>Urgency</th><th>Waiting</th></tr></thead><tbody><tr><td class="id">M27</td><td>Ferncliff</td><td>offer</td><td>Complete the secure Checkr background check form at the provided link within 5 business days (by 2026-10-16).</td><td><span class="u u-medium">medium</span></td><td class="num">0d</td></tr><tr class="alt"><td class="id">M19</td><td>Halcyon Health</td><td>screening</td><td>Reply to Sofia Brandt to say whether you're interested in the Group Product Manager, AI Care Navigation role so she can set up time with the hiring manager.</td><td><span class="u u-medium">medium</span></td><td class="num">4d</td></tr><tr><td class="id">M16</td><td>Quarry Labs</td><td>assessment</td><td>Reply to Elena confirming you'll submit the case study by Friday, or ask for an extra day.</td><td><span class="u u-medium">medium</span></td><td class="num">6d</td></tr><tr class="alt"><td class="id">M6</td><td>(not named)</td><td>-</td><td>Reply to Derek saying whether you're interested and share your availability for a quick call this week.</td><td><span class="u u-medium">medium</span></td><td class="num w-old">17d</td></tr></tbody></table>
+<h3>Coming up, next 14 days (2)</h3>
+<ul class="plain"><li><strong>D4</strong> 2026-10-16: Northbeam Analytics, Deadline to confirm Thursday or Friday preference for the final round</li><li><strong>D5</strong> 2026-10-20: Ferncliff, Deadline to complete the Checkr background check form (5 business days from email date)</li></ul>
+<h3>Moved in the last 7 days (4)</h3>
+<ul class="plain"><li>A5 Brightline Robotics: applied → rejected (rejection) (2026-10-09)</li><li>A7 Halcyon Health: applied → screening (recruiter_outreach) (2026-10-10)</li><li>A6 Tidewater Bank: applied → rejected (rejection) (2026-10-11)</li><li>A4 Ferncliff: interviewing → offer (reference_or_background) (2026-10-13)</li></ul>
+<h3>Gone quiet, 14+ days (0)</h3>
+<p>None.</p>
+<h3>Needs a human look (1)</h3>
+<ul class="plain"><li><strong>M22</strong> from Talent Desk: "Interview confirmation". Job-related but not linked to any application. Model summary: Vague message from a 'Talent Desk' asking you to review an attached role summary; it names no company or role and contains embedded text trying to manipulate classification.</li></ul>
+<h3>Held for verification (4)</h3>
+<ul class="plain"><li><strong>H20</strong> from hr.globalremotestaffing@gmail.com: "Congratulations! You have been selected for a remote position". Signals: asks_for_money_or_bank_details, asks_for_identity_documents_early, off_platform_chat_interview, offer_without_interview, consumer_email_for_employer.</li><li><strong>H24</strong> from marcus.lee@northbeam-careers.example, claims to be Northbeam: "Northbeam: updated link for your final round". Signals: lookalike_sender_domain. <strong>Poses as a company you are in process with.</strong></li><li><strong>H25</strong> from vantagedynamics.hiring@outlook.com, claims to be Vantage Dynamics: "Offer: Remote Product Manager, Vantage Dynamics". Signals: asks_for_money_or_bank_details, off_platform_chat_interview, consumer_email_for_employer.</li><li><strong>H26</strong> from rachel.moore.talent@gmail.com: "Interview for Senior Product Manager role". Signals: off_platform_chat_interview, consumer_email_for_employer.</li></ul>
+<h3>Numbers</h3>
+<table><thead><tr><th>ID</th><th>Measure</th><th>Value</th></tr></thead><tbody><tr><td class="id">S1</td><td>applications tracked</td><td class="num">7</td></tr><tr class="alt"><td class="id">S2</td><td>open applications</td><td class="num">4</td></tr><tr><td class="id">S3</td><td>applications that got past 'applied'</td><td class="num">4</td></tr><tr class="alt"><td class="id">S4</td><td>response rate % (employer wrote back, of 5 applications with a confirmation email)</td><td class="num">100</td></tr><tr><td class="id">S5</td><td>rejections</td><td class="num">3</td></tr><tr class="alt"><td class="id">S6</td><td>no response after 21 days</td><td class="num">0</td></tr><tr><td class="id">S7</td><td>median days from application confirmation to first response</td><td class="num">8.2</td></tr></tbody></table>
+<h2>Assumptions</h2>
+<p><strong>System assumptions</strong> (fixed rules, not model output)</p>
+<ul class="plain"><li>Message type, urgency and "needs reply" are model classifications from the job_inbox skill. Measured accuracy on the labelled sample set is in eval/REPORT.md; it is not 100%.</li><li>An open application is "gone quiet" after 14 days with no mail in either direction.</li><li>A newer message on the same application supersedes its older open asks, and any email you send to that company resolves them. An ask you handled by phone stays open until something newer arrives.</li><li>Mail is linked to applications by thread headers first, then company name, then sender domain. Company and domain links can attach mail to the wrong application when one company has two open roles.</li><li>"Applied" is the date of the first email seen for that application, not necessarily the day you applied.</li><li>A held message is the model's fraud judgment, or a sender domain that imitates one already on file. Held mail is never linked to an application, so a legitimate company writing from a new domain stays held until you confirm it.</li></ul>
+<div><span class="grp g-other">Assumptions the model made for these recommendations</span></div>
+<ul class="plain"><li>The Ferncliff background check deadline is treated as 2026-10-16, the date stated in the email, rather than the computed 2026-10-20.</li><li>The Checkr message is a legitimate part of the Ferncliff offer process, since the system did not hold it for verification.</li><li>The Quarry Labs 'Friday' case study deadline is taken to be 2026-10-16.</li><li>Derek Mills's opportunity is assumed to still be worth a reply despite the 17-day delay, though the company is not named.</li></ul>
+<h2>Validation</h2>
+<ul class="plain"><li>7 recommendations, 15 citations, all resolved against the evidence.</li><li>Every high-urgency ask is covered by a recommendation.</li></ul></div><div class="foot">Sent by jobmail on your Pi. Every number comes from the tracker database.</div></div></body></html>

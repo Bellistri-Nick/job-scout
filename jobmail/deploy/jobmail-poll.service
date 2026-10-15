@@ -1,0 +1,15 @@
+[Unit]
+Description=jobmail: poll job-search inbox once
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# Mail text is arbitrary Unicode; never let the locale decide the encoding.
+Environment=PYTHONIOENCODING=utf-8
+Environment=PYTHONUTF8=1
+Type=oneshot
+User=%i
+WorkingDirectory=/opt/jobmail
+EnvironmentFile=/opt/jobmail/.env
+ExecStart=/opt/jobmail/.venv/bin/python -m jobmail.pipeline
+Nice=10
