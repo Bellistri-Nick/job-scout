@@ -12,7 +12,7 @@
 
 ## The problem
 
-Looking for a job is a second job. You set up alerts on four boards, and every morning they hand you forty roles that match a keyword and nothing else. "Senior PM, AI" shows up whether the job owns an AI platform or grooms a checkout backlog. Your salary floor isn't in the filter. Neither is "not another fintech." So you read all forty, apply to three, and lose an evening.
+Looking for a job is a second job. You set up alerts on four boards, and every morning they hand you forty roles that match a keyword and nothing else. "Senior PM, AI" shows up whether the job owns an AI platform or grooms a backlog. Your salary floor isn't in the filter. Neither is "not another fintech." So you read all forty, apply to three, and lose an evening.
 
 Then the applications pile up. Fifty of them in parallel, each with its own thread. The spreadsheet you started in week one is stale by week three. A recruiter writes "can you send times by Thursday?" and it lands between two alert digests and a shipping notice. You see it Friday. And a company that went quiet looks exactly like one that replied yesterday, because nothing is tracking either.
 
@@ -22,7 +22,7 @@ Here's the thing about both: the hard step is judgment over free text, and judgm
 
 ## Process map
 
-Today a search is ten manual steps. Two need judgment (3 and 7). The bookkeeping around them gets skipped on busy days: logging applications, updating stages, reviewing follow-ups.
+Today, a search is ten manual steps. Two need judgment (3 and 7). The bookkeeping around them gets skipped on busy days: logging applications, updating stages, reviewing follow-ups.
 
 ![Process map of the manual job search, ten steps, with the two judgment steps highlighted](docs/img/process-before.png)
 
