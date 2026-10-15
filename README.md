@@ -95,27 +95,6 @@ A real background check that asks for an SSN, sent through Checkr after an offer
 
 Job Scout ships as a Claude Code skill ([SKILL.md](SKILL.md)) that interviews you and writes your profile, so you never edit JSON. The profile decides every score, so setup is a conversation. jobmail needs no interview: it learns your search from your mail. Both agents can push alerts to Telegram. Full steps, the seven questions, and Telegram and Gmail setup are in [docs/SETUP.md](docs/SETUP.md).
 
-## What's live, and what I've measured
-
-The Pi runs jobmail v2.2, installed October 14, 2026. It classifies mail, links it to applications, tracks stages, sends alerts, serves the dashboard, holds recruiting scams for review, and emails a weekly brief on Friday mornings.
-
-The Pi has sent its first weekly brief, and it arrived. One caveat: I haven't verified the Scout-to-jobmail bridge on the Pi, so its results still come from the evals and `demo.py`.
-
-What I've observed:
-
-- jobmail has tracked 93 applications on the Pi with no manual entry.
-- Cost per unit on the eval's production models: about 4¢ per Scout scan, $0.0071 per email jobmail classifies, and about 5¢ per weekly brief.
-
-Limits worth knowing before you trust it:
-
-- Time saved is not measured. There's no clean before and after, so it's a hypothesis. The test is a two-week time study, minutes per day in the inbox and on job boards, before and after. [CASE_STUDY.md](CASE_STUDY.md#observed-results-vs-expected-benefits) has the metrics I'd track for a team.
-- The eval sets are small and synthetic (21 postings, 26 emails, one brief input). The next step is 100+ real labelled items, kept private.
-- Every email body goes to the model provider. A team rollout needs a data processing agreement, zero retention where offered, redaction before the call, and scoped OAuth.
-- The bridge matches on company and role text. A shared job id from Scout's link to the application would be exact.
-- It serves one user, and fixing a wrong link means editing SQL.
-
-What the evals and demos taught me is in [CASE_STUDY.md](CASE_STUDY.md#learnings). The one that changed the design: the model can't judge what it can't see. It passed the lookalike email as genuine because the tell lives in the database, so a dozen lines of code that read that history do the work.
-
 ## What the brief asks for, and where it is
 
 | Requirement | Where | In one line |
@@ -127,7 +106,7 @@ What the evals and demos taught me is in [CASE_STUDY.md](CASE_STUDY.md#learnings
 | Technical fluency | [demo.py](demo.py), [run it](jobmail/README.md#run-it) | Python CLIs, SQLite, systemd on a Pi, built in Claude Code |
 | Evaluation | [Scout eval](eval/scout/REPORT.md), [jobmail eval](jobmail/eval/REPORT.md) | Hand-labelled sets, three repeats per configuration, cost per item, every miss listed. 77 + 89 offline tests |
 | Edge cases and failures | [The lookalike sender](#the-lookalike-sender), [jobmail edge cases](jobmail/README.md#edge-cases-and-failures) | Prompt injection, keyword stuffing, scams, a lookalike sender domain, and a silent outage the eval reproduced |
-| User value and measurement | [What's live](#whats-live-and-what-ive-measured), [metrics for a team](CASE_STUDY.md#observed-results-vs-expected-benefits) | Observed results kept apart from expected benefits. A two-week time study to measure time saved, and the metrics I'd track for a team |
+| User value and measurement | [observed vs expected](CASE_STUDY.md#observed-results-vs-expected-benefits), [limitations](CASE_STUDY.md#limitations-and-what-id-fix-before-a-team-used-this) | Observed results kept apart from expected benefits. A two-week time study to measure time saved, and the metrics I'd track for a team |
 | Iterations, obstacles, learnings | [Versions](CASE_STUDY.md#versions), [jobmail obstacles](jobmail/README.md#obstacles), [learnings](CASE_STUDY.md#learnings) | Five versions from April to Oct 10 and the real obstacles |
 
 ## Built vs. reused
