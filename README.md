@@ -12,7 +12,7 @@
 
 ## The problem
 
-Looking for a job is a second job. You set up alerts on four boards, and every morning they hand you forty roles that match a keyword and nothing else. "Senior PM, AI" shows up whether the job owns an AI platform or grooms a backlog. Your salary floor isn't in the filter. Neither is "not another fintech." So you read all forty, apply to three, and lose an evening.
+Looking for a job is a second job. You set up alerts on four boards, and every morning they hand you forty roles that match a keyword and nothing else. "Senior Product Designer" shows up whether the role owns a product end to end or resizes banner ads for an agency. Your salary floor isn't in the filter. Neither is "nothing more than two days in an office." So you read all forty, apply to three, and lose an evening.
 
 Then the applications pile up. Fifty of them in parallel, each with its own thread. The spreadsheet you started in week one is stale by week three. A recruiter writes "can you send times by Thursday?" and it lands between two alert digests and a shipping notice. You see it Friday. And a company that went quiet looks exactly like one that replied yesterday, because nothing is tracking either.
 
