@@ -9,13 +9,13 @@ One workflow, end to end: find the right roles, apply, and keep track of what ha
 | Judgment | Does this posting fit this person? | Does this email need me, and by when? |
 | Output | A ranked email digest: strong, worth a look, everything else | Alerts, a pipeline dashboard, a weekly brief |
 | Memory | Every posting seen and sent | Every application, message, date and stage change |
-| Since | September 2026, on a Raspberry Pi | September 2026, same Pi (v2 deployed; v2.1 and v2.2 not yet) |
+| Since | September 2026, on a Raspberry Pi | September 2026, same Pi (v2.2 deployed Oct 14) |
 
 A read-only bridge connects them. Scout skips roles jobmail already tracks, and `run.py funnel` joins what Scout emailed to how far each role got. The join answers the question both agents have to earn their keep on: do strong matches turn into interviews more often than the rest?
 
 | | |
 |---|---|
-| **Demo, no API key** | `pip install -e ./jobmail && python demo.py`: both agents and the bridge, seven steps, each saying what to look for |
+| **Demo, no API key** | `pip install -e "./jobmail[dev]" && python demo.py`: both agents and the bridge, seven steps, each saying what to look for |
 | **Example output** | [Scout digest](examples/scout-digest.html), [funnel](examples/funnel.txt), [jobmail weekly brief](jobmail/examples/pipeline-brief.md), [AP fraud flag](jobmail/examples/ap_inbox-a04-routine-bank-change.json) |
 | **Evaluation** | [Scout](eval/scout/REPORT.md), [jobmail](jobmail/eval/REPORT.md) |
 | **v2 in depth** | [jobmail/README.md](jobmail/README.md) |
@@ -211,15 +211,3 @@ Across both agents, the evals and demos turned up eleven defects. Most were in p
 **Built**: both agents, the triage engine and its three skills, the scorer, digest, bridge, demos, evals and brief. I built it in Claude Code. I chose the problem and the architecture, wrote the labels, and made the trade-off calls. Claude Code wrote most of the code, and every change went through the tests and evals in this repo.
 
 **Reused**: the Anthropic Python SDK, public ATS and job-board APIs, SQLite, FastAPI, Jinja2, systemd and Tailscale.
-
-## Time spent
-
-I have been building this for my own search since April and running it since September. About 3 to 4 hours of my own time went into refining it for this assignment (the Oct 9 and Oct 10 rows). Claude Code did most of the coding in that window, and the tests and evals checked each change.
-
-| Phase | When |
-|---|---|
-| v0 prototype | April 2026 |
-| v1 Job Scout | Sep 3 to 24, 2026 |
-| v2 jobmail | Sep 12 to Oct 7, 2026 |
-| v2.1 evals, skills, bridge, docs | Oct 9, 2026 |
-| v2.2 fraud handling, brief eval, demo | Oct 10, 2026 |

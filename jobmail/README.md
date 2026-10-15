@@ -302,13 +302,3 @@ python -m jobmail.brief --db demo_out/jobmail.db --out demo_out/brief.md
 ```
 
 Production setup on a Pi, Gmail filters and the backfill are in [docs/OPERATIONS.md](docs/OPERATIONS.md).
-
-## Time spent
-
-I have been running jobmail on my own mail since September. About 3 to 4 hours of my own time went into refining it for this assignment (the Oct 9 and Oct 10 rows). Claude Code did most of the coding in that window, and the tests and evals checked each change.
-
-| Phase | When |
-|---|---|
-| v0: pipeline, Pi deployment, dashboard, metrics, backfill | Sep 12 to Oct 7, 2026 |
-| Skill extraction, demo, eval, brief, bug fixes, this README | Oct 9, 2026 |
-| Spec v3 fraud handling, lookalike check, brief eval, one-command demo | Oct 10, 2026 |

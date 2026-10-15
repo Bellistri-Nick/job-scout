@@ -1,5 +1,9 @@
 # Job Scout + jobmail
 
+[![tests](https://github.com/Bellistri-Nick/job-scout/actions/workflows/tests.yml/badge.svg)](https://github.com/Bellistri-Nick/job-scout/actions/workflows/tests.yml)
+
+> **Reviewing this?** Run `python demo.py` (offline, two minutes), then read [CASE_STUDY.md](CASE_STUDY.md). The table under [What the brief asks for](#what-the-brief-asks-for-and-where-it-is) maps every requirement to a file.
+
 **Two agents that help you find the jobs that fit, track your applications, and keep a search on track.**
 
 - Job Scout reads public job feeds and ranks postings against your background.
@@ -22,7 +26,7 @@ The key thing: two of these steps need judgment over free text, and they fail si
 
 So each agent puts a model on exactly one judgment step: ranking a posting, or reading an email. Everything around it (fetching, deduping, linking, stage tracking, alerting) is plain code that tests can pin down. The current workflow, mapped step by step, is in [CASE_STUDY.md](CASE_STUDY.md#current-workflow-mapped).
 
-Jump to: [Process map](#process-map) · [Run it](#run-it-in-two-minutes) · [What it looks like](#what-it-looks-like) · [Onboarding](#onboarding-setting-it-up-on-your-own-search) · [The lookalike sender](#the-lookalike-sender) · [Human in the loop](#where-a-human-stays-in-the-loop) · [Results and limits](#results-and-limits) · [For reviewers](#what-the-brief-asks-for-and-where-it-is) · [Repo map](#repo-map)
+Jump to: [Process map](#process-map) · [Run it](#run-it-in-two-minutes) · [What it looks like](#what-it-looks-like) · [Set it up](#set-it-up-on-your-own-search) · [The lookalike sender](#the-lookalike-sender) · [Human in the loop](#where-a-human-stays-in-the-loop) · [Results and limits](#results-and-limits) · [For reviewers](#what-the-brief-asks-for-and-where-it-is) · [Repo map](#repo-map)
 
 ## Process map
 
@@ -40,8 +44,9 @@ The same maps as editable Mermaid, plus the tables of where a human decides and 
 
 ```bash
 git clone https://github.com/Bellistri-Nick/job-scout && cd job-scout
-pip install -e ./jobmail       # Scout needs only the standard library; jobmail needs a few packages
-python demo.py                 # the whole workflow, offline: no API key, no network
+pip install -e "./jobmail[dev]"   # Scout needs only the standard library; jobmail needs a few packages, plus pytest
+python demo.py                   # the whole workflow, offline: no API key, no network
+python -m pytest tests && (cd jobmail && python -m pytest)   # 77 Scout + 89 jobmail tests, offline
 ```
 
 `demo.py` walks seven steps and tells you what to look for in each. Scout scans 22 sample postings. jobmail processes two weeks of sample email (28 messages) by replaying Claude's recorded answers through the real pipeline. Then Scout runs again with jobmail's memory and skips roles you already applied to. With an API key, every step also runs live. The commands are in [CASE_STUDY.md](CASE_STUDY.md) and [jobmail/README.md](jobmail/README.md).
@@ -68,46 +73,9 @@ Every recommendation is a checkbox that cites the evidence behind it (the small 
 
 ![Weekly pipeline brief with recommendations and evidence citations](docs/img/weekly-brief.png)
 
-## Onboarding: setting it up on your own search
+## Set it up on your own search
 
-Setup is a conversation, and it matters more than any other step. The profile decides every score, so a bad profile fails silently. Job Scout ships as a Claude Code skill ([SKILL.md](SKILL.md)) that interviews you and writes the profile. You never edit JSON.
-
-The flow, in order:
-
-1. Resume first. Drop in a resume. Claude reads it, plays it back in two sentences (level, domain, strongest scope signal), and asks what that misses. Anything the resume already answers becomes a confirmation, not a question.
-2. Seven questions at most, one per message. Questions the resume answered get skipped.
-3. One follow-up per vague answer. "Senior roles" becomes which titles. "Good pay" becomes a number. After one follow-up, Claude writes down a sensible default, says it did, and moves on.
-4. Read-back. Claude saves your answers in your own words to `config/interview.md`, reads them back in a short paragraph, and asks "anything wrong?" That file is the record, so changing your search later means editing one answer, not redoing the interview.
-5. Profile check. Claude drafts the profile, then `python run.py profile-check` explains in plain language what it will do: target titles, what never reaches you, where, pay, and how much email to expect. Every warning gets fixed before the first scan. Then one last question: "Is there a role you'd want that this would miss?"
-6. Watchlist, email, dry run. You name companies you'd take a call from, and `python run.py discover` keeps only the job boards that resolve. Then you wire up email and run `python run.py scan --dry-run --open`. You review the results together before anything sends.
-
-The questions:
-
-| # | Claude asks | It pushes for | Becomes |
-|---|---|---|---|
-| 0 | "Walk me through your last two roles: title, team size, what you owned." (only without a resume) | Scope and numbers, not duties | Background, strong keywords |
-| 1 | "What's the next role? The title you'd say yes to, and the one that's a step down but still okay." | Real title variants, the level floor | Target titles, seniority |
-| 2 | "Where do you need to work? Home base, remote, and how many days in an office you'd accept." | Towns you'd commute to, a hard "no" | Home base, locations |
-| 3 | "What's your base salary floor, and what are you aiming for? Is a posting with no salary okay?" | A number, not a range | Comp floor and target |
-| 4 | "What should never reach your inbox? Roles, levels, industries, or companies." | Neighbouring functions that share vocabulary | Blocked titles, levels, companies |
-| 5 | "Describe a role you'd drop everything for." | The kind of work, scope, and domain | Strong-fit signals |
-| 6 | "What does a posting look like that seems right but isn't?" | The trap, in your words | Anti-signals |
-
-A real set of answers is in [samples/scout/interview.md](samples/scout/interview.md), and `python run.py profile-from-resume samples/scout/resume.txt --interview samples/scout/interview.md` turns it into the sample profile.
-
-### Telegram alerts
-
-Both agents can push to Telegram the moment something needs you: Scout when a digest lands, jobmail when a reply or a held scam needs a look. You create the bot yourself, because Claude can't:
-
-1. Message [@BotFather](https://t.me/botfather) on Telegram, send `/newbot`, and copy the token.
-2. Put the token in `.env` as `TELEGRAM_BOT_TOKEN`, then send your new bot any message.
-3. Run `python run.py telegram-setup` for Scout, or `python -m jobmail.telegram_setup --write` for jobmail. Scout's command finds your chat id, prints it for you to put in `.env`, and sends a test. jobmail's `--write` saves the chat id for you, then sends a test.
-
-With the token unset, Telegram is a silent no-op, and a failed push never breaks a scan. Email still goes out.
-
-### jobmail setup
-
-jobmail has no interview. It learns your search from your mail. You give it a Gmail account with an App Password, an Anthropic API key, and an `OWNER_NAME` so the classifier knows who "you" is. Then `python -m jobmail.preflight` checks the connection and `python -m jobmail.pipeline --dry-run -v` does a first run with no alerts. To recover applications you sent before installing, `python -m jobmail.backfill --list` shows what it would find and spends nothing. The full steps are in [jobmail/docs/OPERATIONS.md](jobmail/docs/OPERATIONS.md).
+Job Scout ships as a Claude Code skill ([SKILL.md](SKILL.md)) that interviews you and writes your profile, so you never edit JSON. The profile decides every score, which is why setup is a conversation and not a config file. jobmail needs no interview: it learns your search from your mail. Both agents can push alerts to Telegram. Full steps, the seven questions, and Telegram and Gmail setup are in [docs/SETUP.md](docs/SETUP.md).
 
 ## What's live
 
@@ -133,10 +101,6 @@ Limits worth knowing before you trust it:
 
 What the evals and demos taught me is in [CASE_STUDY.md](CASE_STUDY.md#learnings). The one that changed the design: the model can't judge what it can't see. It passed the lookalike email as genuine because the tell lives in the database, so a dozen lines of code that read that history do the work.
 
-## Time spent
-
-I've been building this for my own search since April. About 3 to 4 hours of my own time went into refining it for this assignment: the skill engine, evals, bridge, brief, fraud handling, and demo, built with Claude Code. Phases and dates are in [CASE_STUDY.md](CASE_STUDY.md#time-spent).
-
 ## What the brief asks for, and where it is
 
 | Requirement | Where | In one line |
@@ -149,7 +113,7 @@ I've been building this for my own search since April. About 3 to 4 hours of my 
 | Evaluation | [Scout eval](eval/scout/REPORT.md), [jobmail eval](jobmail/eval/REPORT.md) | Hand-labelled sets, three repeats per configuration, cost per item, every miss listed. 77 + 89 offline tests |
 | Edge cases and failures | [jobmail edge cases](jobmail/README.md#edge-cases-and-failures) | Prompt injection, keyword stuffing, scams, a lookalike sender domain, and a silent outage the eval reproduced |
 | User value and measurement | [Results and limits](#results-and-limits), [metrics for a team](CASE_STUDY.md#observed-results-vs-expected-benefits) | Observed results kept apart from expected benefits. A two-week time study to measure time saved, and the metrics I'd track for a team |
-| Iterations, obstacles, learnings, time | [Versions](CASE_STUDY.md#versions), [jobmail obstacles](jobmail/README.md#obstacles), [learnings](CASE_STUDY.md#learnings), [time spent](#time-spent) | Five versions from April to Oct 10, the real obstacles, and about 3 to 4 hours of my own time on this assignment |
+| Iterations, obstacles, learnings | [Versions](CASE_STUDY.md#versions), [jobmail obstacles](jobmail/README.md#obstacles), [learnings](CASE_STUDY.md#learnings) | Five versions from April to Oct 10 and the real obstacles |
 
 ## The lookalike sender
 
@@ -184,6 +148,7 @@ README.md                you are here
 CASE_STUDY.md            the full write-up: problem, map, versions, evals, trade-offs, learnings, time
 demo.py                  the whole workflow, offline
 run.py, jobagent/        Job Scout: sources, rules, model re-rank, digest, memory, eval
+docs/SETUP.md            setting up your own search: onboarding, Telegram, Gmail
 docs/SCOUT.md            operating Job Scout: install, tuning, scheduling
 docs/PROCESS_MAP.md      the process map: before and after, human checkpoints, model vs code
 docs/img/                screenshots used in this README
