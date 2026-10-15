@@ -51,7 +51,7 @@ python -m pytest tests && (cd jobmail && python -m pytest)   # 77 Scout + 89 job
 
 ## What it looks like
 
-All three screenshots come from the offline demo, so you can reproduce them.
+The first three screenshots come from the offline demo, so you can reproduce them. The Telegram alerts are rendered from the same sample data, in the layout the Pi sends.
 
 ### The jobmail dashboard
 
@@ -70,6 +70,12 @@ Ranked roles, each with a score, a one-line reason, and the rules that fired. Th
 Every recommendation is a checkbox that cites the evidence behind it (the small `M27`, `D5` tags). Code verifies each citation before the brief goes out. This one catches the lookalike Northbeam email and tells you to confirm through the thread you already trust.
 
 ![Weekly pipeline brief with recommendations and evidence citations](docs/img/weekly-brief.png)
+
+### Telegram alerts
+
+One message per email that needs you, headed by the event, with the company, the sender, and what to do. The second one says nothing more is needed, which is the point: a confirmation of a call you already booked should not cost you a click.
+
+<img src="docs/img/telegram-alerts.png" alt="Two Telegram alerts from jobmail: a scheduling confirmation for a Calendly-booked interview, and a recruiter confirming a call already on the calendar" width="420">
 
 ## The lookalike sender
 
@@ -123,7 +129,7 @@ What the evals and demos taught me is in [CASE_STUDY.md](CASE_STUDY.md#learnings
 | Agentic workflow, with boundaries | [CASE_STUDY.md](CASE_STUDY.md), [jobmail architecture](jobmail/README.md#architecture) | The model reads and judges. Code links, moves stages, and decides what may page you. Nothing is ever sent to anyone but you |
 | Reusable skills | [jobmail skills](jobmail/README.md#reusable-skills), [`.claude/skills/inbox-triage`](.claude/skills/inbox-triage/SKILL.md), [SKILL.md](SKILL.md) | A skill is a JSON spec: instructions, schema, invariants, fallback. One engine runs three of them, including a Finance AP inbox with no new code |
 | Context and memory | [Memory](CASE_STUDY.md#memory-across-steps-runs-and-agents) | Profile, seen-postings history, and an application data model with an append-only event log. Demo steps 2, 4, and 5 show memory changing a result |
-| Usable output | [digest](examples/scout-digest.html), [weekly brief](jobmail/examples/pipeline-brief.md) | The brief separates evidence (written by code), assumptions (code and model, labelled), and recommendations (model, each citing evidence ids that code verifies) |
+| Usable output | [digest](examples/scout-digest.html), [weekly brief](jobmail/examples/pipeline-brief.md), [Telegram alerts](docs/img/telegram-alerts.png) | The brief separates evidence (written by code), assumptions (code and model, labelled), and recommendations (model, each citing evidence ids that code verifies) |
 | Technical fluency | [demo.py](demo.py), [run it](jobmail/README.md#run-it) | Python CLIs, SQLite, systemd on a Pi, built in Claude Code |
 | Evaluation | [Scout eval](eval/scout/REPORT.md), [jobmail eval](jobmail/eval/REPORT.md) | Hand-labelled sets, three repeats per configuration, cost per item, every miss listed. 77 + 89 offline tests |
 | Edge cases and failures | [The lookalike sender](#the-lookalike-sender), [jobmail edge cases](jobmail/README.md#edge-cases-and-failures) | Prompt injection, keyword stuffing, scams, a lookalike sender domain, and a silent outage the eval reproduced |

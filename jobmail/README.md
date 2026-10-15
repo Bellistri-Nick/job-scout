@@ -127,7 +127,7 @@ The full output is in [examples/demo-run2.txt](examples/demo-run2.txt). Without 
 
 ## Usable output
 
-- **Alerts** (Telegram and email): one per message that needs you, headed by the event ("Reply needed", "Scheduling", "Upcoming"), with the company, role, and the concrete action, such as "Reply to Marcus with two or three times by end of day Thursday." A held scam pages you only when it poses as a company you are in a process with. Generic "you've been selected" scams are held without an alert and listed in the brief.
+- **Alerts** (Telegram and email, [example](../docs/img/telegram-alerts.png)): one per message that needs you, headed by the event ("Reply needed", "Scheduling", "Upcoming"), with the company, role, and the concrete action, such as "Reply to Marcus with two or three times by end of day Thursday." A held scam pages you only when it poses as a company you are in a process with. Generic "you've been selected" scams are held without an alert and listed in the brief.
 - **Dashboard**: pipeline by stage, open asks, metrics. Private, behind Tailscale.
 - **Obsidian notes**: one per application, regenerated each run; your own notes below a marker survive.
 - **Weekly brief** ([example](examples/pipeline-brief.md), [styled email version](examples/pipeline-brief.html), written with `--html`), built in three sections so a reader can tell fact from inference:
