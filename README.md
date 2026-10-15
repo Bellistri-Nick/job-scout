@@ -8,8 +8,6 @@
 - jobmail reads your job-search inbox, links mail to applications, tracks stages, and holds anything that looks like a scam.
 - A read-only bridge lets each one use the other's memory. Scout stops surfacing roles you already applied to.
 
-I've run both on a Raspberry Pi against my own search since September 2026. This repo is the public copy. Every sample is synthetic: the resume, profile, and 28 emails belong to John Doe, a fictional candidate, and every company is made up.
-
 > **Reviewing this?** Run `python demo.py` (offline, two minutes), then read [CASE_STUDY.md](CASE_STUDY.md). The table under [What the brief asks for](#what-the-brief-asks-for-and-where-it-is) maps every requirement to a file.
 
 ## The problem
